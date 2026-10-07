@@ -3,7 +3,7 @@ from decimal import Decimal
 from src.domain.models import Workspace, PersonStatus
 
 
-def render(workspace: Workspace, today) -> None:
+def render_air_view(workspace: Workspace, today) -> None:
     st.header("Air View")
 
     filter_status = st.selectbox(
