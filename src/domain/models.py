@@ -57,7 +57,9 @@ class Project(BaseModel):
 
     @field_validator("logged_hours")
     @classmethod
-    def logged_hours_must_not_exceed_four_times_budget(cls, value: Decimal, info: object) -> Decimal:
+    def logged_hours_must_not_exceed_four_times_budget(
+        cls, value: Decimal, info: object
+    ) -> Decimal:
         budget_hours = getattr(info, "data", {}).get("budget_hours")
         if budget_hours is not None and value > budget_hours * Decimal("4"):
             raise ValueError("Logged hours exceed the permitted validation limit")
@@ -105,7 +107,9 @@ class Workspace(BaseModel):
     def overall_burn_percentage(self) -> Decimal:
         if self.total_budget_hours == Decimal("0"):
             return Decimal("0")
-        return (self.total_logged_hours / self.total_budget_hours * Decimal("100")).quantize(Decimal("0.1"))
+        return (self.total_logged_hours / self.total_budget_hours * Decimal("100")).quantize(
+            Decimal("0.1")
+        )
 
 
 class Log(BaseModel):

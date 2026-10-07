@@ -16,7 +16,9 @@ class InsightResponse:
 
 
 class AIInsightService:
-    def answer_query(self, workspace: Workspace, query: str, today: date | None = None) -> InsightResponse:
+    def answer_query(
+        self, workspace: Workspace, query: str, today: date | None = None
+    ) -> InsightResponse:
         assessment_date = today or date.today()
         query_lower = query.lower()
 
@@ -40,7 +42,9 @@ class AIInsightService:
         self, workspace: Workspace, today: date, query: str
     ) -> InsightResponse:
         at_risk_projects = [
-            project for project in workspace.projects if project.status(today) == ProjectStatus.AT_RISK
+            project
+            for project in workspace.projects
+            if project.status(today) == ProjectStatus.AT_RISK
         ]
 
         if not at_risk_projects:
@@ -73,9 +77,7 @@ class AIInsightService:
             supporting_facts=facts,
         )
 
-    def _capacity_insight(
-        self, workspace: Workspace, today: date, query: str
-    ) -> InsightResponse:
+    def _capacity_insight(self, workspace: Workspace, today: date, query: str) -> InsightResponse:
         from src.domain.models import PersonStatus
 
         overbooked_people = [
@@ -108,14 +110,16 @@ class AIInsightService:
             supporting_facts=tuple(facts),
         )
 
-    def _risk_insight(
-        self, workspace: Workspace, today: date, query: str
-    ) -> InsightResponse:
+    def _risk_insight(self, workspace: Workspace, today: date, query: str) -> InsightResponse:
         at_risk_projects = [
-            project for project in workspace.projects if project.status(today) == ProjectStatus.AT_RISK
+            project
+            for project in workspace.projects
+            if project.status(today) == ProjectStatus.AT_RISK
         ]
         watch_projects = [
-            project for project in workspace.projects if project.status(today) == ProjectStatus.WATCH
+            project
+            for project in workspace.projects
+            if project.status(today) == ProjectStatus.WATCH
         ]
 
         facts: list[str] = []
