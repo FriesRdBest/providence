@@ -43,15 +43,15 @@ if workspace_loaded:
     st.sidebar.title("Providence")
     view = st.sidebar.radio(
         "Choose a view",
-        ("Land", "Sea", "Air", "Overview"),
+        ("Health", "Project", "People", "Overview"),
         index=0,
     )
 
-    if view == "Land":
+    if view == "Health":
         render_land_view(workspace)
-    elif view == "Sea":
+    elif view == "Project":
         render_sea_view(workspace)
-    elif view == "Air":
+    elif view == "People":
         render_air_view(workspace)
     else:
         render_overview_view(workspace)
