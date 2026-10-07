@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+from datetime import date
+
 import streamlit as st
 
 from src.domain.models import ProjectStatus, Workspace
 
 
 def render_sea_view(workspace: Workspace) -> None:
-    today = st.context.date
+    today = date.today()
 
-    st.header("Sea")
+    st.header("Project")
     st.subheader("Daily project delivery status")
 
     filter_status = st.radio(
