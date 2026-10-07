@@ -3993,6 +3993,51 @@ def apply_global_styles() -> None:
 
 
 
+
+        /* Export action spacing refinement */
+
+        .providence-overview-export {{
+            margin: 2.25rem 0 0.85rem;
+            padding: 1.4rem 1.5rem;
+        }}
+
+        .providence-overview-export + div {{
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.8rem;
+            width: 100%;
+            margin: 0;
+        }}
+
+        .providence-overview-export + div > div {{
+            min-width: 0;
+            width: 100%;
+        }}
+
+        .providence-overview-export + div .stDownloadButton {{
+            width: 100%;
+            margin: 0;
+        }}
+
+        .providence-overview-export + div .stDownloadButton > button {{
+            width: 100%;
+            min-height: 2.9rem;
+            margin: 0;
+            white-space: nowrap;
+        }}
+
+        @media (max-width: 760px) {{
+            .providence-overview-export {{
+                margin-top: 1.75rem;
+                padding: 1.2rem;
+            }}
+
+            .providence-overview-export + div {{
+                grid-template-columns: 1fr;
+                gap: 0.65rem;
+            }}
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
