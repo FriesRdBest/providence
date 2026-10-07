@@ -30,9 +30,9 @@ def apply_global_styles() -> None:
             --shadow-md: {TOKENS.shadow_md};
             --shadow-lg: {TOKENS.shadow_lg};
             --shadow-xl: {TOKENS.shadow_xl};
-            --radius-sm: {TOKENS.radius_small};
-            --radius-md: {TOKENS.radius_medium};
-            --radius-lg: {TOKENS.radius_large};
+            --radius-sm: {TOKENS.radius_sm};
+            --radius-md: {TOKENS.radius_md};
+            --radius-lg: {TOKENS.radius_lg};
         }}
         
         * {{
