@@ -733,6 +733,49 @@ def apply_global_styles() -> None:
                 display: none;
             }}
         }}
+
+        /* Navigation and application-shell resilience */
+
+        [data-testid="stSidebar"] > div:first-child {{
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }}
+
+        .providence-sidebar-footer {{
+            margin-top: auto;
+            padding: 1.5rem 0.25rem 0.5rem;
+            color: var(--text-supporting);
+            font-family: "Raleway", sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }}
+
+        .providence-nav-tooltip,
+        .providence-navigation-tooltip,
+        [data-testid="stSidebar"] [role="tooltip"] {{
+            display: none !important;
+        }}
+
+        .main .block-container,
+        [data-testid="stMainBlockContainer"] {{
+            padding-top: 4.5rem !important;
+        }}
+
+        @media (max-width: 860px) {{
+            .main .block-container,
+            [data-testid="stMainBlockContainer"] {{
+                padding-top: 3.5rem !important;
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+            }}
+
+            .providence-sidebar-footer {{
+                padding-top: 1rem;
+            }}
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,

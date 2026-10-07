@@ -90,7 +90,6 @@ def render_overview_view(workspace: Workspace) -> None:
 
     render_page_header(
         "Overview",
-        "A clear picture of delivery pace, budget exposure, and current team capacity.",
         today,
     )
 

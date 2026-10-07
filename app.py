@@ -21,6 +21,12 @@ st.set_page_config(
 )
 
 
+st.sidebar.markdown(
+    '<div class="providence-sidebar-footer">By Robin Sylvester</div>',
+    unsafe_allow_html=True,
+)
+
+
 @st.cache_data
 def load_workspace() -> Workspace:
     today = date.today()
@@ -96,8 +102,6 @@ def render_navigation() -> str:
         )
         st.markdown(
             """
-            <div class="providence-nav-note">
-                Clear view of delivery pace, budget boundaries, and team capacity.
             </div>
             """,
             unsafe_allow_html=True,
