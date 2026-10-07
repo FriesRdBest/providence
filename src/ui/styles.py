@@ -65,10 +65,7 @@ def apply_global_styles() -> None:
 
         .block-container {{
             max-width: 1480px;
-            padding-top: 2.25rem;
-            padding-right: 2.25rem;
-            padding-bottom: 3.5rem;
-            padding-left: 2.25rem;
+            padding: 2.25rem 2.25rem 3.5rem;
         }}
 
         h1, h2, h3, h4, p {{
@@ -116,10 +113,39 @@ def apply_global_styles() -> None:
         }}
 
         [data-testid="stSidebar"] > div:first-child {{
-            padding: 1.25rem 0.9rem;
+            min-height: 100%;
+            padding: 1.25rem 0.9rem 7rem;
         }}
 
         [data-testid="stSidebarNav"] {{
+            display: none;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] > div {{
+            gap: 0.22rem;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label {{
+            border-radius: var(--radius-md);
+            color: var(--text-supporting);
+            font-size: 0.92rem;
+            font-weight: 650;
+            padding: 0.62rem 0.72rem;
+            transition: background 150ms ease, color 150ms ease;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {{
+            background: var(--surface-secondary);
+            color: var(--text-core);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {{
+            background: var(--surface-secondary);
+            color: var(--text-core);
+            box-shadow: inset 3px 0 0 var(--action-primary);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] input {{
             display: none;
         }}
 
@@ -155,8 +181,7 @@ def apply_global_styles() -> None:
             font-weight: 600;
         }}
 
-        .stButton > button,
-        .stDownloadButton > button {{
+        .stButton > button {{
             min-height: 2.7rem;
             border: 1px solid var(--action-primary);
             border-radius: var(--radius-md);
@@ -170,12 +195,29 @@ def apply_global_styles() -> None:
             transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
         }}
 
-        .stButton > button:hover,
-        .stDownloadButton > button:hover {{
+        .stButton > button:hover {{
             background: var(--action-primary-hover);
             border-color: var(--action-primary-hover);
             box-shadow: var(--shadow-card);
             transform: translateY(-1px);
+        }}
+
+        .stDownloadButton > button {{
+            min-height: 2.7rem;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            background: var(--surface-primary);
+            color: var(--text-core);
+            font-size: 0.9rem;
+            font-weight: 650;
+            letter-spacing: -0.01em;
+            padding: 0.58rem 0.9rem;
+            transition: background 150ms ease, border-color 150ms ease;
+        }}
+
+        .stDownloadButton > button:hover {{
+            background: var(--surface-secondary);
+            border-color: var(--text-muted);
         }}
 
         .stButton > button:focus-visible,
@@ -235,6 +277,26 @@ def apply_global_styles() -> None:
         [data-testid="stProgress"] > div > div > div {{
             border-radius: 999px;
             background: var(--action-primary);
+        }}
+
+        div:has(> .providence-capacity-progress-healthy)
+        + [data-testid="stProgress"] > div > div > div {{
+            background: var(--text-muted);
+        }}
+
+        div:has(> .providence-capacity-progress-watch)
+        + [data-testid="stProgress"] > div > div > div {{
+            background: var(--status-watch);
+        }}
+
+        div:has(> .providence-capacity-progress-risk)
+        + [data-testid="stProgress"] > div > div > div {{
+            background: var(--status-risk);
+        }}
+
+        div:has(> .providence-capacity-progress-neutral)
+        + [data-testid="stProgress"] > div > div > div {{
+            background: var(--steel-500, #7D8790);
         }}
 
         [data-testid="stAlert"] {{
@@ -451,6 +513,193 @@ def apply_global_styles() -> None:
             margin: 0;
         }}
 
+        .providence-hero-label,
+        .providence-health-hero-label {{
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 750;
+            letter-spacing: 0.09em;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+        }}
+
+        .providence-hero-value,
+        .providence-health-hero-value {{
+            color: var(--text-core);
+            font-size: clamp(3.2rem, 6vw, 5.5rem);
+            font-weight: 680;
+            letter-spacing: -0.07em;
+            line-height: 0.92;
+        }}
+
+        .providence-hero-copy,
+        .providence-health-hero-copy {{
+            color: var(--text-supporting);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0.75rem 0 1.35rem;
+        }}
+
+        .providence-hero-stat-label,
+        .providence-preview-label,
+        .providence-health-stat-label {{
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 750;
+            letter-spacing: 0.075em;
+            text-transform: uppercase;
+        }}
+
+        .providence-hero-stat-value,
+        .providence-health-stat-value {{
+            color: var(--text-core);
+            font-size: 1.15rem;
+            font-weight: 680;
+            letter-spacing: -0.025em;
+            margin-top: 0.22rem;
+        }}
+
+        .providence-preview-value,
+        .providence-project-value,
+        .providence-health-row-value {{
+            color: var(--text-core);
+            font-size: 1.15rem;
+            font-weight: 680;
+            letter-spacing: -0.03em;
+            margin-top: 0.22rem;
+        }}
+
+        .providence-health-number {{
+            font-size: 2.4rem;
+            font-weight: 680;
+            letter-spacing: -0.06em;
+            line-height: 1;
+            margin: 0.3rem 0 0.45rem;
+        }}
+
+        .providence-health-number-risk {{
+            color: var(--status-risk);
+        }}
+
+        .providence-health-number-watch {{
+            color: var(--status-watch);
+        }}
+
+        .providence-health-exposure-title {{
+            color: var(--text-core);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.1rem;
+        }}
+
+        .providence-empty-title {{
+            color: var(--text-core);
+            font-size: 1rem;
+            font-weight: 680;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.35rem;
+        }}
+
+        .providence-empty-copy {{
+            color: var(--text-supporting);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }}
+
+        .providence-export-area {{
+            display: flex;
+            align-items: center;
+            margin-top: 2.5rem;
+            padding: 1.1rem 1.2rem;
+            background: rgba(255, 255, 255, 0.54);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+        }}
+
+        .providence-export-title {{
+            color: var(--text-core);
+            font-size: 0.92rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+        }}
+
+        .providence-export-copy {{
+            color: var(--text-supporting);
+            font-size: 0.84rem;
+            line-height: 1.45;
+            margin: 0.22rem 0 0;
+        }}
+
+        .providence-project-count-label {{
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 750;
+            letter-spacing: 0.075em;
+            margin-top: 0.2rem;
+            text-transform: uppercase;
+        }}
+
+        .providence-project-count-value {{
+            color: var(--text-core);
+            font-size: 2rem;
+            font-weight: 680;
+            letter-spacing: -0.055em;
+            line-height: 1;
+            margin-top: 0.28rem;
+        }}
+
+        .providence-project-count-copy {{
+            color: var(--text-supporting);
+            font-size: 0.82rem;
+            font-weight: 550;
+            margin-top: 0.16rem;
+        }}
+
+        .providence-project-message {{
+            color: var(--text-supporting);
+            font-size: 0.88rem;
+            line-height: 1.45;
+            margin: 0.9rem 0 0;
+        }}
+
+        .providence-person-identity {{
+            display: flex;
+            align-items: center;
+            gap: 0.72rem;
+        }}
+
+        .providence-person-mark {{
+            display: grid;
+            flex: 0 0 auto;
+            place-items: center;
+            width: 2.3rem;
+            height: 2.3rem;
+            background: var(--surface-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50%;
+            color: var(--text-core);
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }}
+
+        .providence-person-name {{
+            color: var(--text-core);
+            font-size: 0.96rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }}
+
+        .providence-person-role {{
+            color: var(--text-supporting);
+            font-size: 0.8rem;
+            line-height: 1.35;
+            margin-top: 0.12rem;
+        }}
+
         @media (max-width: 860px) {{
             .block-container {{
                 padding: 1.35rem 1rem 2.25rem;
@@ -465,6 +714,23 @@ def apply_global_styles() -> None:
 
             .providence-date-context {{
                 white-space: normal;
+            }}
+
+            .providence-hero-value,
+            .providence-health-hero-value {{
+                font-size: 3.4rem;
+            }}
+
+            .providence-export-area {{
+                display: block;
+            }}
+
+            .providence-project-count-label {{
+                margin-top: 0;
+            }}
+
+            .providence-nav-note {{
+                display: none;
             }}
         }}
         </style>

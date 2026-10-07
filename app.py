@@ -5,7 +5,7 @@ from decimal import Decimal
 
 import streamlit as st
 
-from src.domain.models import Project, Workspace
+from src.domain.models import Person, Project, Workspace
 from src.ui.air_view import render_air_view
 from src.ui.components import render_brand
 from src.ui.land_view import render_land_view
@@ -49,10 +49,37 @@ def load_workspace() -> Workspace:
         ),
     ]
 
+    people = [
+        Person(
+            name="Alice Morgan",
+            role="Product design",
+            daily_capacity_hours=Decimal("8.0"),
+            logged_hours_today=Decimal("4.5"),
+        ),
+        Person(
+            name="Ben Carter",
+            role="Engineering",
+            daily_capacity_hours=Decimal("8.0"),
+            logged_hours_today=Decimal("6.5"),
+        ),
+        Person(
+            name="Charlie Reed",
+            role="Client delivery",
+            daily_capacity_hours=Decimal("8.0"),
+            logged_hours_today=Decimal("9.5"),
+        ),
+        Person(
+            name="Dana Brooks",
+            role="Operations",
+            daily_capacity_hours=Decimal("8.0"),
+            logged_hours_today=Decimal("0.0"),
+        ),
+    ]
+
     return Workspace(
         name="Providence workspace",
         projects=projects,
-        people=[],
+        people=people,
         today=today,
     )
 
