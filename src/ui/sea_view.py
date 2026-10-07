@@ -11,7 +11,7 @@ def render_sea_view(workspace: Workspace) -> None:
     today = date.today()
 
     st.header("Project")
-    st.subheader("Daily project delivery status")
+    st.caption("Daily project delivery status and budget tracking")
 
     filter_status = st.radio(
         "Filter by status",
@@ -47,39 +47,42 @@ def render_sea_view(workspace: Workspace) -> None:
         }[status]
 
         with st.container(border=True):
-            st.subheader(project.name)
-            st.caption(f"Client: {project.client}")
+            col_main, col_status = st.columns([4, 1], gap="large")
 
-            col1, col2, col3, col4 = st.columns(4)
+            with col_main:
+                st.markdown(f"### {project.name}")
+                st.caption(f"{project.client}")
 
-            with col1:
-                st.metric(
-                    label="Budget burn",
-                    value=f"{project.budget_burn_percentage} %",
-                )
+                col1, col2, col3 = st.columns(3, gap="large")
 
-            with col2:
-                st.metric(
-                    label="Budget remaining",
-                    value=f"{project.budget_remaining_hours:,.1f} h",
-                )
+                with col1:
+                    st.metric(
+                        label="Budget burn",
+                        value=f"{project.budget_burn_percentage} %",
+                    )
 
-            with col3:
-                st.metric(
-                    label="Days until delivery",
-                    value=project.days_until_delivery(today),
-                )
+                with col2:
+                    st.metric(
+                        label="Remaining",
+                        value=f"{project.budget_remaining_hours:,.1f} h",
+                    )
 
-            with col4:
-                st.metric(
-                    label="Status",
-                    value=status_label,
-                    delta=None,
-                )
+                with col3:
+                    st.metric(
+                        label="Days left",
+                        value=project.days_until_delivery(today),
+                    )
+
+            with col_status:
+                if status == ProjectStatus.AT_RISK:
+                    st.error(f"**{status_label}**")
+                elif status == ProjectStatus.WATCH:
+                    st.warning(f"**{status_label}**")
+                else:
+                    st.success(f"**{status_label}**")
 
             st.progress(
                 float(project.budget_burn_percentage) / 100,
-                text="Budget utilisation",
             )
 
             if status == ProjectStatus.AT_RISK:
@@ -90,5 +93,3 @@ def render_sea_view(workspace: Workspace) -> None:
                 st.info(
                     "This project is approaching a threshold. Monitor allocation closely."
                 )
-            else:
-                st.success("This project is tracking within expected boundaries.")
