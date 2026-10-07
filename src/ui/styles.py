@@ -2826,6 +2826,670 @@ def apply_global_styles() -> None:
             }}
         }}
 
+
+        /* Phase 5: People, compact density, and sidebar navigation */
+
+        .providence-nav-title {{
+            display: none !important;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] {{
+            width: 100%;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] > div {{
+            width: 100%;
+            gap: 0.5rem;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label {{
+            box-sizing: border-box;
+            width: 100%;
+            min-height: 3.35rem;
+            margin: 0;
+            padding: 0.82rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 1rem;
+            background: transparent;
+            color: rgba(254, 246, 243, 0.78);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label::before,
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked)::before {{
+            display: none !important;
+            content: none !important;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {{
+            transform: none;
+            background: rgba(254, 246, 243, 0.10);
+            color: var(--providence-blush);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {{
+            width: 100%;
+            background: linear-gradient(
+                100deg,
+                var(--providence-butter),
+                #FFD582
+            );
+            border-color: rgba(255, 222, 145, 0.92);
+            box-shadow: 0 12px 24px rgba(255, 222, 145, 0.16);
+            color: var(--providence-plum);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked),
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) * {{
+            color: var(--providence-plum) !important;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:focus-within {{
+            outline: 3px solid rgba(255, 222, 145, 0.72);
+            outline-offset: 3px;
+        }}
+
+        .providence-people-stage {{
+            display: block;
+            margin-top: -0.75rem;
+        }}
+
+        .providence-people-kicker,
+        .providence-people-hero-label,
+        .providence-people-signal span,
+        .providence-people-card-data span {{
+            display: inline-flex;
+            color: var(--providence-butter);
+            font-size: 0.66rem;
+            font-weight: 850;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+        }}
+
+        .providence-people-count {{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 4.4rem;
+            padding: 0.85rem 1rem;
+            border: 1px solid rgba(254, 246, 243, 0.16);
+            border-radius: 1rem;
+            background: rgba(254, 246, 243, 0.07);
+        }}
+
+        .providence-people-count span,
+        .providence-people-count small {{
+            color: rgba(254, 246, 243, 0.58);
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }}
+
+        .providence-people-count strong {{
+            color: var(--providence-butter);
+            font-size: 1.6rem;
+            font-weight: 850;
+            letter-spacing: -0.07em;
+        }}
+
+        .providence-people-hero {{
+            position: relative;
+            overflow: hidden;
+            min-height: 27rem;
+            padding: clamp(1.4rem, 3vw, 2.3rem);
+            border: 1px solid rgba(44, 19, 56, 0.18);
+            border-radius: 1.65rem;
+            background:
+                radial-gradient(
+                    circle at 88% 18%,
+                    rgba(168, 118, 245, 0.70),
+                    transparent 24%
+                ),
+                radial-gradient(
+                    circle at 68% 90%,
+                    rgba(229, 124, 216, 0.48),
+                    transparent 25%
+                ),
+                linear-gradient(135deg, #FFDE91, #FFD88C 54%, #FFCF9B);
+            box-shadow: 0 24px 65px rgba(12, 4, 18, 0.23);
+            color: var(--providence-plum);
+        }}
+
+        .providence-people-hero::after {{
+            position: absolute;
+            right: -4rem;
+            bottom: -6.5rem;
+            width: 16rem;
+            height: 16rem;
+            border: 1px solid rgba(44, 19, 56, 0.17);
+            border-radius: 50%;
+            content: "";
+        }}
+
+        .providence-people-hero-topline,
+        .providence-people-pace-labels,
+        .providence-people-hero-stats,
+        .providence-people-decision-foot {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }}
+
+        .providence-people-live {{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.42rem;
+            padding: 0.4rem 0.6rem;
+            border: 1px solid rgba(44, 19, 56, 0.16);
+            border-radius: 999px;
+            background: rgba(254, 246, 243, 0.34);
+            color: rgba(44, 19, 56, 0.82);
+            font-size: 0.68rem;
+            font-weight: 750;
+        }}
+
+        .providence-people-live i {{
+            width: 0.42rem;
+            height: 0.42rem;
+            border-radius: 50%;
+            background: #2C1338;
+            box-shadow: 0 0 0 0.22rem rgba(44, 19, 56, 0.12);
+        }}
+
+        .providence-people-hero-grid {{
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 1.35rem;
+            margin: clamp(2rem, 4.5vw, 3.5rem) 0 1.3rem;
+        }}
+
+        .providence-people-hero strong {{
+            display: block;
+            margin-top: 0.55rem;
+            color: var(--providence-plum);
+            font-size: clamp(4rem, 8vw, 6.8rem);
+            font-weight: 850;
+            letter-spacing: -0.1em;
+            line-height: 0.78;
+        }}
+
+        .providence-people-hero p {{
+            max-width: 25rem;
+            margin: 0.9rem 0 0;
+            color: rgba(44, 19, 56, 0.75);
+            font-size: 0.94rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }}
+
+        .providence-people-orbit {{
+            width: clamp(6.5rem, 12vw, 9.5rem);
+            height: clamp(6.5rem, 12vw, 9.5rem);
+            display: grid;
+            place-items: center;
+            align-content: center;
+            border: 0.9rem solid rgba(44, 19, 56, 0.10);
+            border-top-color: var(--providence-plum);
+            border-right-color: var(--providence-lavender);
+            border-radius: 50%;
+            background: rgba(254, 246, 243, 0.26);
+            transform: rotate(18deg);
+        }}
+
+        .providence-people-orbit span,
+        .providence-people-orbit small {{
+            transform: rotate(-18deg);
+        }}
+
+        .providence-people-orbit span {{
+            color: var(--providence-plum);
+            font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+            font-weight: 850;
+            letter-spacing: -0.08em;
+        }}
+
+        .providence-people-orbit small {{
+            margin-top: 0.18rem;
+            color: rgba(44, 19, 56, 0.7);
+            font-size: 0.58rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }}
+
+        .providence-people-pace-track,
+        .providence-people-card-progress {{
+            overflow: hidden;
+            height: 0.62rem;
+            border-radius: 999px;
+            background: rgba(44, 19, 56, 0.15);
+        }}
+
+        .providence-people-pace-track span,
+        .providence-people-card-progress span {{
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+        }}
+
+        .providence-people-pace-track span {{
+            background: linear-gradient(
+                90deg,
+                var(--providence-plum),
+                var(--providence-lavender),
+                var(--providence-orchid),
+                var(--providence-coral)
+            );
+        }}
+
+        .providence-people-pace-labels {{
+            margin-top: 0.6rem;
+            color: rgba(44, 19, 56, 0.7);
+            font-size: 0.72rem;
+            font-weight: 750;
+        }}
+
+        .providence-people-hero-stats {{
+            position: relative;
+            z-index: 1;
+            margin-top: 1.4rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(44, 19, 56, 0.16);
+        }}
+
+        .providence-people-hero-stats div {{
+            flex: 1;
+        }}
+
+        .providence-people-hero-stats span {{
+            display: block;
+            color: rgba(44, 19, 56, 0.66);
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }}
+
+        .providence-people-hero-stats strong {{
+            margin-top: 0.2rem;
+            font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+            letter-spacing: -0.05em;
+        }}
+
+        .providence-people-decision {{
+            position: relative;
+            overflow: hidden;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: clamp(1.35rem, 2.4vw, 1.9rem);
+            border: 1px solid rgba(254, 246, 243, 0.26);
+            border-radius: 1.65rem;
+            background:
+                radial-gradient(
+                    circle at 100% 0%,
+                    rgba(255, 138, 122, 0.32),
+                    transparent 34%
+                ),
+                linear-gradient(
+                    145deg,
+                    rgba(168, 118, 245, 0.42),
+                    rgba(44, 19, 56, 0.92) 58%
+                );
+            box-shadow: var(--providence-shadow-deep);
+            color: var(--providence-blush);
+        }}
+
+        .providence-people-decision::after {{
+            position: absolute;
+            right: -2.8rem;
+            bottom: -2.8rem;
+            width: 9rem;
+            height: 9rem;
+            border: 1px solid rgba(254, 246, 243, 0.22);
+            border-radius: 50%;
+            content: "";
+        }}
+
+        .providence-people-decision h2 {{
+            max-width: 13ch;
+            margin: 1.35rem 0 0.8rem;
+            color: var(--providence-blush);
+            font-size: clamp(1.45rem, 2.8vw, 2rem);
+            font-weight: 800;
+            letter-spacing: -0.06em;
+            line-height: 1.05;
+        }}
+
+        .providence-people-decision p {{
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            color: rgba(254, 246, 243, 0.78);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }}
+
+        .providence-people-decision-foot {{
+            position: relative;
+            z-index: 1;
+            margin-top: 1.8rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(254, 246, 243, 0.18);
+            color: rgba(254, 246, 243, 0.62);
+            font-size: 0.7rem;
+            font-weight: 750;
+        }}
+
+        .providence-people-decision-foot strong {{
+            color: var(--providence-butter);
+            font-size: 0.82rem;
+        }}
+
+        .providence-people-signal {{
+            position: relative;
+            overflow: hidden;
+            min-height: 11rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.2rem;
+            border: 1px solid rgba(254, 246, 243, 0.20);
+            border-radius: 1.3rem;
+            box-shadow: 0 16px 38px rgba(12, 4, 18, 0.18);
+        }}
+
+        .providence-people-signal::after {{
+            position: absolute;
+            top: -2rem;
+            right: -2rem;
+            width: 6.5rem;
+            height: 6.5rem;
+            border-radius: 50%;
+            content: "";
+        }}
+
+        .providence-people-signal-violet {{
+            background: linear-gradient(
+                145deg,
+                rgba(168, 118, 245, 0.42),
+                rgba(254, 246, 243, 0.10)
+            );
+        }}
+
+        .providence-people-signal-violet::after {{
+            background: rgba(168, 118, 245, 0.32);
+        }}
+
+        .providence-people-signal-pink {{
+            background: linear-gradient(
+                145deg,
+                rgba(229, 124, 216, 0.40),
+                rgba(254, 246, 243, 0.10)
+            );
+        }}
+
+        .providence-people-signal-pink::after {{
+            background: rgba(229, 124, 216, 0.32);
+        }}
+
+        .providence-people-signal-coral {{
+            background: linear-gradient(
+                145deg,
+                rgba(255, 138, 122, 0.42),
+                rgba(254, 246, 243, 0.10)
+            );
+        }}
+
+        .providence-people-signal-coral::after {{
+            background: rgba(255, 138, 122, 0.32);
+        }}
+
+        .providence-people-signal strong {{
+            position: relative;
+            z-index: 1;
+            display: block;
+            margin-top: 0.7rem;
+            color: var(--providence-blush);
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 850;
+            letter-spacing: -0.09em;
+            line-height: 0.82;
+        }}
+
+        .providence-people-signal p {{
+            position: relative;
+            z-index: 1;
+            margin: 0.75rem 0 0;
+            color: rgba(254, 246, 243, 0.74);
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }}
+
+        .providence-people-card {{
+            position: relative;
+            display: grid;
+            grid-template-columns:
+                minmax(11rem, 1.6fr)
+                minmax(9rem, 1.45fr)
+                repeat(3, minmax(4.5rem, 0.62fr));
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.25rem;
+            padding: 1rem 1.1rem;
+            border: 1px solid rgba(254, 246, 243, 0.14);
+            border-radius: 1.15rem;
+            background: rgba(254, 246, 243, 0.07);
+            box-shadow: inset 0 1px 0 rgba(254, 246, 243, 0.08);
+        }}
+
+        .providence-people-card-person {{
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.72rem;
+        }}
+
+        .providence-people-avatar {{
+            width: 2.55rem;
+            height: 2.55rem;
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+            border: 1px solid rgba(254, 246, 243, 0.22);
+            border-radius: 0.82rem;
+            background: rgba(168, 118, 245, 0.25);
+            color: var(--providence-blush);
+            font-size: 0.72rem;
+            font-weight: 850;
+            letter-spacing: -0.03em;
+        }}
+
+        .providence-people-card h3 {{
+            overflow: hidden;
+            margin: 0;
+            color: var(--providence-blush);
+            font-size: 0.98rem;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }}
+
+        .providence-people-card-person p,
+        .providence-people-card-capacity p {{
+            margin: 0.15rem 0 0;
+            color: rgba(254, 246, 243, 0.58);
+            font-size: 0.74rem;
+            line-height: 1.35;
+        }}
+
+        .providence-people-card-progress {{
+            height: 0.42rem;
+            background: rgba(254, 246, 243, 0.14);
+        }}
+
+        .providence-people-progress-healthy {{
+            background: var(--providence-lavender);
+        }}
+
+        .providence-people-progress-watch {{
+            background: var(--providence-butter);
+        }}
+
+        .providence-people-progress-risk {{
+            background: var(--providence-coral);
+        }}
+
+        .providence-people-progress-neutral {{
+            background: var(--providence-orchid);
+        }}
+
+        .providence-people-card-data span {{
+            color: rgba(254, 246, 243, 0.58);
+        }}
+
+        .providence-people-card-data strong {{
+            display: block;
+            margin-top: 0.2rem;
+            color: var(--providence-blush);
+            font-size: 0.96rem;
+            font-weight: 850;
+            letter-spacing: -0.05em;
+        }}
+
+        .providence-people-card-status {{
+            display: flex;
+            justify-content: flex-end;
+            min-height: 2rem;
+            margin: -2.35rem 1.1rem 0.6rem;
+            pointer-events: none;
+        }}
+
+        .providence-people-empty {{
+            position: relative;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            padding: 1.4rem;
+            border: 1px solid rgba(254, 246, 243, 0.20);
+            border-radius: 1.35rem;
+            background:
+                linear-gradient(
+                    100deg,
+                    rgba(168, 118, 245, 0.24),
+                    transparent 56%
+                ),
+                rgba(254, 246, 243, 0.08);
+        }}
+
+        .providence-people-empty h3 {{
+            margin: 0.5rem 0 0;
+            color: var(--providence-blush);
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }}
+
+        .providence-people-empty p {{
+            margin: 0.55rem 0 0;
+            color: rgba(254, 246, 243, 0.68);
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }}
+
+        @media (max-width: 860px) {{
+            .providence-people-hero,
+            .providence-people-decision {{
+                border-radius: 1.3rem;
+            }}
+
+            .providence-people-hero {{
+                min-height: auto;
+            }}
+
+            .providence-people-hero-grid {{
+                grid-template-columns: 1fr;
+                margin-top: 1.7rem;
+            }}
+
+            .providence-people-orbit {{
+                justify-self: end;
+                margin-top: -4.5rem;
+            }}
+
+            .providence-people-hero-stats {{
+                flex-wrap: wrap;
+            }}
+
+            .providence-people-hero-stats div {{
+                min-width: 30%;
+            }}
+
+            .providence-people-card {{
+                grid-template-columns: minmax(0, 1fr) repeat(3, minmax(4rem, 0.7fr));
+            }}
+
+            .providence-people-card-person {{
+                grid-column: 1 / -1;
+            }}
+
+            .providence-people-card-capacity {{
+                grid-column: 1 / -1;
+            }}
+
+            .providence-people-card-status {{
+                margin-top: -0.15rem;
+                margin-right: 1.1rem;
+            }}
+        }}
+
+        @media (max-width: 540px) {{
+            .providence-people-hero {{
+                padding: 1.15rem;
+            }}
+
+            .providence-people-hero strong {{
+                font-size: 4rem;
+            }}
+
+            .providence-people-orbit {{
+                width: 6.3rem;
+                height: 6.3rem;
+                border-width: 0.68rem;
+                margin-top: -3.5rem;
+            }}
+
+            .providence-people-hero-stats {{
+                gap: 0.75rem;
+            }}
+
+            .providence-people-hero-stats strong {{
+                font-size: 0.95rem;
+            }}
+
+            .providence-people-signal {{
+                min-height: 9.5rem;
+            }}
+
+            .providence-people-card {{
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.85rem;
+            }}
+
+            .providence-people-card-person,
+            .providence-people-card-capacity {{
+                grid-column: 1 / -1;
+            }}
+
+            .providence-people-card-data {{
+                min-width: 0;
+            }}
+        }}}}
+
         </style>
         """,
         unsafe_allow_html=True,
