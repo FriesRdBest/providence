@@ -776,6 +776,350 @@ def apply_global_styles() -> None:
             }}
         }}
 
+
+        /* Phase 1: dark visual foundation */
+
+        :root {{
+            --providence-butter: #FFDE91;
+            --providence-plum: #2C1338;
+            --providence-blush: #FEF6F3;
+            --providence-lavender: #A876F5;
+            --providence-orchid: #E57CD8;
+            --providence-coral: #FF8A7A;
+            --providence-plum-glass: rgba(44, 19, 56, 0.74);
+            --providence-blush-glass: rgba(254, 246, 243, 0.12);
+            --providence-blush-border: rgba(254, 246, 243, 0.24);
+            --providence-shadow-deep: 0 22px 64px rgba(17, 5, 24, 0.34);
+        }}
+
+        html,
+        body,
+        [class*="css"],
+        [data-testid="stAppViewContainer"] {{
+            background: var(--providence-plum);
+            color: var(--providence-blush);
+            font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
+        }}
+
+        .stApp {{
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 83% 3%, rgba(168, 118, 245, 0.28), transparent 23rem),
+                radial-gradient(circle at 18% 88%, rgba(229, 124, 216, 0.16), transparent 30rem),
+                linear-gradient(145deg, #2C1338 0%, #20102A 52%, #2C1338 100%);
+            color: var(--providence-blush);
+        }}
+
+        [data-testid="stHeader"] {{
+            background: rgba(44, 19, 56, 0.78);
+            border-bottom: 1px solid rgba(254, 246, 243, 0.12);
+            backdrop-filter: blur(18px);
+        }}
+
+        [data-testid="stHeader"] *,
+        [data-testid="stToolbar"] * {{
+            color: var(--providence-blush) !important;
+        }}
+
+        .block-container,
+        [data-testid="stMainBlockContainer"] {{
+            max-width: 1480px;
+        }}
+
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        .stMarkdown,
+        [data-testid="stCaptionContainer"] {{
+            color: var(--providence-blush);
+        }}
+
+        h1 {{
+            font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
+            font-weight: 750;
+            letter-spacing: -0.06em;
+        }}
+
+        h2,
+        h3 {{
+            font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
+            color: var(--providence-blush);
+        }}
+
+        [data-testid="stSidebar"] {{
+            background:
+                radial-gradient(circle at 15% 0%, rgba(168, 118, 245, 0.24), transparent 18rem),
+                linear-gradient(180deg, #2C1338 0%, #200F2A 100%);
+            border-right: 1px solid rgba(254, 246, 243, 0.15);
+        }}
+
+        [data-testid="stSidebar"] > div:first-child {{
+            background: transparent;
+        }}
+
+        .providence-mark {{
+            background: var(--providence-butter);
+            box-shadow: 0 10px 28px rgba(255, 222, 145, 0.26);
+            color: var(--providence-plum);
+        }}
+
+        .providence-brand-name {{
+            color: var(--providence-blush);
+        }}
+
+        .providence-brand-detail,
+        .providence-nav-title,
+        .providence-sidebar-footer {{
+            color: rgba(254, 246, 243, 0.62);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label {{
+            border: 1px solid transparent;
+            color: rgba(254, 246, 243, 0.74);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {{
+            background: rgba(254, 246, 243, 0.09);
+            color: var(--providence-blush);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {{
+            background: var(--providence-butter);
+            border-color: var(--providence-butter);
+            box-shadow: none;
+            color: var(--providence-plum);
+        }}
+
+        .providence-page-header {{
+            position: relative;
+            padding: 1.55rem 1.7rem;
+            border: 1px solid var(--providence-blush-border);
+            border-radius: 1.45rem;
+            background:
+                linear-gradient(120deg, rgba(255, 222, 145, 0.10), transparent 42%),
+                rgba(254, 246, 243, 0.07);
+            box-shadow: var(--providence-shadow-deep);
+            backdrop-filter: blur(18px);
+        }}
+
+        .providence-eyebrow {{
+            color: var(--providence-butter);
+            transform: rotate(-2deg);
+            transform-origin: left center;
+        }}
+
+        .providence-page-subtitle,
+        .providence-section-detail,
+        .providence-hero-copy,
+        .providence-health-hero-copy,
+        .providence-insight-body,
+        .providence-export-copy,
+        .providence-empty-copy,
+        .providence-person-role,
+        .providence-project-count-copy,
+        .providence-project-message {{
+            color: rgba(254, 246, 243, 0.72);
+        }}
+
+        .providence-date-context {{
+            background: rgba(254, 246, 243, 0.12);
+            border-color: var(--providence-blush-border);
+            color: var(--providence-blush);
+            box-shadow: 0 10px 28px rgba(17, 5, 24, 0.18);
+            backdrop-filter: blur(14px);
+        }}
+
+        [data-testid="stVerticalBlockBorderWrapper"],
+        .providence-insight,
+        .providence-export-area {{
+            background:
+                linear-gradient(135deg, rgba(168, 118, 245, 0.16), transparent 58%),
+                var(--providence-blush-glass);
+            border-color: var(--providence-blush-border);
+            box-shadow: var(--providence-shadow-deep);
+            backdrop-filter: blur(18px);
+        }}
+
+        .providence-insight {{
+            border-color: rgba(255, 138, 122, 0.48);
+        }}
+
+        .providence-insight-label {{
+            color: var(--providence-butter);
+        }}
+
+        .providence-insight-title,
+        .providence-empty-title,
+        .providence-export-title,
+        .providence-person-name,
+        .providence-preview-value,
+        .providence-project-value,
+        .providence-health-row-value,
+        .providence-hero-value,
+        .providence-health-hero-value,
+        .providence-hero-stat-value,
+        .providence-health-stat-value,
+        .providence-project-count-value {{
+            color: var(--providence-blush);
+        }}
+
+        [data-testid="stMetricLabel"],
+        .providence-hero-label,
+        .providence-health-hero-label,
+        .providence-hero-stat-label,
+        .providence-preview-label,
+        .providence-health-stat-label,
+        .providence-project-count-label {{
+            color: rgba(255, 222, 145, 0.76);
+        }}
+
+        [data-testid="stMetricValue"] {{
+            color: var(--providence-blush);
+        }}
+
+        .stButton > button {{
+            background: var(--providence-coral);
+            border-color: var(--providence-coral);
+            box-shadow: 0 12px 28px rgba(255, 138, 122, 0.22);
+            color: var(--providence-plum);
+            font-family: "Raleway", ui-sans-serif, system-ui, sans-serif;
+            font-weight: 800;
+        }}
+
+        .stButton > button:hover {{
+            background: var(--providence-butter);
+            border-color: var(--providence-butter);
+            box-shadow: 0 16px 34px rgba(255, 222, 145, 0.22);
+        }}
+
+        .stDownloadButton > button {{
+            background: rgba(254, 246, 243, 0.10);
+            border-color: var(--providence-blush-border);
+            color: var(--providence-blush);
+            backdrop-filter: blur(12px);
+        }}
+
+        .stDownloadButton > button:hover {{
+            background: rgba(254, 246, 243, 0.18);
+            border-color: var(--providence-butter);
+        }}
+
+        [data-baseweb="select"] > div,
+        [data-testid="stTextInput"] input {{
+            background: rgba(254, 246, 243, 0.10);
+            border-color: var(--providence-blush-border);
+            color: var(--providence-blush);
+        }}
+
+        [data-testid="stTabs"] [data-baseweb="tab-list"] {{
+            border-bottom-color: rgba(254, 246, 243, 0.18);
+        }}
+
+        [data-testid="stTabs"] [data-baseweb="tab"] {{
+            color: rgba(254, 246, 243, 0.66);
+        }}
+
+        [data-testid="stTabs"] [aria-selected="true"] {{
+            background: rgba(254, 246, 243, 0.10);
+            color: var(--providence-butter);
+        }}
+
+        [data-testid="stTabs"] [data-baseweb="tab-highlight"] {{
+            background-color: var(--providence-coral);
+        }}
+
+        [data-testid="stProgress"] > div > div {{
+            background: rgba(254, 246, 243, 0.16);
+        }}
+
+        [data-testid="stProgress"] > div > div > div {{
+            background: linear-gradient(
+                90deg,
+                var(--providence-lavender),
+                var(--providence-orchid),
+                var(--providence-coral)
+            );
+        }}
+
+        [data-testid="stAlert"] {{
+            background: rgba(254, 246, 243, 0.09);
+            border-color: var(--providence-blush-border);
+            color: var(--providence-blush);
+            backdrop-filter: blur(14px);
+        }}
+
+        [data-testid="stAlert"] * {{
+            color: var(--providence-blush) !important;
+        }}
+
+        [data-testid="stDataFrame"] {{
+            border-color: var(--providence-blush-border);
+            box-shadow: var(--providence-shadow-deep);
+        }}
+
+        hr {{
+            border-color: rgba(254, 246, 243, 0.16);
+        }}
+
+        .providence-status-healthy {{
+            background: rgba(168, 118, 245, 0.22);
+            color: #EADFFF;
+        }}
+
+        .providence-status-watch {{
+            background: rgba(255, 222, 145, 0.18);
+            color: var(--providence-butter);
+        }}
+
+        .providence-status-risk {{
+            background: rgba(255, 138, 122, 0.20);
+            color: #FFC5BD;
+        }}
+
+        .providence-status-neutral {{
+            background: rgba(229, 124, 216, 0.18);
+            color: #F7C8EF;
+        }}
+
+        .providence-person-mark {{
+            background: rgba(168, 118, 245, 0.24);
+            border-color: rgba(254, 246, 243, 0.22);
+            color: var(--providence-blush);
+        }}
+
+        .stButton > button:focus-visible,
+        .stDownloadButton > button:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        [role="tab"]:focus-visible,
+        [role="radio"]:focus-visible {{
+            outline-color: var(--providence-butter) !important;
+        }}
+
+        @media (max-width: 860px) {{
+            .providence-page-header {{
+                padding: 1.2rem;
+                border-radius: 1.1rem;
+            }}
+
+            .providence-date-context {{
+                width: 100%;
+            }}
+        }}
+
+        @media (prefers-reduced-motion: reduce) {{
+            *,
+            *::before,
+            *::after {{
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }}
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
