@@ -1,0 +1,54 @@
+{
+  "id": "bcb40a8b-fb09-4ba4-83d9-6d9e777b5fc1",
+  "name": "Providence Demonstration Workspace",
+  "people": [
+    {
+      "id": "521ee40b-1691-477a-a11b-7ef050901aa2",
+      "name": "Maya Chen",
+      "role": "Product Designer",
+      "daily_capacity_hours": "8",
+      "logged_hours_today": "6"
+    },
+    {
+      "id": "52f4a0a2-24c1-4d83-9560-5463adf0abdb",
+      "name": "Jordan Hale",
+      "role": "Software Engineer",
+      "daily_capacity_hours": "8",
+      "logged_hours_today": "9"
+    },
+    {
+      "id": "2b40db84-3d35-4393-b919-b66727699ba0",
+      "name": "Avery Morgan",
+      "role": "Customer Researcher",
+      "daily_capacity_hours": "8",
+      "logged_hours_today": "0"
+    }
+  ],
+  "projects": [
+    {
+      "id": "a7f1cd9b-13c6-4f5d-92c8-3db04b65e12c",
+      "name": "Atlas Launch",
+      "client": "Northstar Collective",
+      "budget_hours": "240",
+      "logged_hours": "208",
+      "delivery_date": "2026-10-11"
+    },
+    {
+      "id": "cc2e72f3-1d4f-4e3c-90d5-07bc36e55fb4",
+      "name": "Harbour Research",
+      "client": "Harbour Works",
+      "budget_hours": "180",
+      "logged_hours": "96",
+      "delivery_date": "2026-10-23"
+    },
+    {
+      "id": "473c73d7-9cd0-47cd-8805-9c8844b5411c",
+      "name": "Cedar Renewal",
+      "client": "Cedar Studio",
+      "budget_hours": "120",
+      "logged_hours": "24",
+      "delivery_date": "2026-11-14"
+    }
+  ],
+  "time_entries": []
+}
