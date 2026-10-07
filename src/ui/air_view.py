@@ -6,11 +6,7 @@ from decimal import Decimal
 import streamlit as st
 
 from src.domain.models import Person, PersonStatus, Workspace
-from src.ui.components import (
-    render_insight,
-    render_page_header,
-    render_section_heading,
-)
+from src.ui.components import render_page_header, render_section_heading
 
 
 def _format_hours(value: Decimal) -> str:
@@ -122,7 +118,10 @@ def render_air_view(workspace: Workspace) -> None:
         today,
     )
 
-    control_status, control_sort, control_count = st.columns([1.15, 1.15, 0.7], gap="medium")
+    control_status, control_sort, control_count = st.columns(
+        [1.15, 1.15, 0.7],
+        gap="medium",
+    )
 
     with control_status:
         filter_status = st.selectbox(
@@ -145,51 +144,150 @@ def render_air_view(workspace: Workspace) -> None:
     ]
     people = _sort_people(people, sort_by)
 
-    with control_count:
-        st.markdown(
-            '<div class="providence-project-count-label">Showing</div>'
-            f'<div class="providence-project-count-value">{len(people)}</div>'
-            '<div class="providence-project-count-copy">people</div>',
-            unsafe_allow_html=True,
-        )
-
-    total_capacity = sum((person.daily_capacity_hours for person in people), Decimal("0"))
-    total_remaining = sum((person.capacity_remaining for person in people), Decimal("0"))
+    total_capacity = sum(
+        (person.daily_capacity_hours for person in people),
+        Decimal("0"),
+    )
+    total_logged = sum(
+        (person.logged_hours_today for person in people),
+        Decimal("0"),
+    )
+    total_remaining = sum(
+        (person.capacity_remaining for person in people),
+        Decimal("0"),
+    )
     attention_count = sum(
         person.status in {PersonStatus.OVERBOOKED, PersonStatus.MISSING_TIME} for person in people
     )
+    busy_count = sum(person.status == PersonStatus.BUSY for person in people)
+    utilisation = Decimal("0")
+    if total_capacity > Decimal("0"):
+        utilisation = (total_logged / total_capacity * Decimal("100")).quantize(Decimal("0.1"))
+    utilisation_width = min(float(utilisation), 100)
 
-    summary_one, summary_two, summary_three = st.columns(3, gap="medium")
+    with control_count:
+        st.markdown(
+            f"""
+            <div class="providence-people-count">
+                <span>Showing</span>
+                <strong>{len(people)}</strong>
+                <small>people</small>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    with summary_one:
-        with st.container(border=True):
-            st.metric(
-                label="People tracked",
-                value=len(people),
-                delta="Current result set",
-                delta_color="off",
-            )
+    st.markdown('<section class="providence-people-stage">', unsafe_allow_html=True)
 
-    with summary_two:
-        with st.container(border=True):
-            st.metric(
-                label="Capacity remaining",
-                value=_format_hours(total_remaining),
-                delta=f"Of {_format_hours(total_capacity)} daily capacity",
-                delta_color="off",
-            )
+    capacity_column, insight_column = st.columns([1.65, 0.95], gap="large")
 
-    with summary_three:
-        with st.container(border=True):
-            st.metric(
-                label="Attention needed",
-                value=attention_count,
-                delta=("Review required" if attention_count > 0 else "Within current boundaries"),
-                delta_color="inverse" if attention_count > 0 else "off",
-            )
+    with capacity_column:
+        st.markdown(
+            f"""
+            <article class="providence-people-hero">
+                <div class="providence-people-hero-topline">
+                    <span class="providence-people-kicker">Capacity pulse</span>
+                    <span class="providence-people-live"><i></i> Today's view</span>
+                </div>
+                <div class="providence-people-hero-grid">
+                    <div>
+                        <span class="providence-people-hero-label">Team utilisation</span>
+                        <strong>{utilisation}%</strong>
+                        <p>
+                            {_format_hours(total_remaining)} remains from
+                            {_format_hours(total_capacity)} daily capacity.
+                        </p>
+                    </div>
+                    <div class="providence-people-orbit">
+                        <span>{len(people)}</span>
+                        <small>tracked</small>
+                    </div>
+                </div>
+                <div class="providence-people-pace">
+                    <div class="providence-people-pace-track">
+                        <span style="width: {utilisation_width:.2f}%"></span>
+                    </div>
+                    <div class="providence-people-pace-labels">
+                        <span>Logged {_format_hours(total_logged)}</span>
+                        <span>Available {_format_hours(total_remaining)}</span>
+                    </div>
+                </div>
+                <div class="providence-people-hero-stats">
+                    <div>
+                        <span>Available</span>
+                        <strong>
+                            {sum(person.status == PersonStatus.AVAILABLE for person in people)}
+                        </strong>
+                    </div>
+                    <div>
+                        <span>Busy</span>
+                        <strong>{busy_count}</strong>
+                    </div>
+                    <div>
+                        <span>Attention</span>
+                        <strong>{attention_count}</strong>
+                    </div>
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    insight_title, insight_body = _insight_copy(people)
-    render_insight(insight_title, insight_body)
+    with insight_column:
+        insight_title, insight_body = _insight_copy(people)
+        st.markdown(
+            f"""
+            <aside class="providence-people-decision">
+                <div class="providence-people-kicker">Allocation signal</div>
+                <h2>{insight_title}</h2>
+                <p>{insight_body}</p>
+                <div class="providence-people-decision-foot">
+                    <span>Attention needed</span>
+                    <strong>{attention_count}</strong>
+                </div>
+            </aside>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    summary_available, summary_busy, summary_attention = st.columns(3, gap="medium")
+
+    with summary_available:
+        available_count = sum(person.status == PersonStatus.AVAILABLE for person in people)
+        st.markdown(
+            f"""
+            <article class="providence-people-signal providence-people-signal-violet">
+                <span>Available</span>
+                <strong>{available_count}</strong>
+                <p>People with room for assignment</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with summary_busy:
+        st.markdown(
+            f"""
+            <article class="providence-people-signal providence-people-signal-pink">
+                <span>Busy</span>
+                <strong>{busy_count}</strong>
+                <p>People nearing a capacity boundary</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with summary_attention:
+        st.markdown(
+            f"""
+            <article class="providence-people-signal providence-people-signal-coral">
+                <span>Attention</span>
+                <strong>{attention_count}</strong>
+                <p>Overbooked or missing time records</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
 
     render_section_heading(
         "Capacity ledger",
@@ -197,14 +295,17 @@ def render_air_view(workspace: Workspace) -> None:
     )
 
     if not people:
-        with st.container(border=True):
-            st.markdown(
-                '<div class="providence-empty-title">No people match this view</div>'
-                '<p class="providence-empty-copy">'
-                "Change the current capacity filter to review other people records."
-                "</p>",
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            """
+            <article class="providence-people-empty">
+                <div class="providence-people-kicker">No matches</div>
+                <h3>No people match this view</h3>
+                <p>Change the capacity filter to review other people records.</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.markdown("</section>", unsafe_allow_html=True)
         return
 
     for person in people:
@@ -214,68 +315,54 @@ def render_air_view(workspace: Workspace) -> None:
                 float(person.logged_hours_today / person.daily_capacity_hours),
                 1.0,
             )
+        capacity_width = capacity_ratio * 100
+        status_class = _status_style(person.status)
+        status_text = _status_label(person.status)
 
-        with st.container(border=True):
-            identity_column, logged_column, capacity_column, remaining_column, status_column = (
-                st.columns(
-                    [2.2, 1, 1, 1.15, 1],
-                    gap="medium",
-                )
-            )
+        st.markdown(
+            f"""
+            <article class="providence-people-card">
+                <div class="providence-people-card-person">
+                    <div class="providence-people-avatar">{_person_initials(person.name)}</div>
+                    <div>
+                        <h3>{person.name}</h3>
+                        <p>{person.role}</p>
+                    </div>
+                </div>
+                <div class="providence-people-card-capacity">
+                    <div class="providence-people-card-progress">
+                        <span
+                            class="providence-people-progress-{status_class}"
+                            style="width: {capacity_width:.2f}%"
+                        ></span>
+                    </div>
+                    <p>{_capacity_message(person)}</p>
+                </div>
+                <div class="providence-people-card-data">
+                    <span>Logged</span>
+                    <strong>{_format_hours(person.logged_hours_today)}</strong>
+                </div>
+                <div class="providence-people-card-data">
+                    <span>Capacity</span>
+                    <strong>{_format_hours(person.daily_capacity_hours)}</strong>
+                </div>
+                <div class="providence-people-card-data">
+                    <span>Remaining</span>
+                    <strong>{_format_hours(person.capacity_remaining)}</strong>
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            f"""
+            <div class="providence-people-card-status">
+                <span class="providence-status providence-status-{status_class}">
+                    {status_text}
+                </span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
 
-            with identity_column:
-                st.markdown(
-                    f'<div class="providence-person-identity">'
-                    f'<div class="providence-person-mark">{_person_initials(person.name)}</div>'
-                    f'<div><div class="providence-person-name">{person.name}</div>'
-                    f'<div class="providence-person-role">{person.role}</div></div>'
-                    f"</div>",
-                    unsafe_allow_html=True,
-                )
-
-            with logged_column:
-                st.markdown(
-                    '<div class="providence-preview-label">Logged today</div>'
-                    f'<div class="providence-project-value">'
-                    f"{_format_hours(person.logged_hours_today)}</div>",
-                    unsafe_allow_html=True,
-                )
-
-            with capacity_column:
-                st.markdown(
-                    '<div class="providence-preview-label">Daily capacity</div>'
-                    f'<div class="providence-project-value">'
-                    f"{_format_hours(person.daily_capacity_hours)}</div>",
-                    unsafe_allow_html=True,
-                )
-
-            with remaining_column:
-                st.markdown(
-                    '<div class="providence-preview-label">Remaining</div>'
-                    f'<div class="providence-project-value">'
-                    f"{_format_hours(person.capacity_remaining)}</div>",
-                    unsafe_allow_html=True,
-                )
-
-            with status_column:
-                status_class = _status_style(person.status)
-                status_text = _status_label(person.status)
-                status_markup = (
-                    f'<span class="providence-status providence-status-{status_class}">'
-                    f"{status_text}</span>"
-                )
-                st.markdown(status_markup, unsafe_allow_html=True)
-
-            progress_class = f"providence-capacity-progress-{_status_style(person.status)}"
-            progress_container = st.container()
-            with progress_container:
-                st.markdown(
-                    f'<div class="{progress_class}"></div>',
-                    unsafe_allow_html=True,
-                )
-                st.progress(capacity_ratio)
-
-            st.markdown(
-                f'<p class="providence-project-message">{_capacity_message(person)}</p>',
-                unsafe_allow_html=True,
-            )
+    st.markdown("</section>", unsafe_allow_html=True)

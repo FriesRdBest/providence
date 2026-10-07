@@ -7,7 +7,6 @@ import streamlit as st
 
 from src.domain.models import Project, ProjectStatus, Workspace
 from src.ui.components import (
-    render_insight,
     render_page_header,
     render_section_heading,
     render_status,
@@ -51,7 +50,10 @@ def _insight_copy(projects: list[Project], today: date) -> tuple[str, str]:
 
     at_risk = [project for project in projects if project.status(today) == ProjectStatus.AT_RISK]
     if at_risk:
-        priority_project = max(at_risk, key=lambda project: project.budget_burn_percentage)
+        priority_project = max(
+            at_risk,
+            key=lambda project: project.budget_burn_percentage,
+        )
         return (
             f"{priority_project.name} needs immediate review",
             f"Budget use is {priority_project.budget_burn_percentage}% with "
@@ -67,8 +69,8 @@ def _insight_copy(projects: list[Project], today: date) -> tuple[str, str]:
         )
         return (
             f"{priority_project.name} is nearest to a delivery boundary",
-            f"{priority_project.days_until_delivery(today)} days remain until delivery. "
-            "Review planned allocation before the next work period.",
+            f"{priority_project.days_until_delivery(today)} days remain until "
+            "delivery. Review planned allocation before the next work period.",
         )
 
     return (
@@ -77,7 +79,11 @@ def _insight_copy(projects: list[Project], today: date) -> tuple[str, str]:
     )
 
 
-def _sort_projects(projects: list[Project], sort_by: str, today: date) -> list[Project]:
+def _sort_projects(
+    projects: list[Project],
+    sort_by: str,
+    today: date,
+) -> list[Project]:
     status_order = {
         ProjectStatus.AT_RISK: 0,
         ProjectStatus.WATCH: 1,
@@ -114,7 +120,10 @@ def render_sea_view(workspace: Workspace) -> None:
         today,
     )
 
-    control_status, control_sort, control_count = st.columns([1.15, 1.15, 0.7], gap="medium")
+    control_status, control_sort, control_count = st.columns(
+        [1.15, 1.15, 0.7],
+        gap="medium",
+    )
 
     with control_status:
         filter_status = st.selectbox(
@@ -139,9 +148,13 @@ def render_sea_view(workspace: Workspace) -> None:
 
     with control_count:
         st.markdown(
-            '<div class="providence-project-count-label">Showing</div>'
-            f'<div class="providence-project-count-value">{len(projects)}</div>'
-            '<div class="providence-project-count-copy">projects</div>',
+            f"""
+            <div class="providence-project-count">
+                <span>Showing</span>
+                <strong>{len(projects)}</strong>
+                <small>projects</small>
+            </div>
+            """,
             unsafe_allow_html=True,
         )
 
@@ -151,39 +164,60 @@ def render_sea_view(workspace: Workspace) -> None:
     )
     at_risk_count = sum(project.status(today) == ProjectStatus.AT_RISK for project in projects)
     watch_count = sum(project.status(today) == ProjectStatus.WATCH for project in projects)
+    exposure = at_risk_count + watch_count
 
-    summary_one, summary_two, summary_three = st.columns(3, gap="medium")
+    st.markdown('<section class="providence-project-stage">', unsafe_allow_html=True)
 
-    with summary_one:
-        with st.container(border=True):
-            st.metric(
-                label="Active projects",
-                value=len(projects),
-                delta="Current result set",
-                delta_color="off",
-            )
+    summary_active, summary_budget, summary_pressure = st.columns(3, gap="medium")
 
-    with summary_two:
-        with st.container(border=True):
-            st.metric(
-                label="Budget remaining",
-                value=_format_hours(total_remaining),
-                delta="Across visible projects",
-                delta_color="off",
-            )
+    with summary_active:
+        st.markdown(
+            f"""
+            <article class="providence-project-metric providence-project-metric-violet">
+                <span>Active projects</span>
+                <strong>{len(projects)}</strong>
+                <p>Current result set</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    with summary_three:
-        with st.container(border=True):
-            exposure = at_risk_count + watch_count
-            st.metric(
-                label="Delivery pressure",
-                value=exposure,
-                delta=("Review required" if exposure > 0 else "Within current boundaries"),
-                delta_color="inverse" if exposure > 0 else "off",
-            )
+    with summary_budget:
+        st.markdown(
+            f"""
+            <article class="providence-project-metric providence-project-metric-pink">
+                <span>Budget remaining</span>
+                <strong>{_format_hours(total_remaining)}</strong>
+                <p>Across visible projects</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with summary_pressure:
+        pressure_copy = "Review required" if exposure > 0 else "Within current boundaries"
+        st.markdown(
+            f"""
+            <article class="providence-project-metric providence-project-metric-coral">
+                <span>Delivery pressure</span>
+                <strong>{exposure}</strong>
+                <p>{pressure_copy}</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
 
     insight_title, insight_body = _insight_copy(projects, today)
-    render_insight(insight_title, insight_body)
+    st.markdown(
+        f"""
+        <aside class="providence-project-decision">
+            <div class="providence-project-kicker">Portfolio signal</div>
+            <h2>{insight_title}</h2>
+            <p>{insight_body}</p>
+        </aside>
+        """,
+        unsafe_allow_html=True,
+    )
 
     render_section_heading(
         "Active work",
@@ -191,64 +225,54 @@ def render_sea_view(workspace: Workspace) -> None:
     )
 
     if not projects:
-        with st.container(border=True):
-            st.markdown(
-                '<div class="providence-empty-title">No projects match this view</div>'
-                '<p class="providence-empty-copy">'
-                "Change the current status filter to view other active project records."
-                "</p>",
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            """
+            <article class="providence-project-empty">
+                <div class="providence-project-kicker">No matches</div>
+                <h3>No projects match this view</h3>
+                <p>Change the status filter to review other active project records.</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.markdown("</section>", unsafe_allow_html=True)
         return
 
     for project in projects:
-        with st.container(border=True):
-            top_left, top_right = st.columns([3.1, 0.9], gap="medium")
-            with top_left:
-                st.markdown(f"### {project.name}")
-                st.caption(project.client)
-            with top_right:
-                render_status(project.status(today))
+        project_burn = min(float(project.budget_burn_percentage), 100)
+        st.markdown(
+            f"""
+            <article class="providence-project-card">
+                <div class="providence-project-card-main">
+                    <h3>{project.name}</h3>
+                    <p>{project.client}</p>
+                    <div class="providence-project-card-progress">
+                        <span style="width: {project_burn:.2f}%"></span>
+                    </div>
+                    <p class="providence-project-card-message">
+                        {_delivery_message(project, today)}
+                    </p>
+                </div>
+                <div class="providence-project-card-data">
+                    <span>Budget used</span>
+                    <strong>{project.budget_burn_percentage}%</strong>
+                </div>
+                <div class="providence-project-card-data">
+                    <span>Logged</span>
+                    <strong>{_format_hours(project.logged_hours)}</strong>
+                </div>
+                <div class="providence-project-card-data">
+                    <span>Remaining</span>
+                    <strong>{_format_hours(project.budget_remaining_hours)}</strong>
+                </div>
+                <div class="providence-project-card-data">
+                    <span>Delivery</span>
+                    <strong>{project.days_until_delivery(today)}d</strong>
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+        render_status(project.status(today))
 
-            metric_one, metric_two, metric_three, metric_four = st.columns(
-                4,
-                gap="small",
-            )
-
-            with metric_one:
-                st.markdown(
-                    '<div class="providence-preview-label">Budget used</div>'
-                    f'<div class="providence-project-value">'
-                    f"{project.budget_burn_percentage}%</div>",
-                    unsafe_allow_html=True,
-                )
-
-            with metric_two:
-                st.markdown(
-                    '<div class="providence-preview-label">Logged</div>'
-                    f'<div class="providence-project-value">'
-                    f"{_format_hours(project.logged_hours)}</div>",
-                    unsafe_allow_html=True,
-                )
-
-            with metric_three:
-                st.markdown(
-                    '<div class="providence-preview-label">Remaining</div>'
-                    f'<div class="providence-project-value">'
-                    f"{_format_hours(project.budget_remaining_hours)}</div>",
-                    unsafe_allow_html=True,
-                )
-
-            with metric_four:
-                st.markdown(
-                    '<div class="providence-preview-label">Delivery</div>'
-                    f'<div class="providence-project-value">'
-                    f"{project.days_until_delivery(today)} days</div>",
-                    unsafe_allow_html=True,
-                )
-
-            st.progress(min(float(project.budget_burn_percentage) / 100, 1.0))
-            st.markdown(
-                f'<p class="providence-project-message">{_delivery_message(project, today)}</p>',
-                unsafe_allow_html=True,
-            )
+    st.markdown("</section>", unsafe_allow_html=True)

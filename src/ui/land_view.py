@@ -8,7 +8,6 @@ import streamlit as st
 from src.domain.models import ProjectStatus, Workspace
 from src.services.rule_engine import RuleEngine
 from src.ui.components import (
-    render_insight,
     render_page_header,
     render_section_heading,
     render_status,
@@ -78,6 +77,8 @@ def render_land_view(workspace: Workspace) -> None:
             Decimal("0"),
         ),
     )
+    exposure_count = health.projects_at_risk + health.projects_on_watch
+    burn_width = min(float(overall_burn), 100)
 
     render_page_header(
         "Health",
@@ -85,121 +86,126 @@ def render_land_view(workspace: Workspace) -> None:
         today,
     )
 
-    capacity_column, budget_column, exposure_column = st.columns([1, 1.35, 1], gap="medium")
+    st.markdown('<section class="providence-health-stage">', unsafe_allow_html=True)
 
-    with capacity_column:
-        with st.container(border=True):
-            st.metric(
-                label="Team utilisation",
-                value=f"{health.utilisation_percentage}%",
-                delta=(
-                    f"{_format_hours(capacity_remaining)} capacity remaining"
-                    if total_capacity > 0
-                    else "Capacity data is not available"
-                ),
-                delta_color="off",
-            )
+    triage_column, decision_column = st.columns([1.65, 0.95], gap="large")
 
-    with budget_column:
-        with st.container(border=True):
-            st.metric(
-                label="Budget remaining",
-                value=_format_hours(health.remaining_budget_hours),
-                delta=f"Of {_format_hours(health.total_budget_hours)} total budget",
-                delta_color="off",
-            )
-
-    with exposure_column:
-        with st.container(border=True):
-            exposure_count = health.projects_at_risk + health.projects_on_watch
-            st.metric(
-                label="Delivery exposure",
-                value=exposure_count,
-                delta=("Review required" if exposure_count > 0 else "No current exposure"),
-                delta_color="inverse" if exposure_count > 0 else "off",
-            )
-
-    render_section_heading(
-        "Budget pace",
-        "Current use against active project budgets",
-    )
-
-    pace_column, exposure_detail_column = st.columns([1.65, 1], gap="large")
-
-    with pace_column:
-        with st.container(border=True):
-            st.markdown(
-                """
-                <div class="providence-health-hero-label">Overall budget used</div>
-                <div class="providence-health-hero-value">"""
-                f"{overall_burn}%"
-                """</div>
-                <div class="providence-health-hero-copy">"""
-                f"{
-                    _budget_interpretation(
-                        overall_burn,
-                        health.projects_at_risk,
-                        health.projects_on_watch,
-                    )
-                }"
-                """</div>
-                """,
-                unsafe_allow_html=True,
-            )
-            st.progress(min(float(overall_burn) / 100, 1.0))
-            budget_total, budget_used, budget_remaining = st.columns(3, gap="small")
-            with budget_total:
-                st.markdown(
-                    '<div class="providence-health-stat-label">Budget</div>'
-                    f'<div class="providence-health-stat-value">'
-                    f"{_format_hours(health.total_budget_hours)}</div>",
-                    unsafe_allow_html=True,
+    with triage_column:
+        capacity_note = (
+            f"{_format_hours(capacity_remaining)} capacity remaining"
+            if total_capacity > 0
+            else "Capacity data is not available"
+        )
+        st.markdown(
+            f"""
+            <article class="providence-health-hero">
+                <div class="providence-health-hero-topline">
+                    <span class="providence-health-kicker">Weekly triage</span>
+                    <span class="providence-health-live"><i></i> {capacity_note}</span>
+                </div>
+                <div class="providence-health-hero-grid">
+                    <div>
+                        <span class="providence-health-hero-label">Overall budget used</span>
+                        <strong>{overall_burn}%</strong>
+                        <p>{
+                _budget_interpretation(
+                    overall_burn,
+                    health.projects_at_risk,
+                    health.projects_on_watch,
                 )
-            with budget_used:
-                st.markdown(
-                    '<div class="providence-health-stat-label">Used</div>'
-                    f'<div class="providence-health-stat-value">'
-                    f"{_format_hours(total_logged)}</div>",
-                    unsafe_allow_html=True,
-                )
-            with budget_remaining:
-                st.markdown(
-                    '<div class="providence-health-stat-label">Remaining</div>'
-                    f'<div class="providence-health-stat-value">'
-                    f"{_format_hours(health.remaining_budget_hours)}</div>",
-                    unsafe_allow_html=True,
-                )
+            }</p>
+                    </div>
+                    <div class="providence-health-orbit">
+                        <span>{health.utilisation_percentage}%</span>
+                        <small>team use</small>
+                    </div>
+                </div>
+                <div class="providence-health-pace">
+                    <div class="providence-health-pace-track">
+                        <span style="width: {burn_width:.2f}%"></span>
+                    </div>
+                    <div class="providence-health-pace-labels">
+                        <span>Budget pace</span>
+                        <span>{_format_hours(health.remaining_budget_hours)} left</span>
+                    </div>
+                </div>
+                <div class="providence-health-hero-stats">
+                    <div>
+                        <span>Total budget</span>
+                        <strong>{_format_hours(health.total_budget_hours)}</strong>
+                    </div>
+                    <div>
+                        <span>Logged</span>
+                        <strong>{_format_hours(total_logged)}</strong>
+                    </div>
+                    <div>
+                        <span>Remaining</span>
+                        <strong>{_format_hours(health.remaining_budget_hours)}</strong>
+                    </div>
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    with exposure_detail_column:
-        with st.container(border=True):
-            st.markdown(
-                '<div class="providence-health-exposure-title">Delivery exposure</div>',
-                unsafe_allow_html=True,
-            )
-            risk_column, watch_column = st.columns(2, gap="small")
-            with risk_column:
-                st.markdown(
-                    '<div class="providence-preview-label">At risk</div>'
-                    f'<div class="providence-health-number providence-health-number-risk">'
-                    f"{health.projects_at_risk}</div>",
-                    unsafe_allow_html=True,
-                )
-                st.caption("Requires immediate attention")
-            with watch_column:
-                st.markdown(
-                    '<div class="providence-preview-label">On watch</div>'
-                    f'<div class="providence-health-number providence-health-number-watch">'
-                    f"{health.projects_on_watch}</div>",
-                    unsafe_allow_html=True,
-                )
-                st.caption("Approaching a delivery boundary")
+    with decision_column:
+        insight_title, insight_body = _delivery_insight(
+            health.projects_at_risk,
+            health.projects_on_watch,
+            health.remaining_budget_hours,
+        )
+        st.markdown(
+            f"""
+            <aside class="providence-health-decision">
+                <div class="providence-health-kicker">Triage signal</div>
+                <h2>{insight_title}</h2>
+                <p>{insight_body}</p>
+                <div class="providence-health-decision-foot">
+                    <span>Delivery exposure</span>
+                    <strong>{exposure_count}</strong>
+                </div>
+            </aside>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    insight_title, insight_body = _delivery_insight(
-        health.projects_at_risk,
-        health.projects_on_watch,
-        health.remaining_budget_hours,
-    )
-    render_insight(insight_title, insight_body)
+    signal_risk, signal_watch, signal_capacity = st.columns(3, gap="medium")
+
+    with signal_risk:
+        st.markdown(
+            f"""
+            <article class="providence-health-signal providence-health-signal-risk">
+                <span>At risk</span>
+                <strong>{health.projects_at_risk}</strong>
+                <p>Immediate allocation review</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with signal_watch:
+        st.markdown(
+            f"""
+            <article class="providence-health-signal providence-health-signal-watch">
+                <span>On watch</span>
+                <strong>{health.projects_on_watch}</strong>
+                <p>Approaching a boundary</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with signal_capacity:
+        st.markdown(
+            f"""
+            <article class="providence-health-signal providence-health-signal-capacity">
+                <span>Capacity</span>
+                <strong>{_format_hours(capacity_remaining)}</strong>
+                <p>Available across tracked people</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
 
     render_section_heading(
         "Project health",
@@ -207,14 +213,17 @@ def render_land_view(workspace: Workspace) -> None:
     )
 
     if not workspace.projects:
-        with st.container(border=True):
-            st.markdown(
-                '<div class="providence-empty-title">No project health data is available</div>'
-                '<p class="providence-empty-copy">'
-                "Health information will appear here when active project records are available."
-                "</p>",
-                unsafe_allow_html=True,
-            )
+        st.markdown(
+            """
+            <article class="providence-health-empty">
+                <div class="providence-health-kicker">No health data</div>
+                <h3>Active project records are not available</h3>
+                <p>Health information will appear when project records are added.</p>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.markdown("</section>", unsafe_allow_html=True)
         return
 
     status_order = {
@@ -231,31 +240,31 @@ def render_land_view(workspace: Workspace) -> None:
     )
 
     for project in ranked_projects:
-        with st.container(border=True):
-            identity_column, budget_column, delivery_column, status_column = st.columns(
-                [2.1, 1.15, 1.15, 0.85],
-                gap="medium",
-            )
-            with identity_column:
-                st.markdown(f"### {project.name}")
-                st.caption(project.client)
-            with budget_column:
-                st.markdown(
-                    '<div class="providence-preview-label">Budget used</div>'
-                    f'<div class="providence-health-row-value">'
-                    f"{project.budget_burn_percentage}%</div>",
-                    unsafe_allow_html=True,
-                )
-                st.caption(f"{_format_hours(project.budget_remaining_hours)} remaining")
-            with delivery_column:
-                st.markdown(
-                    '<div class="providence-preview-label">Delivery</div>'
-                    f'<div class="providence-health-row-value">'
-                    f"{project.days_until_delivery(today)} days</div>",
-                    unsafe_allow_html=True,
-                )
-                st.caption("Time remaining")
-            with status_column:
-                render_status(project.status(today))
+        project_burn = min(float(project.budget_burn_percentage), 100)
+        st.markdown(
+            f"""
+            <article class="providence-health-project">
+                <div class="providence-health-project-main">
+                    <h3>{project.name}</h3>
+                    <p>{project.client}</p>
+                    <div class="providence-health-project-progress">
+                        <span style="width: {project_burn:.2f}%"></span>
+                    </div>
+                </div>
+                <div class="providence-health-project-data">
+                    <span>Budget used</span>
+                    <strong>{project.budget_burn_percentage}%</strong>
+                    <small>{_format_hours(project.budget_remaining_hours)} left</small>
+                </div>
+                <div class="providence-health-project-data">
+                    <span>Delivery</span>
+                    <strong>{project.days_until_delivery(today)}d</strong>
+                    <small>Time remaining</small>
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+        render_status(project.status(today))
 
-            st.progress(min(float(project.budget_burn_percentage) / 100, 1.0))
+    st.markdown("</section>", unsafe_allow_html=True)
