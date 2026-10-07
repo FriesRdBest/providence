@@ -25,9 +25,9 @@ def load_workspace() -> Workspace:
             budget_hours=Decimal("40.0"),
             deadline=today + timedelta(days=30),
             logs=[
-                Log(alice, Decimal("2.0"), today - timedelta(days=1)),
-                Log(bob, Decimal("1.5"), today - timedelta(days=2)),
-                Log(charlie, Decimal("3.0"), today - timedelta(days=3)),
+                Log(person=alice, hours=Decimal("2.0"), date=today - timedelta(days=1)),
+                Log(person=bob, hours=Decimal("1.5"), date=today - timedelta(days=2)),
+                Log(person=charlie, hours=Decimal("3.0"), date=today - timedelta(days=3)),
             ],
         ),
         Project(
@@ -35,8 +35,8 @@ def load_workspace() -> Workspace:
             budget_hours=Decimal("60.0"),
             deadline=today + timedelta(days=45),
             logs=[
-                Log(alice, Decimal("4.0"), today - timedelta(days=1)),
-                Log(bob, Decimal("2.5"), today - timedelta(days=2)),
+                Log(person=alice, hours=Decimal("4.0"), date=today - timedelta(days=1)),
+                Log(person=bob, hours=Decimal("2.5"), date=today - timedelta(days=2)),
             ],
         ),
         Project(
@@ -44,8 +44,8 @@ def load_workspace() -> Workspace:
             budget_hours=Decimal("80.0"),
             deadline=today + timedelta(days=60),
             logs=[
-                Log(alice, Decimal("1.0"), today - timedelta(days=1)),
-                Log(charlie, Decimal("2.0"), today - timedelta(days=2)),
+                Log(person=alice, hours=Decimal("1.0"), date=today - timedelta(days=1)),
+                Log(person=charlie, hours=Decimal("2.0"), date=today - timedelta(days=2)),
             ],
         ),
     ]
