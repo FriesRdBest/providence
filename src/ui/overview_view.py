@@ -7,6 +7,7 @@ from decimal import Decimal
 import streamlit as st
 
 from src.domain.models import ProjectStatus, Workspace
+from src.services.report_service import build_detailed_pdf, build_executive_pdf
 from src.services.rule_engine import RuleEngine
 from src.ui.components import (
     render_page_header,
@@ -338,12 +339,33 @@ def render_overview_view(workspace: Workspace) -> None:
         """,
         unsafe_allow_html=True,
     )
-    st.download_button(
-        label="Export workspace summary",
-        data=_export_document(workspace),
-        file_name="providence_summary.json",
-        mime="application/json",
-        use_container_width=False,
-    )
+    executive_pdf, detailed_pdf, json_export = st.columns(3, gap="small")
+
+    with executive_pdf:
+        st.download_button(
+            label="Executive PDF",
+            data=build_executive_pdf(workspace, today=today),
+            file_name="providence_executive_summary.pdf",
+            mime="application/pdf",
+            use_container_width=True,
+        )
+
+    with detailed_pdf:
+        st.download_button(
+            label="Detailed PDF",
+            data=build_detailed_pdf(workspace, today=today),
+            file_name="providence_detailed_report.pdf",
+            mime="application/pdf",
+            use_container_width=True,
+        )
+
+    with json_export:
+        st.download_button(
+            label="JSON data",
+            data=_export_document(workspace),
+            file_name="providence_workspace_data.json",
+            mime="application/json",
+            use_container_width=True,
+        )
 
     st.markdown("</section>", unsafe_allow_html=True)
