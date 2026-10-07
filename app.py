@@ -19,55 +19,64 @@ st.set_page_config(
 
 apply_global_styles()
 
-service = WorkspaceService()
-workspace = service.load_workspace()
-ai_service = AIInsightService()
+try:
+    service = WorkspaceService()
+    workspace = service.load_workspace()
+    ai_service = AIInsightService()
+    workspace_loaded = True
+except Exception as error:
+    workspace_loaded = False
+    workspace = None
+    ai_service = None
+    st.error(f"Failed to load workspace: {error}")
+    st.info("Check the Streamlit Cloud deployment logs for details.")
 
 st.title("Providence")
 st.caption("Time intelligence for clear management decisions")
 
-st.sidebar.title("Providence")
-view = st.sidebar.radio(
-    "Choose a view",
-    ("Land", "Sea", "Air", "Overview"),
-    index=0,
-)
-
-if view == "Land":
-    render_land_view(workspace)
-elif view == "Sea":
-    render_sea_view(workspace)
-elif view == "Air":
-    render_air_view(workspace)
-else:
-    render_overview_view(workspace)
-
-st.divider()
-
-with st.container(border=True):
-    st.subheader("AI Predictive Insight Box")
-    st.caption("Ask a plain language question about your workspace")
-
-    query = st.text_input(
-        "Your question",
-        placeholder="Which active project faces immediate budget depletion this week?",
-        label_visibility="collapsed",
+if workspace_loaded:
+    st.sidebar.title("Providence")
+    view = st.sidebar.radio(
+        "Choose a view",
+        ("Land", "Sea", "Air", "Overview"),
+        index=0,
     )
 
-    if query:
-        insight = ai_service.answer_query(workspace, query)
+    if view == "Land":
+        render_land_view(workspace)
+    elif view == "Sea":
+        render_sea_view(workspace)
+    elif view == "Air":
+        render_air_view(workspace)
+    else:
+        render_overview_view(workspace)
 
-        with st.container(border=True):
-            st.write(f"**Query:** {insight.query}")
-            st.write(f"**Answer:** {insight.answer}")
-            st.write(f"**Confidence:** {insight.confidence}")
+    st.divider()
 
-            if insight.supporting_facts:
-                st.write("**Supporting facts:**")
-                for fact in insight.supporting_facts:
-                    st.write(f"- {fact}")
+    with st.container(border=True):
+        st.subheader("AI Predictive Insight Box")
+        st.caption("Ask a plain language question about your workspace")
 
-st.caption(
-    f"Validated workspace loaded: {workspace.name}. "
-    f"{len(workspace.projects)} projects and {len(workspace.people)} people are available."
-)
+        query = st.text_input(
+            "Your question",
+            placeholder="Which active project faces immediate budget depletion this week?",
+            label_visibility="collapsed",
+        )
+
+        if query:
+            insight = ai_service.answer_query(workspace, query)
+
+            with st.container(border=True):
+                st.write(f"**Query:** {insight.query}")
+                st.write(f"**Answer:** {insight.answer}")
+                st.write(f"**Confidence:** {insight.confidence}")
+
+                if insight.supporting_facts:
+                    st.write("**Supporting facts:**")
+                    for fact in insight.supporting_facts:
+                        st.write(f"- {fact}")
+
+    st.caption(
+        f"Validated workspace loaded: {workspace.name}. "
+        f"{len(workspace.projects)} projects and {len(workspace.people)} people are available."
+    )
