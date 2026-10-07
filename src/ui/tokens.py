@@ -100,5 +100,33 @@ class SemanticTokens:
     def accent_purple(self) -> str:
         return self.primitives.purple
 
+    @property
+    def shadow_sm(self) -> str:
+        return self.primitives.shadow_sm
+
+    @property
+    def shadow_md(self) -> str:
+        return self.primitives.shadow_md
+
+    @property
+    def shadow_lg(self) -> str:
+        return self.primitives.shadow_lg
+
+    @property
+    def shadow_xl(self) -> str:
+        return self.primitives.shadow_xl
+
+    @property
+    def radius_sm(self) -> str:
+        return self.primitives.radius_small
+
+    @property
+    def radius_md(self) -> str:
+        return self.primitives.radius_medium
+
+    @property
+    def radius_lg(self) -> str:
+        return self.primitives.radius_large
+
 
 TOKENS = SemanticTokens()
