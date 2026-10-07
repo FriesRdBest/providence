@@ -7,6 +7,7 @@ from src.ui.styles import apply_global_styles
 from src.ui.land_view import render_land_view
 from src.ui.sea_view import render_sea_view
 from src.ui.air_view import render_air_view
+from src.ui.overview_view import render_overview_view
 
 st.set_page_config(
     page_title="Providence",
@@ -37,8 +38,7 @@ elif view == "Sea":
 elif view == "Air":
     render_air_view(workspace)
 else:
-    st.header("Overview")
-    st.write("A concise explanation of Providence will appear here.")
+    render_overview_view(workspace)
 
 st.divider()
 st.caption(
