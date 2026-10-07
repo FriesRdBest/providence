@@ -179,11 +179,11 @@ def render_air_view(workspace: Workspace) -> None:
 
     st.markdown('<section class="providence-people-stage">', unsafe_allow_html=True)
 
-    capacity_column, insight_column = st.columns([1, 1], gap="large")
+    insight_title, insight_body = _insight_copy(people)
 
-    with capacity_column:
-        st.markdown(
-            f"""
+    st.markdown(
+        f"""
+        <section class="providence-equal-card-row">
             <article class="providence-people-hero">
                 <div class="providence-people-hero-topline">
                     <span class="providence-people-kicker">Capacity pulse</span>
@@ -229,14 +229,6 @@ def render_air_view(workspace: Workspace) -> None:
                     </div>
                 </div>
             </article>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with insight_column:
-        insight_title, insight_body = _insight_copy(people)
-        st.markdown(
-            f"""
             <aside class="providence-people-decision">
                 <div class="providence-people-kicker">Allocation signal</div>
                 <h2>{insight_title}</h2>
@@ -246,9 +238,10 @@ def render_air_view(workspace: Workspace) -> None:
                     <strong>{attention_count}</strong>
                 </div>
             </aside>
-            """,
-            unsafe_allow_html=True,
-        )
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
     summary_available, summary_busy, summary_attention = st.columns(3, gap="medium")
 

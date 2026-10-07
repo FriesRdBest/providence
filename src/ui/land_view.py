@@ -88,16 +88,20 @@ def render_land_view(workspace: Workspace) -> None:
 
     st.markdown('<section class="providence-health-stage">', unsafe_allow_html=True)
 
-    triage_column, decision_column = st.columns([1, 1], gap="large")
+    capacity_note = (
+        f"{_format_hours(capacity_remaining)} capacity remaining"
+        if total_capacity > 0
+        else "Capacity data is not available"
+    )
+    insight_title, insight_body = _delivery_insight(
+        health.projects_at_risk,
+        health.projects_on_watch,
+        health.remaining_budget_hours,
+    )
 
-    with triage_column:
-        capacity_note = (
-            f"{_format_hours(capacity_remaining)} capacity remaining"
-            if total_capacity > 0
-            else "Capacity data is not available"
-        )
-        st.markdown(
-            f"""
+    st.markdown(
+        f"""
+        <section class="providence-equal-card-row">
             <article class="providence-health-hero">
                 <div class="providence-health-hero-topline">
                     <span class="providence-health-kicker">Weekly triage</span>
@@ -144,18 +148,6 @@ def render_land_view(workspace: Workspace) -> None:
                     </div>
                 </div>
             </article>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with decision_column:
-        insight_title, insight_body = _delivery_insight(
-            health.projects_at_risk,
-            health.projects_on_watch,
-            health.remaining_budget_hours,
-        )
-        st.markdown(
-            f"""
             <aside class="providence-health-decision">
                 <div class="providence-health-kicker">Triage signal</div>
                 <h2>{insight_title}</h2>
@@ -165,9 +157,10 @@ def render_land_view(workspace: Workspace) -> None:
                     <strong>{exposure_count}</strong>
                 </div>
             </aside>
-            """,
-            unsafe_allow_html=True,
-        )
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
     signal_risk, signal_watch, signal_capacity = st.columns(3, gap="medium")
 

@@ -4056,47 +4056,34 @@ def apply_global_styles() -> None:
             overflow: hidden !important;
         }}
 
-        </style>
 
-        /* Equal-height flagship card pairs: Overview, Health, and People.
-           Scoped to hero rows only; all other Streamlit columns are unchanged. */
-        [data-testid="stHorizontalBlock"]:has(.providence-overview-hero),
-        [data-testid="stHorizontalBlock"]:has(.providence-health-hero),
-        [data-testid="stHorizontalBlock"]:has(.providence-people-hero) {{
+        /* Equal-height hero and decision cards. */
+        .providence-equal-card-row {{
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             align-items: stretch;
+            gap: clamp(1rem, 2vw, 1.5rem);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
         }}
 
-        [data-testid="stHorizontalBlock"]:has(.providence-overview-hero)
-        > [data-testid="column"],
-        [data-testid="stHorizontalBlock"]:has(.providence-health-hero)
-        > [data-testid="column"],
-        [data-testid="stHorizontalBlock"]:has(.providence-people-hero)
-        > [data-testid="column"] {{
-            display: flex;
-            min-width: 0;
-        }}
-
-        [data-testid="stHorizontalBlock"]:has(.providence-overview-hero)
-        > [data-testid="column"] > div,
-        [data-testid="stHorizontalBlock"]:has(.providence-health-hero)
-        > [data-testid="column"] > div,
-        [data-testid="stHorizontalBlock"]:has(.providence-people-hero)
-        > [data-testid="column"] > div {{
-            display: flex;
+        .providence-equal-card-row > .providence-overview-hero,
+        .providence-equal-card-row > .providence-overview-decision,
+        .providence-equal-card-row > .providence-health-hero,
+        .providence-equal-card-row > .providence-health-decision,
+        .providence-equal-card-row > .providence-people-hero,
+        .providence-equal-card-row > .providence-people-decision {{
             width: 100%;
             min-width: 0;
-        }}
-
-        .providence-overview-hero,
-        .providence-overview-decision,
-        .providence-health-hero,
-        .providence-health-decision,
-        .providence-people-hero,
-        .providence-people-decision {{
-            width: 100%;
             height: 100%;
         }}
 
+        @media (max-width: 860px) {{
+            .providence-equal-card-row {{
+                grid-template-columns: minmax(0, 1fr);
+            }}
+        }}
+
+        </style>
         """,
         unsafe_allow_html=True,
     )

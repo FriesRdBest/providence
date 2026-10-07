@@ -104,11 +104,15 @@ def render_overview_view(workspace: Workspace) -> None:
 
     st.markdown('<section class="providence-overview-stage">', unsafe_allow_html=True)
 
-    hero_column, insight_column = st.columns([1, 1], gap="large")
+    insight_title, insight_body = _insight_copy(
+        health.projects_at_risk,
+        health.projects_on_watch,
+        remaining_budget,
+    )
 
-    with hero_column:
-        st.markdown(
-            f"""
+    st.markdown(
+        f"""
+        <section class="providence-equal-card-row">
             <article class="providence-overview-hero">
                 <div class="providence-overview-hero-topline">
                     <span class="providence-overview-kicker">Delivery pulse</span>
@@ -151,18 +155,6 @@ def render_overview_view(workspace: Workspace) -> None:
                     </div>
                 </div>
             </article>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with insight_column:
-        insight_title, insight_body = _insight_copy(
-            health.projects_at_risk,
-            health.projects_on_watch,
-            remaining_budget,
-        )
-        st.markdown(
-            f"""
             <aside class="providence-overview-decision">
                 <div class="providence-overview-decision-orb"></div>
                 <div class="providence-overview-kicker">Decision support</div>
@@ -173,9 +165,10 @@ def render_overview_view(workspace: Workspace) -> None:
                     <strong>{_attention_copy(attention_count)}</strong>
                 </div>
             </aside>
-            """,
-            unsafe_allow_html=True,
-        )
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
 
     metric_one, metric_two, metric_three = st.columns([1, 1, 1], gap="medium")
 
