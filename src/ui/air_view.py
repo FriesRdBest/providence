@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from decimal import Decimal
+
 import streamlit as st
 
 from src.domain.models import PersonStatus, Workspace
@@ -100,6 +102,3 @@ def render_air_view(workspace: Workspace) -> None:
                 st.info(
                     "This person has limited capacity remaining. Plan accordingly."
                 )
-
-
-from decimal import Decimal
