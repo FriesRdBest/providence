@@ -26,4 +26,4 @@ jobs:
       - name: Run tests
         run: pytest
       - name: Validate data contracts
-        run: python scripts/validate_contracts.py
+        run: python -m scripts.validate_contracts

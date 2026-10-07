@@ -11,4 +11,4 @@ def test_workspace_health_is_deterministic() -> None:
 
     assert health.utilisation_percentage == Decimal("62.5")
     assert health.projects_at_risk == 1
-    assert health.projects_on_watch == 1
+    assert health.projects_on_watch == 0

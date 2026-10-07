@@ -18,8 +18,8 @@ class WorkspaceRepository(ABC):
 
 
 class JsonWorkspaceRepository(WorkspaceRepository):
-    def __init__(self, ledger_path: Path) -> None:
-        self.ledger_path = ledger_path
+    def __init__(self, ledger_path: str | Path) -> None:
+        self.ledger_path = Path(ledger_path)
 
     def read(self) -> Workspace:
         content = json.loads(self.ledger_path.read_text(encoding="utf-8"))
