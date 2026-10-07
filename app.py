@@ -72,9 +72,9 @@ if workspace_loaded:
             insight = ai_service.answer_query(workspace, query)
 
             with st.container(border=True):
-                st.write(f"**Query:** {insight.query}")
-                st.write(f"**Answer:** {insight.answer}")
-                st.write(f"**Confidence:** {insight.confidence}")
+                st.markdown(f"**Query:** {insight.query}")
+                st.markdown(f"**Answer:** {insight.answer}")
+                st.caption(f"Confidence: {insight.confidence}")
 
                 if insight.supporting_facts:
                     st.write("**Supporting facts:**")
