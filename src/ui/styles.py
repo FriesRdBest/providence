@@ -3992,60 +3992,6 @@ def apply_global_styles() -> None:
         }}
 
 
-        /* Final sidebar presentation correction */
-
-        [data-testid="stSidebar"] [data-testid="stRadio"] > label,
-        [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stWidgetLabel"],
-        [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stWidgetLabel"] * {{
-            display: none !important;
-        }}
-
-        [data-testid="stSidebar"] [data-testid="stRadio"] label::before,
-        [data-testid="stSidebar"] [data-testid="stRadio"] label::after,
-        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input)::before,
-        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input)::after {{
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: 0 !important;
-            background: transparent !important;
-            box-shadow: none !important;
-            content: none !important;
-        }}
-
-        [data-testid="stSidebar"] [data-testid="stRadio"] label {{
-            display: flex !important;
-            width: 100% !important;
-            min-height: 3.2rem !important;
-            margin: 0 !important;
-            padding: 0.82rem 1.05rem !important;
-            border-radius: 1rem !important;
-            gap: 0 !important;
-        }}
-
-        [data-testid="stSidebar"] [data-testid="stRadio"] label > div {{
-            margin: 0 !important;
-            padding: 0 !important;
-        }}
-
-        [data-testid="stSidebar"] [data-testid="stRadio"] label span {{
-            margin: 0 !important;
-            padding: 0 !important;
-        }}
-
-        [data-testid="stSidebar"] [data-testid="stRadio"] input {{
-            position: absolute !important;
-            width: 1px !important;
-            height: 1px !important;
-            margin: -1px !important;
-            padding: 0 !important;
-            overflow: hidden !important;
-            clip: rect(0, 0, 0, 0) !important;
-            white-space: nowrap !important;
-            border: 0 !important;
-        }}
 
         </style>
         """,
