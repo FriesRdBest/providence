@@ -1120,6 +1120,426 @@ def apply_global_styles() -> None:
             }}
         }}
 
+
+        /* Phase 2: shell, navigation, and shared component elevation */
+
+        :root {{
+            --providence-sidebar-width: 17.25rem;
+            --providence-shell-gutter: clamp(1rem, 2.4vw, 2.6rem);
+            --providence-shell-top: clamp(5.2rem, 7vw, 6.6rem);
+            --providence-glass-strong: rgba(254, 246, 243, 0.15);
+            --providence-glass-soft: rgba(254, 246, 243, 0.08);
+            --providence-glow-violet: rgba(168, 118, 245, 0.30);
+            --providence-glow-coral: rgba(255, 138, 122, 0.24);
+        }}
+
+        [data-testid="stSidebar"] {{
+            min-width: var(--providence-sidebar-width);
+            width: var(--providence-sidebar-width);
+        }}
+
+        [data-testid="stSidebar"] > div:first-child {{
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 1.35rem 1rem 1.15rem;
+        }}
+
+        [data-testid="stSidebar"] > div:first-child::before {{
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 0.22rem;
+            background: linear-gradient(
+                90deg,
+                var(--providence-butter),
+                var(--providence-lavender),
+                var(--providence-orchid),
+                var(--providence-coral)
+            );
+            content: "";
+        }}
+
+        .providence-brand {{
+            position: relative;
+            margin: 0.35rem 0 1.8rem;
+            padding: 0.7rem;
+            border: 1px solid rgba(254, 246, 243, 0.12);
+            border-radius: 1.2rem;
+            background:
+                linear-gradient(135deg, rgba(255, 222, 145, 0.14), transparent 55%),
+                rgba(254, 246, 243, 0.06);
+            box-shadow: 0 14px 30px rgba(12, 4, 18, 0.20);
+        }}
+
+        .providence-brand::after {{
+            position: absolute;
+            top: -0.28rem;
+            right: 1rem;
+            width: 0.55rem;
+            height: 0.55rem;
+            border-radius: 999px;
+            background: var(--providence-coral);
+            box-shadow: 0 0 0 0.24rem rgba(255, 138, 122, 0.16);
+            content: "";
+        }}
+
+        .providence-mark {{
+            width: 2.35rem;
+            height: 2.35rem;
+            border-radius: 0.88rem;
+            font-size: 0.9rem;
+        }}
+
+        .providence-brand-name {{
+            font-size: 1.18rem;
+            font-weight: 800;
+        }}
+
+        .providence-brand-detail {{
+            color: rgba(254, 246, 243, 0.56);
+            font-size: 0.66rem;
+            letter-spacing: 0.12em;
+        }}
+
+        .providence-nav-title {{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.35rem 0.4rem 0.78rem;
+            color: var(--providence-butter);
+            font-size: 0.64rem;
+            font-weight: 800;
+            letter-spacing: 0.13em;
+        }}
+
+        .providence-nav-title::after {{
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, rgba(255, 222, 145, 0.45), transparent);
+            content: "";
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] > div {{
+            gap: 0.42rem;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label {{
+            position: relative;
+            min-height: 3.05rem;
+            display: flex;
+            align-items: center;
+            border-radius: 0.92rem;
+            font-size: 0.94rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            padding: 0.72rem 0.85rem 0.72rem 1.04rem;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label::before {{
+            width: 0.52rem;
+            height: 0.52rem;
+            flex: 0 0 auto;
+            margin-right: 0.1rem;
+            border: 1px solid rgba(254, 246, 243, 0.40);
+            border-radius: 50%;
+            content: "";
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {{
+            transform: translateX(0.18rem);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {{
+            position: relative;
+            background:
+                linear-gradient(100deg, var(--providence-butter), #FFD582);
+            box-shadow: 0 12px 24px rgba(255, 222, 145, 0.16);
+            color: var(--providence-plum);
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked)::before {{
+            border-color: var(--providence-plum);
+            background: var(--providence-coral);
+            box-shadow: 0 0 0 0.2rem rgba(44, 19, 56, 0.12);
+        }}
+
+        .providence-sidebar-footer {{
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: auto;
+            padding: 1.25rem 0.55rem 0.3rem;
+            color: rgba(254, 246, 243, 0.58);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }}
+
+        .providence-sidebar-footer::before {{
+            width: 1.5rem;
+            height: 1px;
+            background: var(--providence-lavender);
+            content: "";
+        }}
+
+        [data-testid="stMainBlockContainer"],
+        .main .block-container {{
+            position: relative;
+            padding:
+                var(--providence-shell-top)
+                var(--providence-shell-gutter)
+                clamp(2.5rem, 5vw, 5rem) !important;
+        }}
+
+        [data-testid="stMainBlockContainer"]::before {{
+            position: fixed;
+            z-index: -1;
+            top: 7.5rem;
+            right: clamp(1rem, 4vw, 4rem);
+            width: min(22vw, 20rem);
+            height: min(22vw, 20rem);
+            border-radius: 50%;
+            background: var(--providence-butter);
+            filter: blur(1px);
+            opacity: 0.08;
+            content: "";
+        }}
+
+        .providence-page-header {{
+            align-items: stretch;
+            overflow: hidden;
+            isolation: isolate;
+            margin-bottom: clamp(2rem, 4vw, 3.4rem);
+            padding: clamp(1.3rem, 3vw, 2.2rem);
+            border-radius: 1.55rem;
+        }}
+
+        .providence-page-header::after {{
+            position: absolute;
+            z-index: -1;
+            top: -7rem;
+            right: -5rem;
+            width: 15rem;
+            height: 15rem;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(168, 118, 245, 0.38) 0%,
+                transparent 68%
+            );
+            content: "";
+        }}
+
+        .providence-page-header > div:first-child {{
+            max-width: 47rem;
+        }}
+
+        .providence-eyebrow {{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-bottom: 0.72rem;
+        }}
+
+        .providence-eyebrow::before {{
+            width: 0.56rem;
+            height: 0.56rem;
+            border-radius: 50%;
+            background: var(--providence-coral);
+            box-shadow: 0 0 0 0.22rem rgba(255, 138, 122, 0.16);
+            content: "";
+        }}
+
+        .providence-page-header h1 {{
+            max-width: 12ch;
+            font-size: clamp(2.6rem, 5vw, 4.8rem);
+            line-height: 0.93;
+        }}
+
+        .providence-page-subtitle {{
+            max-width: 39rem;
+            font-size: clamp(0.98rem, 1.5vw, 1.1rem);
+        }}
+
+        .providence-date-context {{
+            display: inline-flex;
+            align-items: center;
+            height: fit-content;
+            gap: 0.5rem;
+            border-color: rgba(255, 222, 145, 0.34);
+            border-radius: 999px;
+            background: rgba(44, 19, 56, 0.34);
+            color: var(--providence-butter);
+            font-size: 0.76rem;
+            letter-spacing: 0.025em;
+        }}
+
+        .providence-date-context::before {{
+            width: 0.46rem;
+            height: 0.46rem;
+            border-radius: 50%;
+            background: var(--providence-lavender);
+            box-shadow: 0 0 0 0.2rem rgba(168, 118, 245, 0.16);
+            content: "";
+        }}
+
+        .providence-section-heading {{
+            position: relative;
+            margin: clamp(2.5rem, 5vw, 4.5rem) 0 1.25rem;
+            padding-bottom: 0.8rem;
+        }}
+
+        .providence-section-heading::after {{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                rgba(255, 222, 145, 0.48),
+                rgba(168, 118, 245, 0.22),
+                transparent
+            );
+            content: "";
+        }}
+
+        .providence-section-heading h2 {{
+            font-size: clamp(1.5rem, 2.5vw, 2.05rem);
+            letter-spacing: -0.045em;
+        }}
+
+        .providence-section-detail {{
+            padding: 0.38rem 0.65rem;
+            border: 1px solid rgba(254, 246, 243, 0.16);
+            border-radius: 999px;
+            background: rgba(254, 246, 243, 0.07);
+            color: rgba(254, 246, 243, 0.68);
+        }}
+
+        .providence-insight {{
+            padding: 1.45rem;
+            border-width: 1px;
+            border-radius: 1.3rem;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(255, 138, 122, 0.25), transparent 40%),
+                linear-gradient(135deg, rgba(168, 118, 245, 0.20), transparent 68%),
+                rgba(254, 246, 243, 0.10);
+        }}
+
+        .providence-insight::before {{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0.28rem;
+            height: 100%;
+            border-radius: 1rem 0 0 1rem;
+            background: linear-gradient(
+                180deg,
+                var(--providence-butter),
+                var(--providence-coral),
+                var(--providence-orchid)
+            );
+            content: "";
+        }}
+
+        .providence-insight-label {{
+            display: inline-flex;
+            padding: 0.32rem 0.55rem;
+            border-radius: 999px;
+            background: rgba(255, 222, 145, 0.15);
+            color: var(--providence-butter);
+        }}
+
+        .providence-status {{
+            border: 1px solid rgba(254, 246, 243, 0.14);
+            box-shadow: inset 0 1px 0 rgba(254, 246, 243, 0.12);
+            padding: 0.4rem 0.7rem;
+        }}
+
+        .stButton > button {{
+            min-height: 2.9rem;
+            border-radius: 999px;
+            padding: 0.66rem 1.15rem;
+        }}
+
+        .stDownloadButton > button {{
+            min-height: 2.9rem;
+            border-radius: 999px;
+            padding: 0.66rem 1.1rem;
+        }}
+
+        [data-testid="stTabs"] [data-baseweb="tab-list"] {{
+            padding: 0.32rem;
+            border: 1px solid rgba(254, 246, 243, 0.14);
+            border-radius: 1rem;
+            background: rgba(254, 246, 243, 0.06);
+        }}
+
+        [data-testid="stTabs"] [data-baseweb="tab"] {{
+            border-radius: 0.7rem;
+        }}
+
+        [data-testid="stTabs"] [aria-selected="true"] {{
+            background: rgba(255, 222, 145, 0.16);
+        }}
+
+        [data-testid="stTabs"] [data-baseweb="tab-highlight"] {{
+            display: none;
+        }}
+
+        [data-baseweb="select"] > div,
+        [data-testid="stTextInput"] input {{
+            border-radius: 0.88rem;
+        }}
+
+        @media (max-width: 860px) {{
+            [data-testid="stSidebar"] {{
+                min-width: 0;
+                width: auto;
+            }}
+
+            [data-testid="stMainBlockContainer"],
+            .main .block-container {{
+                padding-top: 5.2rem !important;
+            }}
+
+            .providence-page-header {{
+                border-radius: 1.2rem;
+            }}
+
+            .providence-page-header h1 {{
+                max-width: none;
+                font-size: clamp(2.4rem, 12vw, 3.5rem);
+            }}
+
+            .providence-date-context {{
+                width: fit-content;
+            }}
+
+            .providence-section-heading {{
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 0.7rem;
+            }}
+        }}
+
+
+        /* Phase 2: active navigation contrast correction */
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked),
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) * {{
+            color: #2C1338 !important;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked)::before {{
+            background: #2C1338;
+            border-color: #2C1338;
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
