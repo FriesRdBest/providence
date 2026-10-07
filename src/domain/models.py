@@ -79,20 +79,9 @@ class Project(BaseModel):
         burn = self.budget_burn_percentage
         if burn >= Decimal("100") or (days_remaining <= 5 and burn >= Decimal("80")):
             return ProjectStatus.AT_RISK
-        if burn >= Decimal("75") or days_remaining <= 10:
+        if burn >= Decimal("60") or days_remaining <= 14:
             return ProjectStatus.WATCH
         return ProjectStatus.HEALTHY
-
-
-class TimeEntry(BaseModel):
-    model_config = ConfigDict(frozen=True)
-
-    id: UUID = Field(default_factory=uuid4)
-    person_id: UUID
-    project_id: UUID
-    started_at: datetime
-    duration_hours: Decimal = Field(gt=Decimal("0"), le=Decimal("24"))
-    description: str = Field(min_length=3, max_length=300)
 
 
 class Workspace(BaseModel):
@@ -100,6 +89,28 @@ class Workspace(BaseModel):
 
     id: UUID = Field(default_factory=uuid4)
     name: str = Field(min_length=2, max_length=120)
-    people: tuple[Person, ...] = ()
-    projects: tuple[Project, ...] = ()
-    time_entries: tuple[TimeEntry, ...] = ()
+    projects: list[Project] = Field(default_factory=list)
+    people: list[Person] = Field(default_factory=list)
+    today: date = Field(default_factory=date.today)
+
+    @property
+    def total_budget_hours(self) -> Decimal:
+        return sum((p.budget_hours for p in self.projects), Decimal("0"))
+
+    @property
+    def total_logged_hours(self) -> Decimal:
+        return sum((p.logged_hours for p in self.projects), Decimal("0"))
+
+    @property
+    def overall_burn_percentage(self) -> Decimal:
+        if self.total_budget_hours == Decimal("0"):
+            return Decimal("0")
+        return (self.total_logged_hours / self.total_budget_hours * Decimal("100")).quantize(Decimal("0.1"))
+
+
+class Log(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    person: str
+    hours: Decimal
+    date: date
