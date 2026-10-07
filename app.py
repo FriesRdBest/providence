@@ -5,6 +5,7 @@ import streamlit as st
 from src.services.workspace_service import WorkspaceService
 from src.ui.styles import apply_global_styles
 from src.ui.land_view import render_land_view
+from src.ui.sea_view import render_sea_view
 
 st.set_page_config(
     page_title="Providence",
@@ -31,8 +32,7 @@ view = st.sidebar.radio(
 if view == "Land":
     render_land_view(workspace)
 elif view == "Sea":
-    st.header("Sea")
-    st.write("Daily project delivery status will appear here.")
+    render_sea_view(workspace)
 elif view == "Air":
     st.header("Air")
     st.write("Current people capacity will appear here.")
