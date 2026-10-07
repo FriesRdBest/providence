@@ -3,6 +3,7 @@ from __future__ import annotations
 import streamlit as st
 
 from src.services.workspace_service import WorkspaceService
+from src.services.ai_insight_service import AIInsightService
 from src.ui.styles import apply_global_styles
 from src.ui.land_view import render_land_view
 from src.ui.sea_view import render_sea_view
@@ -20,6 +21,7 @@ apply_global_styles()
 
 service = WorkspaceService()
 workspace = service.load_workspace()
+ai_service = AIInsightService()
 
 st.title("Providence")
 st.caption("Time intelligence for clear management decisions")
@@ -41,6 +43,30 @@ else:
     render_overview_view(workspace)
 
 st.divider()
+
+with st.container(border=True):
+    st.subheader("AI Predictive Insight Box")
+    st.caption("Ask a plain language question about your workspace")
+
+    query = st.text_input(
+        "Your question",
+        placeholder="Which active project faces immediate budget depletion this week?",
+        label_visibility="collapsed",
+    )
+
+    if query:
+        insight = ai_service.answer_query(workspace, query)
+
+        with st.container(border=True):
+            st.write(f"**Query:** {insight.query}")
+            st.write(f"**Answer:** {insight.answer}")
+            st.write(f"**Confidence:** {insight.confidence}")
+
+            if insight.supporting_facts:
+                st.write("**Supporting facts:**")
+                for fact in insight.supporting_facts:
+                    st.write(f"- {fact}")
+
 st.caption(
     f"Validated workspace loaded: {workspace.name}. "
     f"{len(workspace.projects)} projects and {len(workspace.people)} people are available."
