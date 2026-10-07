@@ -9,7 +9,6 @@ import streamlit as st
 from src.domain.models import ProjectStatus, Workspace
 from src.services.rule_engine import RuleEngine
 from src.ui.components import (
-    render_insight,
     render_page_header,
     render_section_heading,
     render_status,
@@ -80,6 +79,12 @@ def _export_document(workspace: Workspace) -> str:
     return json.dumps(document, indent=2)
 
 
+def _attention_copy(attention_count: int) -> str:
+    if attention_count == 0:
+        return "Clear"
+    return "Review"
+
+
 def render_overview_view(workspace: Workspace) -> None:
     today = date.today()
     health = RuleEngine().assess_workspace(workspace, today=today)
@@ -87,6 +92,8 @@ def render_overview_view(workspace: Workspace) -> None:
     total_logged = workspace.total_logged_hours
     overall_burn = workspace.overall_burn_percentage
     attention_count = health.projects_at_risk + health.projects_on_watch
+    remaining_budget = health.remaining_budget_hours
+    remaining_percent = max(0, min(100, 100 - float(overall_burn)))
 
     render_page_header(
         "Overview",
@@ -94,105 +101,150 @@ def render_overview_view(workspace: Workspace) -> None:
         today,
     )
 
-    summary_one, summary_two, summary_three, summary_four = st.columns(4, gap="medium")
+    st.markdown('<section class="providence-overview-stage">', unsafe_allow_html=True)
 
-    with summary_one:
-        with st.container(border=True):
-            st.metric(
-                label="Team utilisation",
-                value=f"{health.utilisation_percentage}%",
-                delta="Current capacity use",
-                delta_color="off",
-            )
-
-    with summary_two:
-        with st.container(border=True):
-            st.metric(
-                label="Active projects",
-                value=len(workspace.projects),
-                delta="Current delivery work",
-                delta_color="off",
-            )
-
-    with summary_three:
-        with st.container(border=True):
-            st.metric(
-                label="Budget remaining",
-                value=_format_hours(health.remaining_budget_hours),
-                delta=f"Of {_format_hours(total_budget)} total",
-                delta_color="off",
-            )
-
-    with summary_four:
-        with st.container(border=True):
-            attention_label = (
-                "No projects need attention" if attention_count == 0 else "Review today"
-            )
-            st.metric(
-                label="Attention needed",
-                value=attention_count,
-                delta=attention_label,
-                delta_color="inverse" if attention_count > 0 else "off",
-            )
-
-    render_section_heading(
-        "Delivery pulse",
-        "Current budget pace across active work",
-    )
-
-    hero_column, insight_column = st.columns([1.7, 1], gap="large")
+    hero_column, insight_column = st.columns([1.7, 0.9], gap="large")
 
     with hero_column:
-        with st.container(border=True):
-            st.markdown(
-                """
-                <div class="providence-hero-label">Budget position</div>
-                <div class="providence-hero-value">"""
-                f"{overall_burn}%"
-                """</div>
-                <div class="providence-hero-copy">
-                    of active project budget has been used across the workspace
+        st.markdown(
+            f"""
+            <article class="providence-overview-hero">
+                <div class="providence-overview-hero-topline">
+                    <span class="providence-overview-kicker">Delivery pulse</span>
+                    <span class="providence-overview-live"><i></i> Live workspace view</span>
                 </div>
-                """,
-                unsafe_allow_html=True,
-            )
-            st.progress(min(float(overall_burn) / 100, 1.0))
-            pace_one, pace_two, pace_three = st.columns(3, gap="small")
-            with pace_one:
-                st.markdown(
-                    f'<div class="providence-hero-stat-label">Budget</div>'
-                    f'<div class="providence-hero-stat-value">{_format_hours(total_budget)}</div>',
-                    unsafe_allow_html=True,
-                )
-            with pace_two:
-                st.markdown(
-                    f'<div class="providence-hero-stat-label">Used</div>'
-                    f'<div class="providence-hero-stat-value">{_format_hours(total_logged)}</div>',
-                    unsafe_allow_html=True,
-                )
-            with pace_three:
-                st.markdown(
-                    f'<div class="providence-hero-stat-label">Remaining</div>'
-                    f'<div class="providence-hero-stat-value">'
-                    f"{_format_hours(health.remaining_budget_hours)}</div>",
-                    unsafe_allow_html=True,
-                )
+                <div class="providence-overview-hero-grid">
+                    <div>
+                        <div class="providence-overview-hero-label">Budget position</div>
+                        <div class="providence-overview-burn">{overall_burn}%</div>
+                        <p class="providence-overview-hero-copy">
+                            of active project budget has been used across the workspace
+                        </p>
+                    </div>
+                    <div class="providence-overview-orbit" aria-label="Budget remaining">
+                        <span>{remaining_percent:.0f}%</span>
+                        <small>remaining</small>
+                    </div>
+                </div>
+                <div class="providence-overview-pace">
+                    <div class="providence-overview-pace-track">
+                        <span style="width: {min(float(overall_burn), 100):.2f}%"></span>
+                    </div>
+                    <div class="providence-overview-pace-labels">
+                        <span>Budget pace</span>
+                        <span>{_format_hours(remaining_budget)} available</span>
+                    </div>
+                </div>
+                <div class="providence-overview-hero-stats">
+                    <div>
+                        <span>Total budget</span>
+                        <strong>{_format_hours(total_budget)}</strong>
+                    </div>
+                    <div>
+                        <span>Logged</span>
+                        <strong>{_format_hours(total_logged)}</strong>
+                    </div>
+                    <div>
+                        <span>Remaining</span>
+                        <strong>{_format_hours(remaining_budget)}</strong>
+                    </div>
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
 
     with insight_column:
         insight_title, insight_body = _insight_copy(
             health.projects_at_risk,
             health.projects_on_watch,
-            health.remaining_budget_hours,
+            remaining_budget,
         )
-        render_insight(insight_title, insight_body)
+        st.markdown(
+            f"""
+            <aside class="providence-overview-decision">
+                <div class="providence-overview-decision-orb"></div>
+                <div class="providence-overview-kicker">Decision support</div>
+                <h2>{insight_title}</h2>
+                <p>{insight_body}</p>
+                <div class="providence-overview-decision-foot">
+                    <span>Workspace signal</span>
+                    <strong>{_attention_copy(attention_count)}</strong>
+                </div>
+            </aside>
+            """,
+            unsafe_allow_html=True,
+        )
 
-    preview_left, preview_right = st.columns([1.1, 1], gap="large")
+    metric_one, metric_two, metric_three = st.columns([1, 1, 1], gap="medium")
 
-    with preview_left:
+    with metric_one:
+        st.markdown(
+            f"""
+            <article class="providence-overview-metric providence-overview-metric-violet">
+                <span class="providence-overview-metric-label">Team utilisation</span>
+                <strong>{health.utilisation_percentage}%</strong>
+                <p>Current capacity use across the workspace</p>
+                <div class="providence-overview-metric-line">
+                    <span
+                        style="width: {min(float(health.utilisation_percentage), 100):.2f}%"
+                    ></span>
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with metric_two:
+        st.markdown(
+            f"""
+            <article class="providence-overview-metric providence-overview-metric-pink">
+                <span class="providence-overview-metric-label">Active projects</span>
+                <strong>{len(workspace.projects)}</strong>
+                <p>Delivery commitments in the current view</p>
+                <div class="providence-overview-metric-dots">
+                    <i></i><i></i><i></i>
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    with metric_three:
+        attention_description = (
+            "No projects currently need attention"
+            if attention_count == 0
+            else "Projects need a closer delivery review"
+        )
+        st.markdown(
+            f"""
+            <article class="providence-overview-metric providence-overview-metric-coral">
+                <span class="providence-overview-metric-label">Attention needed</span>
+                <strong>{attention_count}</strong>
+                <p>{attention_description}</p>
+                <div class="providence-overview-attention-badge">
+                    {_attention_copy(attention_count)}
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    project_column, snapshot_column = st.columns([1.45, 0.85], gap="large")
+
+    with project_column:
         render_section_heading("Project focus", "Budget pace and delivery timing")
         if not workspace.projects:
-            with st.container(border=True):
-                st.caption("No active projects are available in this workspace.")
+            st.markdown(
+                """
+                <article class="providence-overview-empty">
+                    <div class="providence-overview-kicker">Portfolio</div>
+                    <h3>No active projects are available</h3>
+                    <p>Add project records to reveal budget pace and delivery timing.</p>
+                </article>
+                """,
+                unsafe_allow_html=True,
+            )
         else:
             ranked_projects = sorted(
                 workspace.projects,
@@ -204,90 +256,94 @@ def render_overview_view(workspace: Workspace) -> None:
                 reverse=True,
             )
 
-            for project in ranked_projects[:3]:
-                with st.container(border=True):
-                    top_left, top_right = st.columns([3, 1], gap="small")
-                    with top_left:
-                        st.markdown(f"### {project.name}")
-                        st.caption(project.client)
-                    with top_right:
-                        render_status(project.status(today))
-
-                    project_meta_left, project_meta_right = st.columns(2, gap="small")
-                    with project_meta_left:
-                        st.markdown(
-                            f'<div class="providence-preview-label">Budget used</div>'
-                            f'<div class="providence-preview-value">'
-                            f"{project.budget_burn_percentage}%</div>",
-                            unsafe_allow_html=True,
-                        )
-                    with project_meta_right:
-                        st.markdown(
-                            f'<div class="providence-preview-label">Delivery</div>'
-                            f'<div class="providence-preview-value">'
-                            f"{project.days_until_delivery(today)} days</div>",
-                            unsafe_allow_html=True,
-                        )
-                    st.progress(min(float(project.budget_burn_percentage) / 100, 1.0))
-
-    with preview_right:
-        render_section_heading("Health snapshot", "Current delivery exposure")
-        with st.container(border=True):
-            health_left, health_right = st.columns(2, gap="medium")
-            with health_left:
+            for index, project in enumerate(ranked_projects[:3], start=1):
+                burn_width = min(float(project.budget_burn_percentage), 100)
                 st.markdown(
-                    '<div class="providence-preview-label">At risk</div>'
-                    f'<div class="providence-health-number providence-health-number-risk">'
-                    f"{health.projects_at_risk}</div>",
+                    f"""
+                    <article class="providence-overview-project">
+                        <div class="providence-overview-project-index">0{index}</div>
+                        <div class="providence-overview-project-main">
+                            <div class="providence-overview-project-title-row">
+                                <div>
+                                    <h3>{project.name}</h3>
+                                    <p>{project.client}</p>
+                                </div>
+                            </div>
+                            <div class="providence-overview-project-progress">
+                                <span style="width: {burn_width:.2f}%"></span>
+                            </div>
+                        </div>
+                        <div class="providence-overview-project-data">
+                            <span>Budget used</span>
+                            <strong>{project.budget_burn_percentage}%</strong>
+                        </div>
+                        <div class="providence-overview-project-data">
+                            <span>Delivery</span>
+                            <strong>{project.days_until_delivery(today)}d</strong>
+                        </div>
+                    </article>
+                    """,
                     unsafe_allow_html=True,
                 )
-                st.caption("Projects requiring immediate attention")
-            with health_right:
-                st.markdown(
-                    '<div class="providence-preview-label">On watch</div>'
-                    f'<div class="providence-health-number providence-health-number-watch">'
-                    f"{health.projects_on_watch}</div>",
-                    unsafe_allow_html=True,
-                )
-                st.caption("Projects approaching a delivery boundary")
+                render_status(project.status(today))
 
-        render_section_heading("People snapshot", "Current capacity visibility")
-        with st.container(border=True):
-            people_count = len(workspace.people)
-            if people_count == 0:
-                st.markdown(
-                    '<div class="providence-empty-title">Capacity data is not available yet</div>'
-                    '<p class="providence-empty-copy">'
-                    "People activity will appear here when workspace capacity records "
-                    "are available."
-                    "</p>",
-                    unsafe_allow_html=True,
-                )
-            else:
-                st.metric(
-                    label="People tracked",
-                    value=people_count,
-                    delta="Current workspace capacity",
-                    delta_color="off",
-                )
+    with snapshot_column:
+        render_section_heading("Workspace signals", "What needs attention")
 
-    st.markdown('<div class="providence-export-area">', unsafe_allow_html=True)
-    export_left, export_right = st.columns([3, 1], gap="large")
-    with export_left:
         st.markdown(
-            '<div class="providence-export-title">Workspace summary</div>'
-            '<p class="providence-export-copy">'
-            "Create a portable record of the current delivery picture "
-            "for review outside Providence."
-            "</p>",
+            f"""
+            <article class="providence-overview-signal-grid">
+                <div class="providence-overview-signal providence-overview-signal-risk">
+                    <span>At risk</span>
+                    <strong>{health.projects_at_risk}</strong>
+                    <p>Immediate review</p>
+                </div>
+                <div class="providence-overview-signal providence-overview-signal-watch">
+                    <span>On watch</span>
+                    <strong>{health.projects_on_watch}</strong>
+                    <p>Monitor pace</p>
+                </div>
+            </article>
+            """,
             unsafe_allow_html=True,
         )
-    with export_right:
-        st.download_button(
-            label="Export summary",
-            data=_export_document(workspace),
-            file_name="providence_summary.json",
-            mime="application/json",
-            use_container_width=True,
+
+        people_count = len(workspace.people)
+        st.markdown(
+            f"""
+            <article class="providence-overview-people">
+                <div>
+                    <span class="providence-overview-kicker">Capacity view</span>
+                    <h3>{people_count} people tracked</h3>
+                    <p>Current workspace capacity is reflected in the utilisation signal.</p>
+                </div>
+                <div class="providence-overview-people-mark">
+                    <span>{health.utilisation_percentage}%</span>
+                    <small>used</small>
+                </div>
+            </article>
+            """,
+            unsafe_allow_html=True,
         )
-    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown(
+        """
+        <section class="providence-overview-export">
+            <div>
+                <div class="providence-overview-kicker">Workspace record</div>
+                <h3>Take the current delivery picture with you</h3>
+                <p>Create a portable summary for review outside Providence.</p>
+            </div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.download_button(
+        label="Export workspace summary",
+        data=_export_document(workspace),
+        file_name="providence_summary.json",
+        mime="application/json",
+        use_container_width=False,
+    )
+
+    st.markdown("</section>", unsafe_allow_html=True)

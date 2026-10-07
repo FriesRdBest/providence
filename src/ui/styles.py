@@ -1540,6 +1540,689 @@ def apply_global_styles() -> None:
             border-color: #2C1338;
         }}
 
+
+        /* Phase 3: Overview flagship composition */
+
+        .providence-overview-stage {{
+            display: block;
+            margin-top: -0.75rem;
+        }}
+
+        .providence-overview-hero {{
+            position: relative;
+            overflow: hidden;
+            min-height: 29rem;
+            padding: clamp(1.45rem, 3vw, 2.45rem);
+            border: 1px solid rgba(44, 19, 56, 0.18);
+            border-radius: 1.7rem;
+            background:
+                radial-gradient(circle at 89% 20%, rgba(168, 118, 245, 0.72), transparent 23%),
+                radial-gradient(circle at 72% 88%, rgba(229, 124, 216, 0.52), transparent 25%),
+                linear-gradient(135deg, #FFDE91 0%, #FFD88C 52%, #FFCF9B 100%);
+            box-shadow: 0 26px 70px rgba(12, 4, 18, 0.24);
+            color: var(--providence-plum);
+        }}
+
+        .providence-overview-hero::after {{
+            position: absolute;
+            right: -4.5rem;
+            bottom: -7rem;
+            width: 18rem;
+            height: 18rem;
+            border: 1px solid rgba(44, 19, 56, 0.18);
+            border-radius: 50%;
+            content: "";
+        }}
+
+        .providence-overview-hero-topline,
+        .providence-overview-pace-labels,
+        .providence-overview-hero-stats,
+        .providence-overview-project,
+        .providence-overview-decision-foot {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }}
+
+        .providence-overview-kicker,
+        .providence-overview-hero-label,
+        .providence-overview-metric-label {{
+            display: inline-flex;
+            color: inherit;
+            font-size: 0.68rem;
+            font-weight: 850;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }}
+
+        .providence-overview-live {{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.42rem 0.62rem;
+            border: 1px solid rgba(44, 19, 56, 0.16);
+            border-radius: 999px;
+            background: rgba(254, 246, 243, 0.34);
+            color: rgba(44, 19, 56, 0.82);
+            font-size: 0.7rem;
+            font-weight: 750;
+        }}
+
+        .providence-overview-live i {{
+            width: 0.45rem;
+            height: 0.45rem;
+            border-radius: 50%;
+            background: #2C1338;
+            box-shadow: 0 0 0 0.24rem rgba(44, 19, 56, 0.12);
+        }}
+
+        .providence-overview-hero-grid {{
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 1.5rem;
+            margin: clamp(2.4rem, 5vw, 4.2rem) 0 1.45rem;
+        }}
+
+        .providence-overview-burn {{
+            color: var(--providence-plum);
+            font-size: clamp(4.7rem, 10vw, 8.4rem);
+            font-weight: 850;
+            letter-spacing: -0.1em;
+            line-height: 0.76;
+        }}
+
+        .providence-overview-hero-copy {{
+            max-width: 26rem;
+            color: rgba(44, 19, 56, 0.75);
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.45;
+            margin: 1.1rem 0 0;
+        }}
+
+        .providence-overview-orbit {{
+            width: clamp(7rem, 13vw, 10.5rem);
+            height: clamp(7rem, 13vw, 10.5rem);
+            display: grid;
+            place-items: center;
+            align-content: center;
+            border: 1rem solid rgba(44, 19, 56, 0.10);
+            border-top-color: var(--providence-plum);
+            border-right-color: var(--providence-lavender);
+            border-radius: 50%;
+            background: rgba(254, 246, 243, 0.26);
+            color: var(--providence-plum);
+            transform: rotate(18deg);
+        }}
+
+        .providence-overview-orbit span,
+        .providence-overview-orbit small {{
+            transform: rotate(-18deg);
+        }}
+
+        .providence-overview-orbit span {{
+            font-size: clamp(1.45rem, 3vw, 2.25rem);
+            font-weight: 850;
+            letter-spacing: -0.08em;
+            line-height: 1;
+        }}
+
+        .providence-overview-orbit small {{
+            margin-top: 0.2rem;
+            font-size: 0.64rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }}
+
+        .providence-overview-pace {{
+            position: relative;
+            z-index: 1;
+            margin-top: 1.3rem;
+        }}
+
+        .providence-overview-pace-track,
+        .providence-overview-project-progress,
+        .providence-overview-metric-line {{
+            overflow: hidden;
+            height: 0.7rem;
+            border-radius: 999px;
+            background: rgba(44, 19, 56, 0.15);
+        }}
+
+        .providence-overview-pace-track span,
+        .providence-overview-project-progress span,
+        .providence-overview-metric-line span {{
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+        }}
+
+        .providence-overview-pace-track span {{
+            background: linear-gradient(
+                90deg,
+                var(--providence-plum),
+                var(--providence-lavender),
+                var(--providence-orchid),
+                var(--providence-coral)
+            );
+        }}
+
+        .providence-overview-pace-labels {{
+            margin-top: 0.65rem;
+            color: rgba(44, 19, 56, 0.7);
+            font-size: 0.74rem;
+            font-weight: 750;
+        }}
+
+        .providence-overview-hero-stats {{
+            position: relative;
+            z-index: 1;
+            margin-top: 1.55rem;
+            padding-top: 1.1rem;
+            border-top: 1px solid rgba(44, 19, 56, 0.16);
+        }}
+
+        .providence-overview-hero-stats div {{
+            flex: 1;
+        }}
+
+        .providence-overview-hero-stats span,
+        .providence-overview-project-data span,
+        .providence-overview-signal span {{
+            display: block;
+            color: rgba(44, 19, 56, 0.66);
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }}
+
+        .providence-overview-hero-stats strong {{
+            display: block;
+            margin-top: 0.24rem;
+            color: var(--providence-plum);
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            font-weight: 850;
+            letter-spacing: -0.055em;
+        }}
+
+        .providence-overview-decision {{
+            position: relative;
+            overflow: hidden;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: clamp(1.4rem, 2.5vw, 2rem);
+            border: 1px solid rgba(254, 246, 243, 0.26);
+            border-radius: 1.7rem;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(255, 138, 122, 0.32), transparent 34%),
+                linear-gradient(145deg, rgba(168, 118, 245, 0.42), rgba(44, 19, 56, 0.92) 58%);
+            box-shadow: var(--providence-shadow-deep);
+            color: var(--providence-blush);
+        }}
+
+        .providence-overview-decision h2 {{
+            max-width: 12ch;
+            margin: 1.6rem 0 0.9rem;
+            color: var(--providence-blush);
+            font-size: clamp(1.55rem, 3vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: -0.06em;
+            line-height: 1.04;
+        }}
+
+        .providence-overview-decision p {{
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            color: rgba(254, 246, 243, 0.78);
+            font-size: 0.94rem;
+            line-height: 1.6;
+        }}
+
+        .providence-overview-decision .providence-overview-kicker {{
+            color: var(--providence-butter);
+        }}
+
+        .providence-overview-decision-orb {{
+            position: absolute;
+            right: -3rem;
+            bottom: -3rem;
+            width: 10rem;
+            height: 10rem;
+            border: 1px solid rgba(254, 246, 243, 0.24);
+            border-radius: 50%;
+        }}
+
+        .providence-overview-decision-foot {{
+            position: relative;
+            z-index: 1;
+            margin-top: 2rem;
+            padding-top: 0.9rem;
+            border-top: 1px solid rgba(254, 246, 243, 0.18);
+            color: rgba(254, 246, 243, 0.62);
+            font-size: 0.7rem;
+            font-weight: 750;
+            letter-spacing: 0.04em;
+        }}
+
+        .providence-overview-decision-foot strong {{
+            color: var(--providence-butter);
+            font-size: 0.74rem;
+        }}
+
+        .providence-overview-metric {{
+            position: relative;
+            overflow: hidden;
+            min-height: 13.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.35rem;
+            border: 1px solid rgba(254, 246, 243, 0.20);
+            border-radius: 1.35rem;
+            box-shadow: 0 18px 42px rgba(12, 4, 18, 0.18);
+        }}
+
+        .providence-overview-metric::after {{
+            position: absolute;
+            top: -2rem;
+            right: -2rem;
+            width: 7rem;
+            height: 7rem;
+            border-radius: 50%;
+            content: "";
+        }}
+
+        .providence-overview-metric-violet {{
+            background: linear-gradient(
+                145deg,
+                rgba(168, 118, 245, 0.42),
+                rgba(254, 246, 243, 0.10)
+            );
+        }}
+
+        .providence-overview-metric-violet::after {{
+            background: rgba(168, 118, 245, 0.38);
+        }}
+
+        .providence-overview-metric-pink {{
+            background: linear-gradient(
+                145deg,
+                rgba(229, 124, 216, 0.40),
+                rgba(254, 246, 243, 0.10)
+            );
+        }}
+
+        .providence-overview-metric-pink::after {{
+            background: rgba(229, 124, 216, 0.34);
+        }}
+
+        .providence-overview-metric-coral {{
+            background: linear-gradient(
+                145deg,
+                rgba(255, 138, 122, 0.42),
+                rgba(254, 246, 243, 0.10)
+            );
+        }}
+
+        .providence-overview-metric-coral::after {{
+            background: rgba(255, 138, 122, 0.34);
+        }}
+
+        .providence-overview-metric-label {{
+            position: relative;
+            z-index: 1;
+            color: var(--providence-butter);
+        }}
+
+        .providence-overview-metric strong {{
+            position: relative;
+            z-index: 1;
+            display: block;
+            margin-top: 1rem;
+            color: var(--providence-blush);
+            font-size: clamp(2.7rem, 5vw, 4.2rem);
+            font-weight: 850;
+            letter-spacing: -0.09em;
+            line-height: 0.88;
+        }}
+
+        .providence-overview-metric p {{
+            position: relative;
+            z-index: 1;
+            max-width: 16rem;
+            margin: 0.9rem 0 0;
+            color: rgba(254, 246, 243, 0.74);
+            font-size: 0.82rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }}
+
+        .providence-overview-metric-line {{
+            position: relative;
+            z-index: 1;
+            margin-top: 1.3rem;
+            background: rgba(254, 246, 243, 0.20);
+        }}
+
+        .providence-overview-metric-line span {{
+            background: var(--providence-butter);
+        }}
+
+        .providence-overview-metric-dots {{
+            position: relative;
+            z-index: 1;
+            display: flex;
+            gap: 0.38rem;
+            margin-top: 1.5rem;
+        }}
+
+        .providence-overview-metric-dots i {{
+            width: 0.7rem;
+            height: 0.7rem;
+            border-radius: 50%;
+            background: var(--providence-butter);
+        }}
+
+        .providence-overview-metric-dots i:nth-child(2) {{
+            background: rgba(254, 246, 243, 0.74);
+        }}
+
+        .providence-overview-metric-dots i:nth-child(3) {{
+            background: rgba(254, 246, 243, 0.32);
+        }}
+
+        .providence-overview-attention-badge {{
+            position: relative;
+            z-index: 1;
+            width: fit-content;
+            margin-top: 1.2rem;
+            padding: 0.42rem 0.68rem;
+            border: 1px solid rgba(254, 246, 243, 0.24);
+            border-radius: 999px;
+            color: var(--providence-blush);
+            font-size: 0.72rem;
+            font-weight: 800;
+        }}
+
+        .providence-overview-project {{
+            position: relative;
+            margin-bottom: 0.7rem;
+            padding: 1rem;
+            border: 1px solid rgba(254, 246, 243, 0.14);
+            border-radius: 1.1rem;
+            background: rgba(254, 246, 243, 0.07);
+            box-shadow: inset 0 1px 0 rgba(254, 246, 243, 0.08);
+        }}
+
+        .providence-overview-project-index {{
+            width: 2rem;
+            color: var(--providence-butter);
+            font-size: 0.76rem;
+            font-weight: 850;
+            letter-spacing: 0.04em;
+        }}
+
+        .providence-overview-project-main {{
+            min-width: 0;
+            flex: 1;
+        }}
+
+        .providence-overview-project-title-row h3 {{
+            margin: 0;
+            color: var(--providence-blush);
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+        }}
+
+        .providence-overview-project-title-row p {{
+            margin: 0.16rem 0 0;
+            color: rgba(254, 246, 243, 0.58);
+            font-size: 0.76rem;
+        }}
+
+        .providence-overview-project-progress {{
+            height: 0.4rem;
+            margin-top: 0.75rem;
+            background: rgba(254, 246, 243, 0.14);
+        }}
+
+        .providence-overview-project-progress span {{
+            background: linear-gradient(90deg, var(--providence-lavender), var(--providence-coral));
+        }}
+
+        .providence-overview-project-data {{
+            min-width: 5.4rem;
+        }}
+
+        .providence-overview-project-data strong {{
+            display: block;
+            margin-top: 0.22rem;
+            color: var(--providence-blush);
+            font-size: 1rem;
+            font-weight: 850;
+            letter-spacing: -0.05em;
+        }}
+
+        .providence-overview-project + div [class*="providence-status"] {{
+            position: relative;
+            top: -3.1rem;
+            float: right;
+            margin-right: 12.8rem;
+        }}
+
+        .providence-overview-signal-grid {{
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.7rem;
+        }}
+
+        .providence-overview-signal {{
+            min-height: 10rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.1rem;
+            border: 1px solid rgba(254, 246, 243, 0.18);
+            border-radius: 1.2rem;
+        }}
+
+        .providence-overview-signal-risk {{
+            background: linear-gradient(145deg, rgba(255, 138, 122, 0.38), rgba(44, 19, 56, 0.45));
+        }}
+
+        .providence-overview-signal-watch {{
+            background: linear-gradient(145deg, rgba(255, 222, 145, 0.28), rgba(44, 19, 56, 0.45));
+        }}
+
+        .providence-overview-signal strong {{
+            margin-top: 0.7rem;
+            color: var(--providence-blush);
+            font-size: 3.1rem;
+            font-weight: 850;
+            letter-spacing: -0.09em;
+            line-height: 0.8;
+        }}
+
+        .providence-overview-signal p {{
+            margin: 0.7rem 0 0;
+            color: rgba(254, 246, 243, 0.66);
+            font-size: 0.74rem;
+            font-weight: 650;
+        }}
+
+        .providence-overview-people {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            padding: 1.25rem;
+            border: 1px solid rgba(254, 246, 243, 0.16);
+            border-radius: 1.25rem;
+            background: rgba(254, 246, 243, 0.08);
+        }}
+
+        .providence-overview-people h3,
+        .providence-overview-export h3,
+        .providence-overview-empty h3 {{
+            margin: 0.5rem 0 0;
+            color: var(--providence-blush);
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }}
+
+        .providence-overview-people p,
+        .providence-overview-export p,
+        .providence-overview-empty p {{
+            margin: 0.55rem 0 0;
+            color: rgba(254, 246, 243, 0.68);
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }}
+
+        .providence-overview-people-mark {{
+            width: 4.7rem;
+            height: 4.7rem;
+            display: grid;
+            place-items: center;
+            align-content: center;
+            flex: 0 0 auto;
+            border: 1px solid rgba(255, 222, 145, 0.35);
+            border-radius: 50%;
+            background: rgba(255, 222, 145, 0.14);
+        }}
+
+        .providence-overview-people-mark span {{
+            color: var(--providence-butter);
+            font-size: 1.15rem;
+            font-weight: 850;
+            letter-spacing: -0.06em;
+        }}
+
+        .providence-overview-people-mark small {{
+            margin-top: 0.1rem;
+            color: rgba(254, 246, 243, 0.58);
+            font-size: 0.58rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }}
+
+        .providence-overview-export,
+        .providence-overview-empty {{
+            position: relative;
+            overflow: hidden;
+            margin-top: 2.5rem;
+            padding: 1.45rem;
+            border: 1px solid rgba(254, 246, 243, 0.20);
+            border-radius: 1.4rem;
+            background:
+                linear-gradient(100deg, rgba(168, 118, 245, 0.24), transparent 56%),
+                rgba(254, 246, 243, 0.08);
+        }}
+
+        .providence-overview-export + div {{
+            margin-top: 0.85rem;
+        }}
+
+        .providence-overview-export + div .stDownloadButton > button {{
+            width: 100%;
+        }}
+
+        @media (max-width: 860px) {{
+            .providence-overview-hero {{
+                min-height: auto;
+                border-radius: 1.35rem;
+            }}
+
+            .providence-overview-hero-grid {{
+                grid-template-columns: 1fr;
+                margin-top: 2rem;
+            }}
+
+            .providence-overview-orbit {{
+                justify-self: end;
+                margin-top: -5.5rem;
+            }}
+
+            .providence-overview-hero-stats {{
+                flex-wrap: wrap;
+            }}
+
+            .providence-overview-hero-stats div {{
+                min-width: 30%;
+            }}
+
+            .providence-overview-project {{
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }}
+
+            .providence-overview-project-main {{
+                order: 1;
+                width: calc(100% - 3rem);
+            }}
+
+            .providence-overview-project-index {{
+                order: 0;
+            }}
+
+            .providence-overview-project-data {{
+                order: 2;
+                margin-left: 2rem;
+            }}
+
+            .providence-overview-project + div [class*="providence-status"] {{
+                position: static;
+                float: none;
+                display: inline-flex;
+                margin: -0.15rem 0 0.85rem 3rem;
+            }}
+        }}
+
+        @media (max-width: 540px) {{
+            .providence-overview-hero {{
+                padding: 1.2rem;
+            }}
+
+            .providence-overview-burn {{
+                font-size: 4.5rem;
+            }}
+
+            .providence-overview-orbit {{
+                width: 6.7rem;
+                height: 6.7rem;
+                border-width: 0.72rem;
+                margin-top: -4.2rem;
+            }}
+
+            .providence-overview-hero-stats {{
+                gap: 0.8rem;
+            }}
+
+            .providence-overview-hero-stats strong {{
+                font-size: 0.98rem;
+            }}
+
+            .providence-overview-project-data {{
+                min-width: 0;
+                margin-left: 3rem;
+            }}
+
+            .providence-overview-signal-grid {{
+                grid-template-columns: 1fr;
+            }}
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
