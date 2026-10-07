@@ -10,7 +10,7 @@ from src.services.rule_engine import RuleEngine
 
 
 def render_overview_view(workspace: Workspace) -> None:
-    today = st.context.date
+    today = date.today()
     health = RuleEngine().assess_workspace(workspace, today=today)
 
     st.header("Overview")
