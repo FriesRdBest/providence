@@ -3765,6 +3765,232 @@ def apply_global_styles() -> None:
             }}
         }}
 
+
+        /* Phase 7: quality and presentation refinement */
+
+        :root {{
+            --providence-card-radius: 1.3rem;
+            --providence-card-border: rgba(254, 246, 243, 0.18);
+            --providence-content-gap: clamp(1rem, 2vw, 1.5rem);
+        }}
+
+        [data-testid="stMainBlockContainer"],
+        .main .block-container {{
+            max-width: 92rem;
+        }}
+
+        [data-testid="stSidebar"] > div:first-child {{
+            padding-right: 0.85rem;
+            padding-left: 0.85rem;
+        }}
+
+        .providence-brand {{
+            margin-bottom: 1.45rem;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] > div {{
+            gap: 0.55rem;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label {{
+            justify-content: flex-start;
+            min-height: 3.2rem;
+            padding-right: 1.05rem;
+            padding-left: 1.05rem;
+        }}
+
+        .providence-page-header {{
+            margin-bottom: clamp(1.85rem, 3vw, 2.75rem);
+        }}
+
+        .providence-page-header h1 {{
+            text-wrap: balance;
+        }}
+
+        .providence-page-subtitle {{
+            text-wrap: pretty;
+        }}
+
+        .providence-section-heading {{
+            margin-top: clamp(2.25rem, 4vw, 3.5rem);
+            margin-bottom: 1rem;
+        }}
+
+        .providence-section-detail {{
+            line-height: 1.25;
+        }}
+
+        .providence-status {{
+            justify-content: center;
+            min-height: 2rem;
+            padding: 0.36rem 0.7rem;
+            line-height: 1;
+        }}
+
+        .providence-status::before {{
+            flex: 0 0 auto;
+        }}
+
+        .providence-overview-hero,
+        .providence-health-hero,
+        .providence-people-hero {{
+            border-radius: var(--providence-card-radius);
+        }}
+
+        .providence-overview-decision,
+        .providence-health-decision,
+        .providence-people-decision,
+        .providence-project-decision {{
+            border-radius: var(--providence-card-radius);
+        }}
+
+        .providence-overview-metric,
+        .providence-health-signal,
+        .providence-project-metric,
+        .providence-people-signal {{
+            min-height: 12rem;
+            border-radius: var(--providence-card-radius);
+        }}
+
+        .providence-overview-project,
+        .providence-health-project,
+        .providence-project-card,
+        .providence-people-card {{
+            border-color: var(--providence-card-border);
+            border-radius: 1.15rem;
+        }}
+
+        .providence-overview-project:hover,
+        .providence-health-project:hover,
+        .providence-project-card:hover,
+        .providence-people-card:hover {{
+            border-color: rgba(255, 222, 145, 0.38);
+            background: rgba(254, 246, 243, 0.09);
+        }}
+
+        .providence-overview-project h3,
+        .providence-health-project h3,
+        .providence-project-card h3,
+        .providence-people-card h3 {{
+            line-height: 1.15;
+        }}
+
+        .providence-overview-project p,
+        .providence-health-project p,
+        .providence-project-card p,
+        .providence-people-card p {{
+            line-height: 1.4;
+        }}
+
+        .providence-overview-project-data,
+        .providence-health-project-data,
+        .providence-project-card-data,
+        .providence-people-card-data {{
+            align-self: center;
+        }}
+
+        .providence-overview-project-data strong,
+        .providence-health-project-data strong,
+        .providence-project-card-data strong,
+        .providence-people-card-data strong {{
+            font-variant-numeric: tabular-nums;
+        }}
+
+        .providence-overview-hero-stats strong,
+        .providence-health-hero-stats strong,
+        .providence-people-hero-stats strong,
+        .providence-overview-metric strong,
+        .providence-health-signal strong,
+        .providence-project-metric strong,
+        .providence-people-signal strong {{
+            font-variant-numeric: tabular-nums;
+        }}
+
+        .providence-overview-project-progress,
+        .providence-health-project-progress,
+        .providence-project-card-progress,
+        .providence-people-card-progress {{
+            margin-bottom: 0.1rem;
+        }}
+
+        .providence-overview-empty,
+        .providence-health-empty,
+        .providence-project-empty,
+        .providence-people-empty,
+        .providence-overview-export {{
+            border-radius: var(--providence-card-radius);
+        }}
+
+        .providence-overview-empty,
+        .providence-health-empty,
+        .providence-project-empty,
+        .providence-people-empty {{
+            border-color: var(--providence-card-border);
+        }}
+
+        @media (hover: hover) and (pointer: fine) {{
+            .providence-overview-project,
+            .providence-health-project,
+            .providence-project-card,
+            .providence-people-card {{
+                transition:
+                    border-color 160ms ease,
+                    background-color 160ms ease;
+            }}
+        }}
+
+        @media (max-width: 860px) {{
+            [data-testid="stSidebar"] > div:first-child {{
+                padding-right: 0.75rem;
+                padding-left: 0.75rem;
+            }}
+
+            .providence-overview-metric,
+            .providence-health-signal,
+            .providence-project-metric,
+            .providence-people-signal {{
+                min-height: 10.5rem;
+            }}
+        }}
+
+        @media (max-width: 560px) {{
+            .providence-page-header {{
+                padding: 1.1rem;
+            }}
+
+            .providence-section-heading {{
+                margin-top: 2rem;
+            }}
+
+            .providence-section-detail {{
+                width: 100%;
+                padding: 0;
+                border: 0;
+                border-radius: 0;
+                background: transparent;
+            }}
+
+            .providence-overview-metric,
+            .providence-health-signal,
+            .providence-project-metric,
+            .providence-people-signal {{
+                min-height: 9.25rem;
+            }}
+
+            .providence-status {{
+                min-height: 2.2rem;
+            }}
+        }}
+
+        @media (prefers-reduced-motion: reduce) {{
+            .providence-overview-project,
+            .providence-health-project,
+            .providence-project-card,
+            .providence-people-card {{
+                transition: none !important;
+            }}
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
