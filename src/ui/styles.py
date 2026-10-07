@@ -2223,6 +2223,609 @@ def apply_global_styles() -> None:
             }}
         }}
 
+
+        /* Phase 4: Health and Project workflows */
+
+        .providence-health-stage,
+        .providence-project-stage {{
+            display: block;
+            margin-top: -0.75rem;
+        }}
+
+        .providence-health-kicker,
+        .providence-project-kicker,
+        .providence-health-hero-label,
+        .providence-health-signal span,
+        .providence-health-project-data span,
+        .providence-project-metric span,
+        .providence-project-card-data span {{
+            display: inline-flex;
+            color: var(--providence-butter);
+            font-size: 0.66rem;
+            font-weight: 850;
+            letter-spacing: 0.11em;
+            text-transform: uppercase;
+        }}
+
+        .providence-health-hero {{
+            position: relative;
+            overflow: hidden;
+            min-height: 27rem;
+            padding: clamp(1.4rem, 3vw, 2.3rem);
+            border: 1px solid rgba(44, 19, 56, 0.18);
+            border-radius: 1.65rem;
+            background:
+                radial-gradient(circle at 88% 18%, rgba(168, 118, 245, 0.70), transparent 24%),
+                radial-gradient(circle at 68% 90%, rgba(229, 124, 216, 0.48), transparent 25%),
+                linear-gradient(135deg, #FFDE91, #FFD88C 54%, #FFCF9B);
+            box-shadow: 0 24px 65px rgba(12, 4, 18, 0.23);
+            color: var(--providence-plum);
+        }}
+
+        .providence-health-hero::after {{
+            position: absolute;
+            right: -4rem;
+            bottom: -6.5rem;
+            width: 16rem;
+            height: 16rem;
+            border: 1px solid rgba(44, 19, 56, 0.17);
+            border-radius: 50%;
+            content: "";
+        }}
+
+        .providence-health-hero-topline,
+        .providence-health-pace-labels,
+        .providence-health-hero-stats,
+        .providence-health-decision-foot {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }}
+
+        .providence-health-live {{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.42rem;
+            padding: 0.4rem 0.6rem;
+            border: 1px solid rgba(44, 19, 56, 0.16);
+            border-radius: 999px;
+            background: rgba(254, 246, 243, 0.34);
+            color: rgba(44, 19, 56, 0.82);
+            font-size: 0.68rem;
+            font-weight: 750;
+        }}
+
+        .providence-health-live i {{
+            width: 0.42rem;
+            height: 0.42rem;
+            border-radius: 50%;
+            background: #2C1338;
+            box-shadow: 0 0 0 0.22rem rgba(44, 19, 56, 0.12);
+        }}
+
+        .providence-health-hero-grid {{
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 1.35rem;
+            margin: clamp(2rem, 4.5vw, 3.5rem) 0 1.3rem;
+        }}
+
+        .providence-health-hero strong {{
+            display: block;
+            margin-top: 0.55rem;
+            color: var(--providence-plum);
+            font-size: clamp(4rem, 8vw, 6.8rem);
+            font-weight: 850;
+            letter-spacing: -0.1em;
+            line-height: 0.78;
+        }}
+
+        .providence-health-hero p {{
+            max-width: 25rem;
+            margin: 0.9rem 0 0;
+            color: rgba(44, 19, 56, 0.75);
+            font-size: 0.94rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }}
+
+        .providence-health-orbit {{
+            width: clamp(6.5rem, 12vw, 9.5rem);
+            height: clamp(6.5rem, 12vw, 9.5rem);
+            display: grid;
+            place-items: center;
+            align-content: center;
+            border: 0.9rem solid rgba(44, 19, 56, 0.10);
+            border-top-color: var(--providence-plum);
+            border-right-color: var(--providence-lavender);
+            border-radius: 50%;
+            background: rgba(254, 246, 243, 0.26);
+            transform: rotate(18deg);
+        }}
+
+        .providence-health-orbit span,
+        .providence-health-orbit small {{
+            transform: rotate(-18deg);
+        }}
+
+        .providence-health-orbit span {{
+            color: var(--providence-plum);
+            font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+            font-weight: 850;
+            letter-spacing: -0.08em;
+        }}
+
+        .providence-health-orbit small {{
+            margin-top: 0.18rem;
+            color: rgba(44, 19, 56, 0.7);
+            font-size: 0.58rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }}
+
+        .providence-health-pace-track,
+        .providence-health-project-progress,
+        .providence-project-card-progress {{
+            overflow: hidden;
+            height: 0.62rem;
+            border-radius: 999px;
+            background: rgba(44, 19, 56, 0.15);
+        }}
+
+        .providence-health-pace-track span,
+        .providence-health-project-progress span,
+        .providence-project-card-progress span {{
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+        }}
+
+        .providence-health-pace-track span {{
+            background: linear-gradient(
+                90deg,
+                var(--providence-plum),
+                var(--providence-lavender),
+                var(--providence-orchid),
+                var(--providence-coral)
+            );
+        }}
+
+        .providence-health-pace-labels {{
+            margin-top: 0.6rem;
+            color: rgba(44, 19, 56, 0.7);
+            font-size: 0.72rem;
+            font-weight: 750;
+        }}
+
+        .providence-health-hero-stats {{
+            position: relative;
+            z-index: 1;
+            margin-top: 1.4rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(44, 19, 56, 0.16);
+        }}
+
+        .providence-health-hero-stats div {{
+            flex: 1;
+        }}
+
+        .providence-health-hero-stats span,
+        .providence-health-project-data span,
+        .providence-health-signal span {{
+            color: rgba(44, 19, 56, 0.66);
+        }}
+
+        .providence-health-hero-stats strong {{
+            margin-top: 0.2rem;
+            font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+            letter-spacing: -0.05em;
+        }}
+
+        .providence-health-decision {{
+            position: relative;
+            overflow: hidden;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: clamp(1.35rem, 2.4vw, 1.9rem);
+            border: 1px solid rgba(254, 246, 243, 0.26);
+            border-radius: 1.65rem;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(255, 138, 122, 0.32), transparent 34%),
+                linear-gradient(145deg, rgba(168, 118, 245, 0.42), rgba(44, 19, 56, 0.92) 58%);
+            box-shadow: var(--providence-shadow-deep);
+            color: var(--providence-blush);
+        }}
+
+        .providence-health-decision h2,
+        .providence-project-decision h2 {{
+            max-width: 13ch;
+            margin: 1.35rem 0 0.8rem;
+            color: var(--providence-blush);
+            font-size: clamp(1.45rem, 2.8vw, 2rem);
+            font-weight: 800;
+            letter-spacing: -0.06em;
+            line-height: 1.05;
+        }}
+
+        .providence-health-decision p,
+        .providence-project-decision p {{
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            color: rgba(254, 246, 243, 0.78);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }}
+
+        .providence-health-decision::after,
+        .providence-project-decision::after {{
+            position: absolute;
+            right: -2.8rem;
+            bottom: -2.8rem;
+            width: 9rem;
+            height: 9rem;
+            border: 1px solid rgba(254, 246, 243, 0.22);
+            border-radius: 50%;
+            content: "";
+        }}
+
+        .providence-health-decision-foot {{
+            position: relative;
+            z-index: 1;
+            margin-top: 1.8rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(254, 246, 243, 0.18);
+            color: rgba(254, 246, 243, 0.62);
+            font-size: 0.7rem;
+            font-weight: 750;
+        }}
+
+        .providence-health-decision-foot strong {{
+            color: var(--providence-butter);
+            font-size: 0.82rem;
+        }}
+
+        .providence-health-signal,
+        .providence-project-metric {{
+            position: relative;
+            overflow: hidden;
+            min-height: 11.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.2rem;
+            border: 1px solid rgba(254, 246, 243, 0.20);
+            border-radius: 1.3rem;
+            box-shadow: 0 16px 38px rgba(12, 4, 18, 0.18);
+        }}
+
+        .providence-health-signal::after,
+        .providence-project-metric::after {{
+            position: absolute;
+            top: -2rem;
+            right: -2rem;
+            width: 6.5rem;
+            height: 6.5rem;
+            border-radius: 50%;
+            content: "";
+        }}
+
+        .providence-health-signal-risk,
+        .providence-project-metric-coral {{
+            background: linear-gradient(
+                145deg,
+                rgba(255, 138, 122, 0.42),
+                rgba(254, 246, 243, 0.10)
+            );
+        }}
+
+        .providence-health-signal-risk::after,
+        .providence-project-metric-coral::after {{
+            background: rgba(255, 138, 122, 0.32);
+        }}
+
+        .providence-health-signal-watch,
+        .providence-project-metric-pink {{
+            background: linear-gradient(
+                145deg,
+                rgba(229, 124, 216, 0.40),
+                rgba(254, 246, 243, 0.10)
+            );
+        }}
+
+        .providence-health-signal-watch::after,
+        .providence-project-metric-pink::after {{
+            background: rgba(229, 124, 216, 0.32);
+        }}
+
+        .providence-health-signal-capacity,
+        .providence-project-metric-violet {{
+            background: linear-gradient(
+                145deg,
+                rgba(168, 118, 245, 0.42),
+                rgba(254, 246, 243, 0.10)
+            );
+        }}
+
+        .providence-health-signal-capacity::after,
+        .providence-project-metric-violet::after {{
+            background: rgba(168, 118, 245, 0.32);
+        }}
+
+        .providence-health-signal strong,
+        .providence-project-metric strong {{
+            position: relative;
+            z-index: 1;
+            display: block;
+            margin-top: 0.7rem;
+            color: var(--providence-blush);
+            font-size: clamp(2.2rem, 4vw, 3.2rem);
+            font-weight: 850;
+            letter-spacing: -0.09em;
+            line-height: 0.82;
+        }}
+
+        .providence-health-signal p,
+        .providence-project-metric p {{
+            position: relative;
+            z-index: 1;
+            margin: 0.75rem 0 0;
+            color: rgba(254, 246, 243, 0.74);
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }}
+
+        .providence-health-project,
+        .providence-project-card {{
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1.1rem;
+            margin-bottom: 0.7rem;
+            padding: 1.05rem;
+            border: 1px solid rgba(254, 246, 243, 0.14);
+            border-radius: 1.15rem;
+            background: rgba(254, 246, 243, 0.07);
+            box-shadow: inset 0 1px 0 rgba(254, 246, 243, 0.08);
+        }}
+
+        .providence-health-project-main,
+        .providence-project-card-main {{
+            min-width: 0;
+            flex: 1;
+        }}
+
+        .providence-health-project h3,
+        .providence-project-card h3 {{
+            margin: 0;
+            color: var(--providence-blush);
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+        }}
+
+        .providence-health-project p,
+        .providence-project-card p {{
+            margin: 0.15rem 0 0;
+            color: rgba(254, 246, 243, 0.58);
+            font-size: 0.76rem;
+        }}
+
+        .providence-health-project-progress,
+        .providence-project-card-progress {{
+            height: 0.38rem;
+            margin-top: 0.7rem;
+            background: rgba(254, 246, 243, 0.14);
+        }}
+
+        .providence-health-project-progress span,
+        .providence-project-card-progress span {{
+            background: linear-gradient(
+                90deg,
+                var(--providence-lavender),
+                var(--providence-coral)
+            );
+        }}
+
+        .providence-health-project-data,
+        .providence-project-card-data {{
+            min-width: 5.5rem;
+        }}
+
+        .providence-health-project-data span,
+        .providence-project-card-data span {{
+            color: rgba(254, 246, 243, 0.58);
+        }}
+
+        .providence-health-project-data strong,
+        .providence-project-card-data strong {{
+            display: block;
+            margin-top: 0.2rem;
+            color: var(--providence-blush);
+            font-size: 1rem;
+            font-weight: 850;
+            letter-spacing: -0.05em;
+        }}
+
+        .providence-health-project-data small,
+        .providence-project-card-data small {{
+            display: block;
+            margin-top: 0.12rem;
+            color: rgba(254, 246, 243, 0.48);
+            font-size: 0.64rem;
+        }}
+
+        .providence-project-card-message {{
+            margin-top: 0.65rem !important;
+            color: rgba(254, 246, 243, 0.66) !important;
+            font-size: 0.78rem !important;
+            line-height: 1.45 !important;
+        }}
+
+        .providence-project-count {{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 4.4rem;
+            padding: 0.85rem 1rem;
+            border: 1px solid rgba(254, 246, 243, 0.16);
+            border-radius: 1rem;
+            background: rgba(254, 246, 243, 0.07);
+        }}
+
+        .providence-project-count span,
+        .providence-project-count small {{
+            color: rgba(254, 246, 243, 0.58);
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }}
+
+        .providence-project-count strong {{
+            color: var(--providence-butter);
+            font-size: 1.6rem;
+            font-weight: 850;
+            letter-spacing: -0.07em;
+        }}
+
+        .providence-project-decision {{
+            position: relative;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            padding: clamp(1.35rem, 2.4vw, 1.9rem);
+            border: 1px solid rgba(254, 246, 243, 0.24);
+            border-radius: 1.5rem;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(255, 138, 122, 0.28), transparent 34%),
+                linear-gradient(145deg, rgba(168, 118, 245, 0.38), rgba(44, 19, 56, 0.92) 58%);
+            box-shadow: var(--providence-shadow-deep);
+        }}
+
+        .providence-project-empty,
+        .providence-health-empty {{
+            position: relative;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            padding: 1.4rem;
+            border: 1px solid rgba(254, 246, 243, 0.20);
+            border-radius: 1.35rem;
+            background:
+                linear-gradient(100deg, rgba(168, 118, 245, 0.24), transparent 56%),
+                rgba(254, 246, 243, 0.08);
+        }}
+
+        .providence-project-empty h3,
+        .providence-health-empty h3 {{
+            margin: 0.5rem 0 0;
+            color: var(--providence-blush);
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }}
+
+        .providence-project-empty p,
+        .providence-health-empty p {{
+            margin: 0.55rem 0 0;
+            color: rgba(254, 246, 243, 0.68);
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }}
+
+        @media (max-width: 860px) {{
+            .providence-health-hero,
+            .providence-health-decision,
+            .providence-project-decision {{
+                border-radius: 1.3rem;
+            }}
+
+            .providence-health-hero {{
+                min-height: auto;
+            }}
+
+            .providence-health-hero-grid {{
+                grid-template-columns: 1fr;
+                margin-top: 1.7rem;
+            }}
+
+            .providence-health-orbit {{
+                justify-self: end;
+                margin-top: -4.5rem;
+            }}
+
+            .providence-health-hero-stats {{
+                flex-wrap: wrap;
+            }}
+
+            .providence-health-hero-stats div {{
+                min-width: 30%;
+            }}
+
+            .providence-health-project,
+            .providence-project-card {{
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }}
+
+            .providence-health-project-main,
+            .providence-project-card-main {{
+                order: 1;
+                width: calc(100% - 3rem);
+            }}
+
+            .providence-health-project-data,
+            .providence-project-card-data {{
+                order: 2;
+                min-width: 0;
+                margin-left: 3rem;
+            }}
+
+            .providence-project-card-message {{
+                margin-left: 3rem !important;
+            }}
+        }}
+
+        @media (max-width: 540px) {{
+            .providence-health-hero {{
+                padding: 1.15rem;
+            }}
+
+            .providence-health-hero strong {{
+                font-size: 4rem;
+            }}
+
+            .providence-health-orbit {{
+                width: 6.3rem;
+                height: 6.3rem;
+                border-width: 0.68rem;
+                margin-top: -3.5rem;
+            }}
+
+            .providence-health-hero-stats {{
+                gap: 0.75rem;
+            }}
+
+            .providence-health-hero-stats strong {{
+                font-size: 0.95rem;
+            }}
+
+            .providence-health-signal,
+            .providence-project-metric {{
+                min-height: 9.5rem;
+            }}
+
+            .providence-health-project-data,
+            .providence-project-card-data {{
+                margin-left: 3rem;
+            }}
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
