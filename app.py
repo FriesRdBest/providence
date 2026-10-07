@@ -36,7 +36,7 @@ def load_workspace() -> Workspace:
         ),
     ]
 
-    return Workspace(projects=projects, today=today)
+    return Workspace(name="Providence Workspace", projects=projects, today=today)
 
 
 def main() -> None:
