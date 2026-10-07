@@ -104,7 +104,7 @@ def render_overview_view(workspace: Workspace) -> None:
 
     st.markdown('<section class="providence-overview-stage">', unsafe_allow_html=True)
 
-    hero_column, insight_column = st.columns([1.7, 0.9], gap="large")
+    hero_column, insight_column = st.columns([1, 1], gap="large")
 
     with hero_column:
         st.markdown(

@@ -179,7 +179,7 @@ def render_air_view(workspace: Workspace) -> None:
 
     st.markdown('<section class="providence-people-stage">', unsafe_allow_html=True)
 
-    capacity_column, insight_column = st.columns([1.65, 0.95], gap="large")
+    capacity_column, insight_column = st.columns([1, 1], gap="large")
 
     with capacity_column:
         st.markdown(

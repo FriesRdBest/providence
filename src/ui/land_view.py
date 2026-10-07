@@ -88,7 +88,7 @@ def render_land_view(workspace: Workspace) -> None:
 
     st.markdown('<section class="providence-health-stage">', unsafe_allow_html=True)
 
-    triage_column, decision_column = st.columns([1.65, 0.95], gap="large")
+    triage_column, decision_column = st.columns([1, 1], gap="large")
 
     with triage_column:
         capacity_note = (
