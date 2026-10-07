@@ -5,6 +5,7 @@ from src.ui.sea_view import render_sea_view
 from src.ui.air_view import render_air_view
 from src.ui.overview_view import render_overview_view
 from datetime import date, timedelta
+from decimal import Decimal
 
 
 st.set_page_config(page_title="Providence", layout="wide")
@@ -21,30 +22,30 @@ def load_workspace() -> Workspace:
     projects = [
         Project(
             name="Alpha",
-            budget_hours=40.0,
+            budget_hours=Decimal("40.0"),
             deadline=today + timedelta(days=30),
             logs=[
-                Log(alice, 2.0, today - timedelta(days=1)),
-                Log(bob, 1.5, today - timedelta(days=2)),
-                Log(charlie, 3.0, today - timedelta(days=3)),
+                Log(alice, Decimal("2.0"), today - timedelta(days=1)),
+                Log(bob, Decimal("1.5"), today - timedelta(days=2)),
+                Log(charlie, Decimal("3.0"), today - timedelta(days=3)),
             ],
         ),
         Project(
             name="Beta",
-            budget_hours=60.0,
+            budget_hours=Decimal("60.0"),
             deadline=today + timedelta(days=45),
             logs=[
-                Log(alice, 4.0, today - timedelta(days=1)),
-                Log(bob, 2.5, today - timedelta(days=2)),
+                Log(alice, Decimal("4.0"), today - timedelta(days=1)),
+                Log(bob, Decimal("2.5"), today - timedelta(days=2)),
             ],
         ),
         Project(
             name="Gamma",
-            budget_hours=80.0,
+            budget_hours=Decimal("80.0"),
             deadline=today + timedelta(days=60),
             logs=[
-                Log(alice, 1.0, today - timedelta(days=1)),
-                Log(charlie, 2.0, today - timedelta(days=2)),
+                Log(alice, Decimal("1.0"), today - timedelta(days=1)),
+                Log(charlie, Decimal("2.0"), today - timedelta(days=2)),
             ],
         ),
     ]
