@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import date
+
 import streamlit as st
 
 from src.domain.models import ProjectStatus, Workspace
@@ -7,10 +9,10 @@ from src.services.rule_engine import RuleEngine
 
 
 def render_land_view(workspace: Workspace) -> None:
-    today = st.context.date
+    today = date.today()
     health = RuleEngine().assess_workspace(workspace, today=today)
 
-    st.header("Land")
+    st.header("Health")
     st.subheader("Weekly organisational health")
 
     with st.container(border=True):
