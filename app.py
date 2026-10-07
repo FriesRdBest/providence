@@ -94,7 +94,7 @@ def render_navigation() -> str:
     with st.sidebar:
         render_brand()
         page = st.radio(
-            label="Navigation",
+            label="",
             options=("Overview", "Health", "Project", "People"),
             label_visibility="collapsed",
             key="providence_navigation",
