@@ -1,4 +1,6 @@
 import streamlit as st
+from datetime import date
+
 from src.domain.models import Workspace, ProjectStatus
 
 
@@ -15,9 +17,9 @@ def render_sea_view(workspace: Workspace) -> None:
         project
         for project in workspace.projects
         if filter_status == "All"
-        or (filter_status == "Healthy" and project.status(workspace.today) == ProjectStatus.HEALTHY)
-        or (filter_status == "Watch" and project.status(workspace.today) == ProjectStatus.WATCH)
-        or (filter_status == "At risk" and project.status(workspace.today) == ProjectStatus.AT_RISK)
+        or (filter_status == "Healthy" and project.status(date.today()) == ProjectStatus.HEALTHY)
+        or (filter_status == "Watch" and project.status(date.today()) == ProjectStatus.WATCH)
+        or (filter_status == "At risk" and project.status(date.today()) == ProjectStatus.AT_RISK)
     ]
 
     if not projects:
@@ -26,7 +28,7 @@ def render_sea_view(workspace: Workspace) -> None:
 
     for project in projects:
         with st.container():
-            status = project.status(workspace.today)
+            status = project.status(date.today())
             st.markdown(f"**{project.name}**")
             st.caption(f"Budget: {project.budget_hours:.2f}h | Logged: {project.logged_hours:.2f}h")
 
