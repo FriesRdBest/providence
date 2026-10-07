@@ -1,20 +1,20 @@
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date
 from decimal import Decimal
-from enum import Enum
+from enum import StrEnum
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
-class ProjectStatus(str, Enum):
+class ProjectStatus(StrEnum):
     HEALTHY = "healthy"
     WATCH = "watch"
     AT_RISK = "at_risk"
 
 
-class PersonStatus(str, Enum):
+class PersonStatus(StrEnum):
     AVAILABLE = "available"
     BUSY = "busy"
     OVERBOOKED = "overbooked"

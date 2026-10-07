@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
-from decimal import Decimal
 
 from src.domain.models import ProjectStatus, Workspace
 
@@ -33,7 +32,11 @@ class AIInsightService:
 
         return InsightResponse(
             query=query,
-            answer="I cannot answer this query with the current data model. Try asking about budget depletion, overbooked people, or project risk.",
+            answer=(
+                "I can help with capacity, project health, budget pace, and delivery risk "
+                "based on the current data model. Try asking about budget depletion, "
+                "overbooked people, or project risk."
+            ),
             confidence="low",
             supporting_facts=("Query does not match supported insight patterns",),
         )
@@ -50,7 +53,10 @@ class AIInsightService:
         if not at_risk_projects:
             return InsightResponse(
                 query=query,
-                answer="No active project faces immediate budget depletion this week. All projects are within acceptable burn boundaries.",
+                answer=(
+                    "No projects show immediate budget depletion this week. "
+                    "All projects are within acceptable burn boundaries."
+                ),
                 confidence="high",
                 supporting_facts=("No projects classified as at risk",),
             )
@@ -105,7 +111,10 @@ class AIInsightService:
 
         return InsightResponse(
             query=query,
-            answer="Capacity alerts detected. Review the Air view for detailed person level information.",
+            answer=(
+                "Capacity alerts detected. Review the Air view for detailed "
+                "person level information."
+            ),
             confidence="medium",
             supporting_facts=tuple(facts),
         )
@@ -133,14 +142,20 @@ class AIInsightService:
         if not facts:
             return InsightResponse(
                 query=query,
-                answer="No projects are currently classified as at risk. All projects are tracking within expected boundaries.",
+                answer=(
+                    "No projects are currently classified as at risk. "
+                    "All projects are tracking within expected boundaries."
+                ),
                 confidence="high",
                 supporting_facts=("No risk alerts detected",),
             )
 
         return InsightResponse(
             query=query,
-            answer="Project risk alerts detected. Review the Land and Sea views for detailed project level information.",
+            answer=(
+                "Project risk alerts detected. Review the Land and Sea views "
+                "for detailed project level information."
+            ),
             confidence="medium",
             supporting_facts=tuple(facts),
         )
