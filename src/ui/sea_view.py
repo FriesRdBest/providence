@@ -2,7 +2,7 @@ import streamlit as st
 from src.domain.models import Workspace, ProjectStatus
 
 
-def render(workspace: Workspace, today) -> None:
+def render_sea_view(workspace: Workspace) -> None:
     st.header("Sea View")
 
     filter_status = st.selectbox(
@@ -15,9 +15,9 @@ def render(workspace: Workspace, today) -> None:
         project
         for project in workspace.projects
         if filter_status == "All"
-        or (filter_status == "Healthy" and project.status(today) == ProjectStatus.HEALTHY)
-        or (filter_status == "Watch" and project.status(today) == ProjectStatus.WATCH)
-        or (filter_status == "At risk" and project.status(today) == ProjectStatus.AT_RISK)
+        or (filter_status == "Healthy" and project.status(workspace.today) == ProjectStatus.HEALTHY)
+        or (filter_status == "Watch" and project.status(workspace.today) == ProjectStatus.WATCH)
+        or (filter_status == "At risk" and project.status(workspace.today) == ProjectStatus.AT_RISK)
     ]
 
     if not projects:
@@ -26,7 +26,7 @@ def render(workspace: Workspace, today) -> None:
 
     for project in projects:
         with st.container():
-            status = project.status(today)
+            status = project.status(workspace.today)
             st.markdown(f"**{project.name}**")
             st.caption(f"Budget: {project.budget_hours:.2f}h | Logged: {project.logged_hours:.2f}h")
 
