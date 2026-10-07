@@ -1,8 +1,9 @@
 import streamlit as st
 from src.domain.models import Workspace, Project, Log
-from src.ui.project_view import render_project_view
-from src.ui.people_view import render_people_view
-from src.ui.health_view import render_health_view
+from src.ui.land_view import render_land_view
+from src.ui.sea_view import render_sea_view
+from src.ui.air_view import render_air_view
+from src.ui.overview_view import render_overview_view
 from datetime import date, timedelta
 
 
@@ -59,13 +60,13 @@ def main() -> None:
     tab_project, tab_people, tab_health = st.tabs(["Project", "People", "Health"])
 
     with tab_project:
-        render_project_view(workspace)
+        render_sea_view(workspace)
 
     with tab_people:
-        render_people_view(workspace)
+        render_air_view(workspace)
 
     with tab_health:
-        render_health_view(workspace)
+        render_land_view(workspace)
 
 
 if __name__ == "__main__":
