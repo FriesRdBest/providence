@@ -1,35 +1,17 @@
 # Providence
 
-Providence is a time intelligence application for managers who need a clear view of capacity, project health, and delivery risk.
+A Streamlit-based application.
 
-It turns simulated workspace records into practical decisions across three connected views. Land presents weekly organisational health. Sea presents project delivery status. Air presents current people capacity.
+## Running in GitHub Codespaces
 
-## Live application
+This repository includes a pinned Codespaces configuration (`.devcontainer/`) that sets up a reproducible Python 3.12 environment with all dependencies preinstalled.
 
-The application will be available through Streamlit Cloud after deployment.
+1. From the repository page, click **Code** → **Codespaces** → **Create codespace on main**.
+2. Wait for the container to build and the `postCreate.sh` script to finish installing dependencies.
+3. In the integrated terminal, run:
+   ```bash
+   streamlit run app.py
+   ```
+4. Streamlit will open automatically on port 8501 in your browser.
 
-## Purpose
-
-Providence demonstrates thoughtful product engineering through accessible language, validated data, predictable rules, and a carefully structured interface.
-
-## Architecture
-
-The application separates domain models, data access, business rules, presentation components, and persistent records. Each layer has a narrow responsibility so that changes remain understandable and safe.
-
-## Documentation
-
-Read `docs/architecture.md` for the application structure.
-
-Read `docs/design-system.md` for visual language decisions.
-
-Read `docs/data-contracts.md` for data validation rules.
-
-Read `docs/operating-plan.md` for the ninety day operating plan.
-
-## Local use
-
-Install the dependencies listed in `requirements.txt`, then run `streamlit run app.py`.
-
-## Licence
-
-This project is licensed under the Apache License, Version 2.0. See `LICENSE` for the complete licence text.
+The configuration also installs Ruff and Pytest for linting and testing.
