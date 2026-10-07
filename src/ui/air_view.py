@@ -12,7 +12,7 @@ def render_air_view(workspace: Workspace) -> None:
     today = date.today()
 
     st.header("People")
-    st.subheader("Current people capacity")
+    st.caption("Real time capacity monitoring and availability")
 
     filter_status = st.radio(
         "Filter by status",
@@ -53,53 +53,51 @@ def render_air_view(workspace: Workspace) -> None:
         }[status]
 
         with st.container(border=True):
-            col1, col2, col3, col4 = st.columns(4)
+            col_main, col_status = st.columns([4, 1], gap="large")
 
-            with col1:
-                st.metric(
-                    label="Name",
-                    value=person.name,
-                )
+            with col_main:
+                st.markdown(f"### {person.name}")
+                st.caption(f"{person.role}")
 
-            with col2:
-                st.metric(
-                    label="Role",
-                    value=person.role,
-                )
+                col1, col2, col3 = st.columns(3, gap="large")
 
-            with col3:
-                st.metric(
-                    label="Logged today",
-                    value=f"{person.logged_hours_today:,.1f} h",
-                )
+                with col1:
+                    st.metric(
+                        label="Logged today",
+                        value=f"{person.logged_hours_today:,.1f} h",
+                    )
 
-            with col4:
-                st.metric(
-                    label="Status",
-                    value=status_label,
-                    delta=None,
-                )
+                with col2:
+                    st.metric(
+                        label="Capacity",
+                        value=f"{person.daily_capacity_hours:,.0f} h",
+                    )
 
-            st.progress(
-                float(min(person.logged_hours_today / person.daily_capacity_hours, Decimal("1"))),
-                text="Daily capacity utilisation",
-            )
+                with col3:
+                    remaining = person.capacity_remaining
+                    st.metric(
+                        label="Remaining",
+                        value=f"{remaining:,.1f} h",
+                    )
 
-            remaining = person.capacity_remaining
-            if remaining > Decimal("0"):
-                st.caption(f"Capacity remaining: {remaining:,.1f} hours")
-            else:
-                st.caption("No capacity remaining today")
+            with col_status:
+                if status == PersonStatus.OVERBOOKED:
+                    st.error(f"**{status_label}**")
+                elif status == PersonStatus.MISSING_TIME:
+                    st.warning(f"**{status_label}**")
+                elif status == PersonStatus.BUSY:
+                    st.info(f"**{status_label}**")
+                else:
+                    st.success(f"**{status_label}**")
+
+            utilisation = float(min(person.logged_hours_today / person.daily_capacity_hours, Decimal("1")))
+            st.progress(utilisation)
 
             if status == PersonStatus.OVERBOOKED:
                 st.error(
                     "This person has exceeded their daily capacity. Review allocation immediately."
                 )
             elif status == PersonStatus.MISSING_TIME:
-                st.warning(
-                    "This person has not logged any time today. Confirm availability."
-                )
-            elif status == PersonStatus.BUSY:
                 st.info(
-                    "This person has limited capacity remaining. Plan accordingly."
+                    "This person has not logged any time today. Confirm availability."
                 )
