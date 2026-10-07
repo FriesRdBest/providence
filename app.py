@@ -1,87 +1,72 @@
-from __future__ import annotations
-
-import sys
-from pathlib import Path
-
 import streamlit as st
+from src.domain.models import Workspace, Project, Log
+from src.ui.project_view import render_project_view
+from src.ui.people_view import render_people_view
+from src.ui.health_view import render_health_view
+from datetime import date, timedelta
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from src.services.workspace_service import WorkspaceService
-from src.services.ai_insight_service import AIInsightService
-from src.ui.styles import apply_global_styles
-from src.ui.land_view import render_land_view
-from src.ui.sea_view import render_sea_view
-from src.ui.air_view import render_air_view
-from src.ui.overview_view import render_overview_view
+st.set_page_config(page_title="Providence", layout="wide")
 
-st.set_page_config(
-    page_title="Providence",
-    page_icon="P",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
 
-apply_global_styles()
+@st.cache_data
+def load_workspace() -> Workspace:
+    today = date.today()
 
-try:
-    service = WorkspaceService()
-    workspace = service.load_workspace()
-    ai_service = AIInsightService()
-    workspace_loaded = True
-except Exception as error:
-    workspace_loaded = False
-    workspace = None
-    ai_service = None
-    st.error(f"Failed to load workspace: {error}")
-    st.info("Check the Streamlit Cloud deployment logs for details.")
+    alice = "Alice"
+    bob = "Bob"
+    charlie = "Charlie"
 
-st.title("Providence")
-st.caption("Time intelligence for clear management decisions")
+    projects = [
+        Project(
+            name="Alpha",
+            budget_hours=40.0,
+            deadline=today + timedelta(days=30),
+            logs=[
+                Log(alice, 2.0, today - timedelta(days=1)),
+                Log(bob, 1.5, today - timedelta(days=2)),
+                Log(charlie, 3.0, today - timedelta(days=3)),
+            ],
+        ),
+        Project(
+            name="Beta",
+            budget_hours=60.0,
+            deadline=today + timedelta(days=45),
+            logs=[
+                Log(alice, 4.0, today - timedelta(days=1)),
+                Log(bob, 2.5, today - timedelta(days=2)),
+            ],
+        ),
+        Project(
+            name="Gamma",
+            budget_hours=80.0,
+            deadline=today + timedelta(days=60),
+            logs=[
+                Log(alice, 1.0, today - timedelta(days=1)),
+                Log(charlie, 2.0, today - timedelta(days=2)),
+            ],
+        ),
+    ]
 
-if workspace_loaded:
-    st.sidebar.title("Providence")
-    view = st.sidebar.radio(
-        "Choose a view",
-        ("Health", "Project", "People", "Overview"),
-        index=0,
-    )
+    return Workspace(projects=projects, today=today)
 
-    if view == "Health":
-        render_land_view(workspace)
-    elif view == "Project":
-        render_sea_view(workspace)
-    elif view == "People":
-        render_air_view(workspace)
-    else:
-        render_overview_view(workspace)
 
-    st.divider()
+def main() -> None:
+    workspace = load_workspace()
 
-    with st.container(border=True):
-        st.subheader("AI Predictive Insight Box")
-        st.caption("Ask a plain language question about your workspace")
+    st.title("Providence")
 
-        query = st.text_input(
-            "Your question",
-            placeholder="Which active project faces immediate budget depletion this week?",
-            label_visibility="collapsed",
-        )
+    tab_project, tab_people, tab_health = st.tabs(["Project", "People", "Health"])
 
-        if query:
-            insight = ai_service.answer_query(workspace, query)
+    with tab_project:
+        render_project_view(workspace)
 
-            with st.container(border=True):
-                st.markdown(f"**Query:** {insight.query}")
-                st.markdown(f"**Answer:** {insight.answer}")
-                st.caption(f"Confidence: {insight.confidence}")
+    with tab_people:
+        render_people_view(workspace)
 
-                if insight.supporting_facts:
-                    st.write("**Supporting facts:**")
-                    for fact in insight.supporting_facts:
-                        st.write(f"- {fact}")
+    with tab_health:
+        render_health_view(workspace)
 
-    st.caption(
-        f"Validated workspace loaded: {workspace.name}. "
-        f"{len(workspace.projects)} projects and {len(workspace.people)} people are available."
-    )
+
+if __name__ == "__main__":
+    main()
