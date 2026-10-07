@@ -1,11 +1,12 @@
-import streamlit as st
 from datetime import date
 
-from src.domain.models import Workspace, ProjectStatus
+import streamlit as st
+
+from src.domain.models import ProjectStatus, Workspace
 
 
 def render_air_view(workspace: Workspace) -> None:
-    st.header("Air View")
+    st.header("People")
 
     filter_status = st.selectbox(
         "Filter by status",

@@ -53,18 +53,12 @@ def render_land_view(workspace: Workspace) -> None:
 
     st.subheader("Project health summary")
 
-    for idx, project in enumerate(workspace.projects):
+    for project in workspace.projects:
         status = project.status(today)
         status_label = {
             ProjectStatus.HEALTHY: "Healthy",
             ProjectStatus.WATCH: "Watch",
             ProjectStatus.AT_RISK: "At risk",
-        }[status]
-
-        status_color = {
-            ProjectStatus.HEALTHY: "success",
-            ProjectStatus.WATCH: "warning",
-            ProjectStatus.AT_RISK: "error",
         }[status]
 
         with st.container(border=True):

@@ -1,14 +1,24 @@
-import streamlit as st
-from src.domain.models import Workspace, Project, Log
-from src.ui.land_view import render_land_view
-from src.ui.sea_view import render_sea_view
-from src.ui.air_view import render_air_view
-from src.ui.overview_view import render_overview_view
+from __future__ import annotations
+
 from datetime import date, timedelta
 from decimal import Decimal
 
+import streamlit as st
 
-st.set_page_config(page_title="Providence", layout="wide")
+from src.domain.models import Project, Workspace
+from src.ui.air_view import render_air_view
+from src.ui.components import render_brand
+from src.ui.land_view import render_land_view
+from src.ui.overview_view import render_overview_view
+from src.ui.sea_view import render_sea_view
+from src.ui.styles import apply_global_styles
+
+st.set_page_config(
+    page_title="Providence",
+    page_icon="P",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
 
 
 @st.cache_data
@@ -18,42 +28,69 @@ def load_workspace() -> Workspace:
     projects = [
         Project(
             name="Alpha",
-            client="Client A",
+            client="Northstar",
             budget_hours=Decimal("40.0"),
+            logged_hours=Decimal("6.5"),
             delivery_date=today + timedelta(days=30),
         ),
         Project(
             name="Beta",
-            client="Client B",
+            client="Harbor",
             budget_hours=Decimal("60.0"),
+            logged_hours=Decimal("9.0"),
             delivery_date=today + timedelta(days=45),
         ),
         Project(
             name="Gamma",
-            client="Client C",
+            client="Summit",
             budget_hours=Decimal("80.0"),
+            logged_hours=Decimal("3.0"),
             delivery_date=today + timedelta(days=60),
         ),
     ]
 
-    return Workspace(name="Providence Workspace", projects=projects, today=today)
+    return Workspace(
+        name="Providence workspace",
+        projects=projects,
+        people=[],
+        today=today,
+    )
+
+
+def render_navigation() -> str:
+    with st.sidebar:
+        render_brand()
+        st.markdown('<div class="providence-nav-title">Workspace</div>', unsafe_allow_html=True)
+        page = st.radio(
+            label="Navigation",
+            options=("Overview", "Health", "Project", "People"),
+            label_visibility="collapsed",
+            key="providence_navigation",
+        )
+        st.markdown(
+            """
+            <div class="providence-nav-note">
+                Clear view of delivery pace, budget boundaries, and team capacity.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    return page
 
 
 def main() -> None:
+    apply_global_styles()
     workspace = load_workspace()
+    page = render_navigation()
 
-    st.title("Providence")
-
-    tab_project, tab_people, tab_health = st.tabs(["Project", "People", "Health"])
-
-    with tab_project:
-        render_sea_view(workspace)
-
-    with tab_people:
-        render_air_view(workspace)
-
-    with tab_health:
+    if page == "Overview":
+        render_overview_view(workspace)
+    elif page == "Health":
         render_land_view(workspace)
+    elif page == "Project":
+        render_sea_view(workspace)
+    else:
+        render_air_view(workspace)
 
 
 if __name__ == "__main__":

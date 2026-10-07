@@ -9,223 +9,462 @@ def apply_global_styles() -> None:
     st.markdown(
         f"""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
         :root {{
-            --page-background: {TOKENS.page_background};
-            --surface-background: {TOKENS.surface_background};
-            --surface-elevated: {TOKENS.surface_elevated};
-            --primary-text: {TOKENS.primary_text};
-            --secondary-text: {TOKENS.secondary_text};
-            --tertiary-text: {TOKENS.tertiary_text};
-            --primary-action: {TOKENS.primary_action};
-            --primary-action-hover: {TOKENS.primary_action_hover};
-            --focus-ring: {TOKENS.focus_ring};
+            --app-surface: {TOKENS.app_surface};
+            --surface-primary: {TOKENS.surface_primary};
+            --surface-secondary: {TOKENS.surface_secondary};
+            --surface-subtle: {TOKENS.surface_subtle};
+            --text-core: {TOKENS.text_core};
+            --text-supporting: {TOKENS.text_supporting};
+            --text-muted: {TOKENS.text_muted};
             --border-subtle: {TOKENS.border_subtle};
             --border-default: {TOKENS.border_default};
-            --success: {TOKENS.success};
-            --warning: {TOKENS.warning};
-            --error: {TOKENS.error};
-            --shadow-sm: {TOKENS.shadow_sm};
-            --shadow-md: {TOKENS.shadow_md};
-            --shadow-lg: {TOKENS.shadow_lg};
-            --shadow-xl: {TOKENS.shadow_xl};
-            --radius-sm: {TOKENS.radius_sm};
-            --radius-md: {TOKENS.radius_md};
-            --radius-lg: {TOKENS.radius_lg};
+            --action-primary: {TOKENS.action_primary};
+            --action-primary-hover: {TOKENS.action_primary_hover};
+            --status-healthy: {TOKENS.status_healthy};
+            --status-healthy-surface: {TOKENS.status_healthy_surface};
+            --status-watch: {TOKENS.status_watch};
+            --status-watch-surface: {TOKENS.status_watch_surface};
+            --status-risk: {TOKENS.status_risk};
+            --status-risk-surface: {TOKENS.status_risk_surface};
+            --status-neutral: {TOKENS.status_neutral};
+            --status-neutral-surface: {TOKENS.status_neutral_surface};
+            --focus-ring: {TOKENS.focus_ring};
+            --shadow-card: {TOKENS.primitives.shadow_card};
+            --shadow-float: {TOKENS.primitives.shadow_float};
+            --radius-sm: {TOKENS.primitives.radius_sm};
+            --radius-md: {TOKENS.primitives.radius_md};
+            --radius-lg: {TOKENS.primitives.radius_lg};
+            --radius-xl: {TOKENS.primitives.radius_xl};
         }}
-        
-        * {{
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+        html, body, [class*="css"] {{
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", sans-serif;
         }}
-        
+
         .stApp {{
-            background: var(--page-background);
-            color: var(--primary-text);
+            background:
+                radial-gradient(circle at 80% 0%, rgba(224, 90, 71, 0.07), transparent 26rem),
+                var(--app-surface);
+            color: var(--text-core);
         }}
-        
+
+        [data-testid="stAppViewContainer"] {{
+            background: transparent;
+        }}
+
+        [data-testid="stHeader"] {{
+            background: rgba(253, 251, 247, 0.92);
+            border-bottom: 1px solid rgba(221, 225, 226, 0.72);
+        }}
+
+        [data-testid="stToolbar"] {{
+            right: 1rem;
+        }}
+
+        .block-container {{
+            max-width: 1480px;
+            padding-top: 2.25rem;
+            padding-right: 2.25rem;
+            padding-bottom: 3.5rem;
+            padding-left: 2.25rem;
+        }}
+
+        h1, h2, h3, h4, p {{
+            color: var(--text-core);
+        }}
+
         h1 {{
-            font-size: 2.5rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--primary-text);
-            margin-bottom: 0.5rem;
+            font-size: clamp(2rem, 3vw, 3.15rem);
+            font-weight: 650;
+            letter-spacing: -0.045em;
+            line-height: 1.04;
+            margin-bottom: 0.45rem;
         }}
-        
+
         h2 {{
-            font-size: 1.75rem;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            color: var(--primary-text);
-            margin-top: 2rem;
-            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 650;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            margin-top: 0;
         }}
-        
+
         h3 {{
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--primary-text);
-            margin-top: 1.5rem;
-            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            font-weight: 650;
+            letter-spacing: -0.01em;
+            margin-top: 0;
         }}
-        
-        p, label, .stMarkdown {{
-            color: var(--primary-text);
-            line-height: 1.6;
+
+        p, .stMarkdown {{
+            color: var(--text-core);
+            line-height: 1.55;
         }}
-        
-        .stCaption {{
-            color: var(--secondary-text);
-            font-size: 0.875rem;
-            font-weight: 400;
+
+        [data-testid="stCaptionContainer"] {{
+            color: var(--text-supporting);
+            font-size: 0.9rem;
+            line-height: 1.45;
         }}
-        
-        [data-testid="stMetricValue"] {{
-            font-size: 1.875rem;
-            font-weight: 600;
-            color: var(--primary-text);
+
+        [data-testid="stSidebar"] {{
+            min-width: 248px;
+            background: var(--surface-primary);
+            border-right: 1px solid var(--border-subtle);
         }}
-        
+
+        [data-testid="stSidebar"] > div:first-child {{
+            padding: 1.25rem 0.9rem;
+        }}
+
+        [data-testid="stSidebarNav"] {{
+            display: none;
+        }}
+
+        [data-testid="stVerticalBlockBorderWrapper"] {{
+            background: var(--surface-primary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+        }}
+
+        [data-testid="stMetric"] {{
+            padding: 0;
+        }}
+
         [data-testid="stMetricLabel"] {{
-            color: var(--secondary-text);
-            font-size: 0.875rem;
-            font-weight: 500;
+            color: var(--text-supporting);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
         }}
-        
+
+        [data-testid="stMetricValue"] {{
+            color: var(--text-core);
+            font-size: clamp(1.8rem, 2.5vw, 2.55rem);
+            font-weight: 650;
+            letter-spacing: -0.045em;
+            line-height: 1.08;
+        }}
+
         [data-testid="stMetricDelta"] {{
-            font-size: 0.875rem;
-            font-weight: 500;
-        }}
-        
-        .stButton > button {{
-            border-radius: var(--radius-md);
-            border: 1px solid transparent;
-            background: var(--primary-action);
-            color: white;
+            font-size: 0.82rem;
             font-weight: 600;
-            font-size: 0.9375rem;
-            padding: 0.625rem 1.25rem;
-            transition: all 0.2s ease;
-            box-shadow: var(--shadow-sm);
         }}
-        
-        .stButton > button:hover {{
-            background: var(--primary-action-hover);
-            box-shadow: var(--shadow-md);
+
+        .stButton > button,
+        .stDownloadButton > button {{
+            min-height: 2.7rem;
+            border: 1px solid var(--action-primary);
+            border-radius: var(--radius-md);
+            background: var(--action-primary);
+            color: #FFFFFF;
+            font-size: 0.92rem;
+            font-weight: 650;
+            letter-spacing: -0.01em;
+            padding: 0.58rem 1rem;
+            box-shadow: none;
+            transition: background 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+        }}
+
+        .stButton > button:hover,
+        .stDownloadButton > button:hover {{
+            background: var(--action-primary-hover);
+            border-color: var(--action-primary-hover);
+            box-shadow: var(--shadow-card);
             transform: translateY(-1px);
         }}
-        
-        button:focus-visible, input:focus-visible, [role="radio"]:focus-visible {{
+
+        .stButton > button:focus-visible,
+        .stDownloadButton > button:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        [role="tab"]:focus-visible,
+        [role="radio"]:focus-visible {{
             outline: 3px solid var(--focus-ring) !important;
             outline-offset: 3px !important;
         }}
-        
-        [data-testid="stSidebar"] {{
-            background: var(--surface-background);
-            border-right: 1px solid var(--border-subtle);
-            box-shadow: var(--shadow-sm);
+
+        [data-testid="stTabs"] [data-baseweb="tab-list"] {{
+            gap: 0.35rem;
+            border-bottom: 1px solid var(--border-subtle);
         }}
-        
-        [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {{
-            font-size: 1.125rem;
-            font-weight: 600;
+
+        [data-testid="stTabs"] [data-baseweb="tab"] {{
+            height: 2.65rem;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            color: var(--text-supporting);
+            font-size: 0.9rem;
+            font-weight: 650;
+            padding: 0 0.9rem;
         }}
-        
-        .stRadio > label {{
-            font-weight: 500;
-            color: var(--primary-text);
-            padding: 0.5rem 0.75rem;
-            border-radius: var(--radius-sm);
-            transition: background 0.15s ease;
+
+        [data-testid="stTabs"] [aria-selected="true"] {{
+            color: var(--text-core);
+            background: var(--surface-primary);
         }}
-        
-        .stRadio > label:hover {{
-            background: var(--surface-elevated);
+
+        [data-testid="stTabs"] [data-baseweb="tab-highlight"] {{
+            background-color: var(--action-primary);
+            height: 2px;
         }}
-        
-        [data-testid="stVerticalBlockBorderWrapper"] {{
-            background: var(--surface-background);
+
+        [data-baseweb="select"] > div,
+        [data-testid="stTextInput"] input {{
+            min-height: 2.65rem;
+            border-radius: var(--radius-md);
+            border-color: var(--border-default);
+            background: var(--surface-primary);
+            color: var(--text-core);
+        }}
+
+        [data-baseweb="select"] > div:hover,
+        [data-testid="stTextInput"] input:hover {{
+            border-color: var(--text-muted);
+        }}
+
+        [data-testid="stProgress"] > div > div {{
+            height: 0.5rem;
+            border-radius: 999px;
+            background: var(--surface-secondary);
+        }}
+
+        [data-testid="stProgress"] > div > div > div {{
+            border-radius: 999px;
+            background: var(--action-primary);
+        }}
+
+        [data-testid="stAlert"] {{
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            box-shadow: none;
+        }}
+
+        [data-testid="stAlert"] p {{
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }}
+
+        [data-testid="stDataFrame"] {{
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            padding: 1.5rem;
-            transition: box-shadow 0.2s ease, transform 0.2s ease;
+            overflow: hidden;
         }}
-        
-        [data-testid="stVerticalBlockBorderWrapper"]:hover {{
-            box-shadow: var(--shadow-md);
+
+        hr {{
+            border-color: var(--border-subtle);
         }}
-        
-        .stProgress > div > div > div > div {{
-            background-color: var(--primary-action);
-            border-radius: var(--radius-sm);
+
+        .providence-brand {{
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.35rem 0.35rem 1.5rem;
         }}
-        
-        .stProgress > div > div {{
-            background-color: var(--border-subtle);
-            border-radius: var(--radius-sm);
-            height: 8px;
+
+        .providence-mark {{
+            width: 2rem;
+            height: 2rem;
+            display: grid;
+            place-items: center;
+            border-radius: 0.68rem;
+            background: var(--text-core);
+            color: #FFFFFF;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: -0.06em;
+            box-shadow: 0 5px 14px rgba(31, 33, 31, 0.15);
         }}
-        
-        .stAlert {{
+
+        .providence-brand-name {{
+            color: var(--text-core);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            line-height: 1;
+        }}
+
+        .providence-brand-detail {{
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.045em;
+            margin-top: 0.2rem;
+            text-transform: uppercase;
+        }}
+
+        .providence-nav-title {{
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            font-weight: 750;
+            letter-spacing: 0.1em;
+            margin: 0.85rem 0.35rem 0.55rem;
+            text-transform: uppercase;
+        }}
+
+        .providence-nav-note {{
+            position: absolute;
+            bottom: 1.2rem;
+            left: 1.25rem;
+            right: 1.25rem;
+            padding: 0.85rem;
+            background: var(--surface-secondary);
+            border: 1px solid var(--border-subtle);
             border-radius: var(--radius-md);
-            border: none;
-            box-shadow: var(--shadow-sm);
+            color: var(--text-supporting);
+            font-size: 0.76rem;
+            line-height: 1.4;
         }}
-        
-        .stAlert[data-testid="stAlert"] {{
-            background: var(--surface-elevated);
+
+        .providence-page-header {{
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin-bottom: 2.1rem;
         }}
-        
-        div[data-testid="stAlert"] p {{
+
+        .providence-eyebrow {{
+            color: var(--action-primary);
+            font-size: 0.72rem;
+            font-weight: 750;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.45rem;
+            text-transform: uppercase;
+        }}
+
+        .providence-page-subtitle {{
+            max-width: 42rem;
+            color: var(--text-supporting);
+            font-size: 1rem;
+            line-height: 1.55;
+            margin: 0;
+        }}
+
+        .providence-date-context {{
+            flex: 0 0 auto;
+            padding: 0.72rem 0.9rem;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            color: var(--text-supporting);
+            font-size: 0.82rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }}
+
+        .providence-section-heading {{
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 2.25rem 0 1rem;
+        }}
+
+        .providence-section-heading h2 {{
+            margin: 0;
+        }}
+
+        .providence-section-detail {{
+            color: var(--text-muted);
+            font-size: 0.82rem;
             font-weight: 500;
         }}
-        
-        .stDivider {{
-            border-top: 1px solid var(--border-subtle);
+
+        .providence-status {{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.38rem;
+            width: fit-content;
+            border-radius: 999px;
+            font-size: 0.74rem;
+            font-weight: 750;
+            letter-spacing: 0.01em;
+            padding: 0.35rem 0.62rem;
+            white-space: nowrap;
         }}
-        
-        [data-testid="stJson"] {{
-            background: var(--surface-elevated);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            border: 1px solid var(--border-subtle);
+
+        .providence-status::before {{
+            width: 0.42rem;
+            height: 0.42rem;
+            border-radius: 50%;
+            background: currentColor;
+            content: "";
         }}
-        
-        .element-container {{
-            border-radius: var(--radius-md);
+
+        .providence-status-healthy {{
+            background: var(--status-healthy-surface);
+            color: var(--status-healthy);
         }}
-        
-        .stTextInput > div > div > input {{
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-default);
-            padding: 0.625rem 0.875rem;
-            font-size: 0.9375rem;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        .providence-status-watch {{
+            background: var(--status-watch-surface);
+            color: var(--status-watch);
         }}
-        
-        .stTextInput > div > div > input:focus {{
-            border-color: var(--focus-ring);
-            box-shadow: 0 0 0 3px rgba(47, 111, 143, 0.1);
+
+        .providence-status-risk {{
+            background: var(--status-risk-surface);
+            color: var(--status-risk);
         }}
-        
-        .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {{
-            margin-top: 0;
+
+        .providence-status-neutral {{
+            background: var(--status-neutral-surface);
+            color: var(--status-neutral);
         }}
-        
-        .block-container {{
-            padding-top: 2rem;
-            padding-bottom: 3rem;
+
+        .providence-insight {{
+            position: relative;
+            overflow: hidden;
+            padding: 1.25rem 1.35rem;
+            background:
+                linear-gradient(135deg, rgba(224, 90, 71, 0.09), transparent 52%),
+                var(--surface-primary);
+            border: 1px solid rgba(224, 90, 71, 0.22);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
         }}
-        
-        @media (max-width: 768px) {{
-            h1 {{
-                font-size: 2rem;
+
+        .providence-insight-label {{
+            color: var(--action-primary);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.095em;
+            margin-bottom: 0.45rem;
+            text-transform: uppercase;
+        }}
+
+        .providence-insight-title {{
+            color: var(--text-core);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.35rem;
+        }}
+
+        .providence-insight-body {{
+            color: var(--text-supporting);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }}
+
+        @media (max-width: 860px) {{
+            .block-container {{
+                padding: 1.35rem 1rem 2.25rem;
             }}
-            h2 {{
-                font-size: 1.5rem;
+
+            .providence-page-header {{
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 1rem;
+                margin-bottom: 1.6rem;
+            }}
+
+            .providence-date-context {{
+                white-space: normal;
             }}
         }}
         </style>

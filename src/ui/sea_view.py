@@ -1,11 +1,12 @@
-import streamlit as st
 from datetime import date
 
-from src.domain.models import Workspace, ProjectStatus
+import streamlit as st
+
+from src.domain.models import ProjectStatus, Workspace
 
 
 def render_sea_view(workspace: Workspace) -> None:
-    st.header("Sea View")
+    st.header("Project")
 
     filter_status = st.selectbox(
         "Filter by status",

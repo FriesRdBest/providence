@@ -5,7 +5,7 @@ from datetime import date
 
 import streamlit as st
 
-from src.domain.models import ProjectStatus, Workspace
+from src.domain.models import Workspace
 from src.services.rule_engine import RuleEngine
 
 
@@ -20,7 +20,8 @@ def render_overview_view(workspace: Workspace) -> None:
         st.markdown("### What is Providence")
         st.write(
             "Providence presents time intelligence across three connected views. "
-            "**Health** shows weekly organisational health. **Project** shows daily project delivery status. "
+            "**Health** shows weekly organisational health. "
+            "**Project** shows daily project delivery status. "
             "**People** shows current people capacity."
         )
 
@@ -50,21 +51,25 @@ def render_overview_view(workspace: Workspace) -> None:
     with st.container(border=True):
         st.markdown("### Design and technical approach")
         st.write(
-            "The interface uses a three layer visual language. Primitive values define the base palette. "
-            "Semantic roles express intent for backgrounds, text, and actions. Component decisions use "
-            "semantic roles rather than direct palette values. This keeps the interface consistent."
+            "The interface uses a three layer visual language. "
+            "Primitive values define the base palette. "
+            "Semantic roles express intent for backgrounds, text, and actions. "
+            "Component decisions use semantic roles rather than direct palette values. "
+            "This keeps the interface consistent."
         )
 
         st.write(
-            "Every workspace record is validated before use. Pydantic models enforce data contracts. "
-            "The rule engine produces deterministic health signals. The presentation layer consumes "
-            "prepared data without changing the ledger."
+            "Every workspace record is validated before use. "
+            "Pydantic models enforce data contracts. "
+            "The rule engine produces deterministic health signals. "
+            "The presentation layer consumes prepared data without changing the ledger."
         )
 
     with st.container(border=True):
         st.markdown("### Export guidance document")
         st.write(
-            "The following document provides a complete overview of the application for stakeholder review. "
+            "The following document provides a complete overview of the application "
+            "for stakeholder review. "
             "You can copy this content or export it as a JSON file for archival purposes."
         )
 
