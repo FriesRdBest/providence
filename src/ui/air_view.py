@@ -323,11 +323,16 @@ def render_air_view(workspace: Workspace) -> None:
                     </div>
                 </div>
                 <div class="providence-people-card-capacity">
-                    <div class="providence-people-card-progress">
-                        <span
-                            class="providence-people-progress-{status_class}"
-                            style="width: {capacity_width:.2f}%"
-                        ></span>
+                    <div class="providence-people-card-progress-row">
+                        <div class="providence-people-card-progress">
+                            <span
+                                class="providence-people-progress-{status_class}"
+                                style="width: {capacity_width:.2f}%"
+                            ></span>
+                        </div>
+                        <span class="providence-status providence-status-{status_class}">
+                            {status_text}
+                        </span>
                     </div>
                     <p>{_capacity_message(person)}</p>
                 </div>
@@ -344,16 +349,6 @@ def render_air_view(workspace: Workspace) -> None:
                     <strong>{_format_hours(person.capacity_remaining)}</strong>
                 </div>
             </article>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            f"""
-            <div class="providence-people-card-status">
-                <span class="providence-status providence-status-{status_class}">
-                    {status_text}
-                </span>
-            </div>
             """,
             unsafe_allow_html=True,
         )

@@ -4083,6 +4083,51 @@ def apply_global_styles() -> None:
             }}
         }}
 
+
+        /* Summary-card and people-status integration refinement. */
+        .providence-overview-metric,
+        .providence-health-signal,
+        .providence-people-signal {{
+            display: flex !important;
+            flex-direction: column;
+            justify-content: space-between;
+        }}
+
+        .providence-people-card-progress-row {{
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 0;
+        }}
+
+        .providence-people-card-progress-row .providence-people-card-progress {{
+            flex: 1 1 auto;
+            min-width: 0;
+            margin-bottom: 0;
+        }}
+
+        .providence-people-card-progress-row .providence-status {{
+            flex: 0 0 auto;
+            margin: 0;
+            white-space: nowrap;
+        }}
+
+        .providence-people-card-status {{
+            display: none !important;
+        }}
+
+        @media (max-width: 560px) {{
+            .providence-people-card-progress-row {{
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 0.55rem;
+            }}
+
+            .providence-people-card-progress-row .providence-people-card-progress {{
+                width: 100%;
+            }}
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
