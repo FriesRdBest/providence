@@ -3490,6 +3490,281 @@ def apply_global_styles() -> None:
             }}
         }}}}
 
+
+        /* Phase 6: responsive and accessibility audit */
+
+        :where(
+            [data-testid="stSidebar"] [data-testid="stRadio"] label,
+            .stButton > button,
+            .stDownloadButton > button,
+            [data-testid="stTabs"] [data-baseweb="tab"]
+        ) {{
+            min-height: 2.75rem;
+        }}
+
+        :where(
+            [data-baseweb="select"] > div,
+            [data-testid="stTextInput"] input,
+            [data-testid="stNumberInput"] input
+        ) {{
+            min-height: 2.75rem;
+        }}
+
+        :where(
+            .stButton > button,
+            .stDownloadButton > button,
+            [data-baseweb="select"] > div,
+            [data-testid="stTextInput"] input,
+            [data-testid="stNumberInput"] input,
+            [data-testid="stTabs"] [data-baseweb="tab"],
+            [data-testid="stSidebar"] [data-testid="stRadio"] label
+        ):focus-visible {{
+            outline: 3px solid var(--providence-butter) !important;
+            outline-offset: 3px;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label:focus-within {{
+            box-shadow: 0 0 0 3px rgba(255, 222, 145, 0.72);
+            outline: none;
+        }}
+
+        [data-testid="stSidebar"] [data-testid="stRadio"] label,
+        [data-testid="stSidebar"] [data-testid="stRadio"] label * {{
+            overflow-wrap: anywhere;
+        }}
+
+        .providence-page-header,
+        .providence-overview-hero,
+        .providence-health-hero,
+        .providence-people-hero,
+        .providence-overview-decision,
+        .providence-health-decision,
+        .providence-people-decision,
+        .providence-project-decision,
+        .providence-overview-metric,
+        .providence-health-signal,
+        .providence-project-metric,
+        .providence-people-signal,
+        .providence-overview-project,
+        .providence-health-project,
+        .providence-project-card,
+        .providence-people-card {{
+            min-width: 0;
+        }}
+
+        .providence-overview-project h3,
+        .providence-health-project h3,
+        .providence-project-card h3,
+        .providence-people-card h3,
+        .providence-overview-decision h2,
+        .providence-health-decision h2,
+        .providence-project-decision h2,
+        .providence-people-decision h2 {{
+            overflow-wrap: anywhere;
+        }}
+
+        .providence-overview-project-data,
+        .providence-health-project-data,
+        .providence-project-card-data,
+        .providence-people-card-data {{
+            min-width: 0;
+        }}
+
+        .providence-overview-project-data strong,
+        .providence-health-project-data strong,
+        .providence-project-card-data strong,
+        .providence-people-card-data strong {{
+            overflow-wrap: anywhere;
+        }}
+
+        @media (max-width: 980px) {{
+            [data-testid="stMainBlockContainer"],
+            .main .block-container {{
+                padding-left: clamp(1rem, 3vw, 1.6rem) !important;
+                padding-right: clamp(1rem, 3vw, 1.6rem) !important;
+            }}
+
+            .providence-overview-hero-stats,
+            .providence-health-hero-stats,
+            .providence-people-hero-stats {{
+                gap: 0.75rem;
+            }}
+
+            .providence-overview-project,
+            .providence-health-project,
+            .providence-project-card {{
+                gap: 0.85rem;
+            }}
+
+            .providence-project-card-data,
+            .providence-health-project-data {{
+                min-width: 4.4rem;
+            }}
+        }}
+
+        @media (max-width: 760px) {{
+            .providence-page-header {{
+                gap: 1rem;
+                padding: 1.2rem;
+            }}
+
+            .providence-page-header h1 {{
+                overflow-wrap: anywhere;
+            }}
+
+            .providence-page-subtitle {{
+                max-width: none;
+            }}
+
+            .providence-date-context {{
+                max-width: 100%;
+                white-space: normal;
+            }}
+
+            .providence-overview-hero-stats,
+            .providence-health-hero-stats,
+            .providence-people-hero-stats {{
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }}
+
+            .providence-overview-project,
+            .providence-health-project,
+            .providence-project-card {{
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) repeat(2, minmax(4rem, auto));
+                align-items: start;
+            }}
+
+            .providence-overview-project-index {{
+                display: none;
+            }}
+
+            .providence-overview-project-main,
+            .providence-health-project-main,
+            .providence-project-card-main {{
+                grid-column: 1 / -1;
+                width: auto;
+            }}
+
+            .providence-overview-project-data,
+            .providence-health-project-data,
+            .providence-project-card-data {{
+                margin-left: 0;
+            }}
+
+            .providence-project-card-message {{
+                margin-left: 0 !important;
+            }}
+
+            .providence-overview-project + div [class*="providence-status"],
+            .providence-health-project + div [class*="providence-status"],
+            .providence-project-card + div [class*="providence-status"] {{
+                float: none;
+                margin: 0 0 0.8rem;
+            }}
+        }}
+
+        @media (max-width: 560px) {{
+            [data-testid="stMainBlockContainer"],
+            .main .block-container {{
+                padding-top: 4.7rem !important;
+                padding-bottom: 2.5rem !important;
+            }}
+
+            .providence-page-header {{
+                margin-bottom: 1.75rem;
+            }}
+
+            .providence-eyebrow {{
+                font-size: 0.64rem;
+            }}
+
+            .providence-date-context {{
+                width: 100%;
+                justify-content: center;
+            }}
+
+            .providence-overview-hero-topline,
+            .providence-health-hero-topline,
+            .providence-people-hero-topline,
+            .providence-overview-pace-labels,
+            .providence-health-pace-labels,
+            .providence-people-pace-labels {{
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 0.55rem;
+            }}
+
+            .providence-overview-live,
+            .providence-health-live,
+            .providence-people-live {{
+                max-width: 100%;
+                white-space: normal;
+            }}
+
+            .providence-overview-hero-stats,
+            .providence-health-hero-stats,
+            .providence-people-hero-stats {{
+                grid-template-columns: 1fr;
+            }}
+
+            .providence-overview-project,
+            .providence-health-project,
+            .providence-project-card {{
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                padding: 1rem;
+            }}
+
+            .providence-overview-project-main,
+            .providence-health-project-main,
+            .providence-project-card-main {{
+                grid-column: 1 / -1;
+            }}
+
+            .providence-overview-project-data,
+            .providence-health-project-data,
+            .providence-project-card-data {{
+                min-width: 0;
+            }}
+
+            .providence-people-card-status {{
+                justify-content: flex-start;
+                margin-left: 1rem;
+            }}
+
+            [data-testid="stSidebar"] [data-testid="stRadio"] label {{
+                min-height: 3rem;
+            }}
+        }}
+
+        @media (prefers-reduced-motion: reduce) {{
+            [data-testid="stSidebar"] [data-testid="stRadio"] label,
+            .providence-overview-orbit,
+            .providence-health-orbit,
+            .providence-people-orbit,
+            .stButton > button,
+            .stDownloadButton > button {{
+                transform: none !important;
+                transition: none !important;
+            }}
+        }}
+
+        @media (forced-colors: active) {{
+            :where(
+                .stButton > button,
+                .stDownloadButton > button,
+                [data-baseweb="select"] > div,
+                [data-testid="stSidebar"] [data-testid="stRadio"] label
+            ):focus-visible {{
+                outline: 3px solid Highlight !important;
+            }}
+
+            [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {{
+                border: 2px solid Highlight;
+            }}
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
