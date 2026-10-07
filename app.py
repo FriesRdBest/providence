@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
 import streamlit as st
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from src.services.workspace_service import WorkspaceService
 from src.services.ai_insight_service import AIInsightService
