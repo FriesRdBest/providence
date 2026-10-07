@@ -13,42 +13,47 @@ def render_land_view(workspace: Workspace) -> None:
     health = RuleEngine().assess_workspace(workspace, today=today)
 
     st.header("Health")
-    st.subheader("Weekly organisational health")
+    st.caption("Weekly organisational health and capacity overview")
 
-    with st.container(border=True):
-        st.metric(
-            label="Team utilisation",
-            value=f"{health.utilisation_percentage} %",
-            delta=None,
-        )
+    col1, col2, col3 = st.columns(3, gap="large")
 
-    with st.container(border=True):
-        st.metric(
-            label="Total budget hours",
-            value=f"{health.total_budget_hours:,.0f} h",
-        )
-        st.metric(
-            label="Remaining budget hours",
-            value=f"{health.remaining_budget_hours:,.0f} h",
-        )
+    with col1:
+        with st.container(border=True):
+            st.metric(
+                label="Team utilisation",
+                value=f"{health.utilisation_percentage} %",
+                delta=None,
+            )
 
-    with st.container(border=True):
-        st.metric(
-            label="Projects at risk",
-            value=health.projects_at_risk,
-            delta="Requires attention" if health.projects_at_risk > 0 else "None",
-            delta_color="inverse",
-        )
-        st.metric(
-            label="Projects on watch",
-            value=health.projects_on_watch,
-            delta="Monitor closely" if health.projects_on_watch > 0 else "None",
-            delta_color="normal",
-        )
+    with col2:
+        with st.container(border=True):
+            st.metric(
+                label="Total budget",
+                value=f"{health.total_budget_hours:,.0f} h",
+            )
+            st.metric(
+                label="Remaining",
+                value=f"{health.remaining_budget_hours:,.0f} h",
+            )
+
+    with col3:
+        with st.container(border=True):
+            st.metric(
+                label="At risk",
+                value=health.projects_at_risk,
+                delta="Requires attention" if health.projects_at_risk > 0 else "None",
+                delta_color="inverse",
+            )
+            st.metric(
+                label="On watch",
+                value=health.projects_on_watch,
+                delta="Monitor closely" if health.projects_on_watch > 0 else "None",
+                delta_color="normal",
+            )
 
     st.subheader("Project health summary")
 
-    for project in workspace.projects:
+    for idx, project in enumerate(workspace.projects):
         status = project.status(today)
         status_label = {
             ProjectStatus.HEALTHY: "Healthy",
@@ -56,9 +61,31 @@ def render_land_view(workspace: Workspace) -> None:
             ProjectStatus.AT_RISK: "At risk",
         }[status]
 
-        st.write(
-            f"**{project.name}** ({project.client}) — "
-            f"Budget burn {project.budget_burn_percentage} %, "
-            f"{project.days_until_delivery(today)} days until delivery — "
-            f"Status: {status_label}"
-        )
+        status_color = {
+            ProjectStatus.HEALTHY: "success",
+            ProjectStatus.WATCH: "warning",
+            ProjectStatus.AT_RISK: "error",
+        }[status]
+
+        with st.container(border=True):
+            col_a, col_b = st.columns([3, 1], gap="large")
+
+            with col_a:
+                st.markdown(f"### {project.name}")
+                st.caption(f"{project.client}")
+                st.write(
+                    f"Budget burn **{project.budget_burn_percentage} %** • "
+                    f"{project.days_until_delivery(today)} days until delivery"
+                )
+
+            with col_b:
+                if status == ProjectStatus.AT_RISK:
+                    st.error(f"**{status_label}**")
+                elif status == ProjectStatus.WATCH:
+                    st.warning(f"**{status_label}**")
+                else:
+                    st.success(f"**{status_label}**")
+
+            st.progress(
+                float(project.budget_burn_percentage) / 100,
+            )
