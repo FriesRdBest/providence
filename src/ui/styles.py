@@ -4038,6 +4038,24 @@ def apply_global_styles() -> None:
             }}
         }}
 
+
+
+
+        /* Three-up dashboard card boundaries */
+
+        .providence-overview-metric,
+        .providence-health-signal,
+        .providence-people-signal {{
+            box-sizing: border-box !important;
+            display: block !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            overflow: hidden !important;
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
