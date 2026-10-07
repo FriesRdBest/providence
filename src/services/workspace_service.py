@@ -13,3 +13,7 @@ class WorkspaceService:
 
     def load_workspace(self) -> Workspace:
         return self.repository.read()
+
+    @staticmethod
+    def get_ledger_path() -> Path:
+        return Path(__file__).resolve().parents[2] / "data" / "workspace.json"
