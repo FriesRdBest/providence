@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 from decimal import Decimal
 
 import streamlit as st
@@ -8,9 +9,9 @@ from src.domain.models import PersonStatus, Workspace
 
 
 def render_air_view(workspace: Workspace) -> None:
-    today = st.context.date
+    today = date.today()
 
-    st.header("Air")
+    st.header("People")
     st.subheader("Current people capacity")
 
     filter_status = st.radio(
