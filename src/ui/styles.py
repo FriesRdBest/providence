@@ -4128,6 +4128,42 @@ def apply_global_styles() -> None:
             }}
         }}
 
+
+        /* Mobile hero-orbit collision fix. */
+        @media (max-width: 560px) {{
+            .providence-overview-hero-grid,
+            .providence-health-hero-grid,
+            .providence-people-hero-grid {{
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1.25rem;
+                margin-top: 2rem;
+            }}
+
+            .providence-overview-hero-grid > div:first-child,
+            .providence-health-hero-grid > div:first-child,
+            .providence-people-hero-grid > div:first-child {{
+                width: 100%;
+                min-width: 0;
+            }}
+
+            .providence-overview-hero-grid p,
+            .providence-health-hero-grid p,
+            .providence-people-hero-grid p {{
+                max-width: none;
+            }}
+
+            .providence-overview-orbit,
+            .providence-health-orbit,
+            .providence-people-orbit {{
+                align-self: center;
+                justify-self: auto;
+                flex: 0 0 auto;
+                margin: 0;
+            }}
+        }}
+
         </style>
         """,
         unsafe_allow_html=True,
