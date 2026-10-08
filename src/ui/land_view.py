@@ -112,12 +112,12 @@ def render_land_view(workspace: Workspace) -> None:
                         <span class="providence-health-hero-label">Overall budget used</span>
                         <strong>{overall_burn}%</strong>
                         <p>{
-                _budget_interpretation(
-                    overall_burn,
-                    health.projects_at_risk,
-                    health.projects_on_watch,
-                )
-            }</p>
+            _budget_interpretation(
+                overall_burn,
+                health.projects_at_risk,
+                health.projects_on_watch,
+            )
+        }</p>
                     </div>
                     <div class="providence-health-orbit">
                         <span>{health.utilisation_percentage}%</span>
